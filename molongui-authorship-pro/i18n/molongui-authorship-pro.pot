@@ -1,0 +1,1400 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the molongui-authorship-pro package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: molongui-authorship-pro 1.5.11\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-01 18:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: includes/activator.php:211
+msgid "Contributors"
+msgstr ""
+
+#: includes/activator.php:212
+msgid ""
+"Many people have contributed to this website and we are thankful to them all "
+"for their hard work."
+msgstr ""
+
+#: includes/compat/plugins/yoast.php:43
+msgid "Yoast SEO Settings"
+msgstr ""
+
+#: includes/extend-wp-rest-api.php:283
+msgid "Failed to update post_author field."
+msgstr ""
+
+#: includes/extend-wp-rest-api.php:294
+msgid "Molongui authors"
+msgstr ""
+
+#: includes/helpers/options.php:37
+msgid "&mdash; No role for this site &mdash;"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:34
+#: includes/hooks/common/options/license.php:65
+msgid "License"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:80
+msgid ""
+"Your license is active. You might want to deactivate your license key on "
+"this site to use it in different installation. Should you want to re-"
+"activate the plugin here, you will need to input your credentials again."
+msgstr ""
+
+#: includes/hooks/common/options/license.php:95
+#, php-format
+msgid ""
+"Please provide your license key and PIN to activate the plugin. You can find "
+"them on your %sMy Account%s"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:107
+msgid "Type here your license key"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:114
+#, php-format
+msgid ""
+"%sThe license key you got by e-mail upon purchase.%s %sYou can also find it "
+"in your My Account.%s"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:122
+msgid "License KEY"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:131
+msgid "Type here your license PIN"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:138
+#, php-format
+msgid ""
+"%sThe PIN you got by e-mail upon purchase.%s %sYou can also find it in your "
+"My Account.%s"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:146
+msgid "License PIN"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:158
+msgid ""
+"Deactivating the license will make the plugin to stop working on this site."
+msgstr ""
+
+#: includes/hooks/common/options/license.php:166
+msgid "Deactivate"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:167
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:186
+msgid "Click here to get some help"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:187
+msgid "Can't activate your license? Get help"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:206
+msgid "Activate"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:207
+msgid "Activate License"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:220
+msgid "Retention"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:234
+#, php-format
+msgid ""
+"%sWhether to deactivate the license key upon plugin deactivation.%s "
+"%sRegardless of this setting, the license will be released when uninstalling "
+"the plugin.%s"
+msgstr ""
+
+#: includes/hooks/common/options/license.php:235
+msgid "Keep plugin license active upon plugin deactivation."
+msgstr ""
+
+#: includes/hooks/common/options/tools.php:32
+msgid "Restore plugin configuration from a previous exported backup file"
+msgstr ""
+
+#: includes/hooks/common/options/tools.php:38
+msgid "Restore"
+msgstr ""
+
+#: includes/hooks/common/options/tools.php:39
+msgid "Restore Plugin Configuration"
+msgstr ""
+
+#: includes/hooks/common/options/tools.php:53
+msgid "Reset plugin settings to their defaults"
+msgstr ""
+
+#: includes/hooks/common/options/tools.php:59
+msgid "Reset"
+msgstr ""
+
+#: includes/hooks/common/options/tools.php:60
+msgid "Reset Plugin Configuration"
+msgstr ""
+
+#: includes/hooks/guest/list/bulk-edit.php:72
+#: includes/hooks/post/bulk-edit.php:83
+msgid "Author Box"
+msgstr ""
+
+#: includes/hooks/guest/list/bulk-edit.php:74
+#: includes/hooks/post/bulk-edit.php:85 includes/hooks/post/bulk-edit.php:187
+msgid "&mdash; No Change &mdash;"
+msgstr ""
+
+#: includes/hooks/guest/list/bulk-edit.php:75
+#: includes/hooks/post/bulk-edit.php:86
+msgid "Default"
+msgstr ""
+
+#: includes/hooks/guest/list/bulk-edit.php:76
+#: includes/hooks/post/bulk-edit.php:87
+msgid "Show"
+msgstr ""
+
+#: includes/hooks/guest/list/bulk-edit.php:77
+#: includes/hooks/post/bulk-edit.php:88
+msgid "Hide"
+msgstr ""
+
+#: includes/hooks/guest/list/row-actions.php:52
+msgid "Duplicate this guest author"
+msgstr ""
+
+#: includes/hooks/guest/list/row-actions.php:52
+msgid "Clone"
+msgstr ""
+
+#: includes/hooks/guest/list/row-actions.php:79
+#: views/guest-author/html-admin-convert-metabox.php:25
+msgid "Convert to User"
+msgstr ""
+
+#: includes/hooks/guest/list/row-actions.php:105
+msgid "No guest to convert has been supplied!"
+msgstr ""
+
+#: includes/hooks/guest/pages/admin-bar.php:53
+msgid "Edit Guest"
+msgstr ""
+
+#: includes/hooks/guest/scripts.php:59
+msgid "Guest to User Conversion"
+msgstr ""
+
+#: includes/hooks/guest/scripts.php:60
+msgid ""
+"This guest author will be removed and a new WordPress user with role "
+"'author' created. Do you want to continue?"
+msgstr ""
+
+#: includes/hooks/guest/scripts.php:61 includes/hooks/options/scripts.php:68
+#: includes/hooks/options/scripts.php:81 includes/hooks/options/scripts.php:97
+#: includes/hooks/options/scripts.php:110 includes/hooks/user/scripts.php:61
+msgid "Cancel"
+msgstr ""
+
+#: includes/hooks/guest/scripts.php:62 includes/hooks/options/scripts.php:69
+#: includes/hooks/options/scripts.php:82 includes/hooks/options/scripts.php:98
+#: includes/hooks/options/scripts.php:111 includes/hooks/user/scripts.php:62
+msgid "OK"
+msgstr ""
+
+#: includes/hooks/guest/scripts.php:63
+msgid "Provide a password for the new user:"
+msgstr ""
+
+#: includes/hooks/guest/scripts.php:64 includes/hooks/user/scripts.php:63
+msgid "Converting..."
+msgstr ""
+
+#: includes/hooks/options/footer.php:32
+msgid "Pro"
+msgstr ""
+
+#: includes/hooks/options/footer.php:33 includes/hooks/options/footer.php:43
+msgid "See changelog"
+msgstr ""
+
+#: includes/hooks/options/footer.php:42
+msgid "Free"
+msgstr ""
+
+#: includes/hooks/options/footer.php:52
+msgid "Docs"
+msgstr ""
+
+#: includes/hooks/options/footer.php:53
+msgid "Read the plugin documentation"
+msgstr ""
+
+#: includes/hooks/options/footer.php:62
+msgid "Help"
+msgstr ""
+
+#: includes/hooks/options/footer.php:63
+msgid "Click to get help"
+msgstr ""
+
+#: includes/hooks/options/footer.php:72
+msgid "Chat"
+msgstr ""
+
+#: includes/hooks/options/footer.php:73
+msgid "How can we help?"
+msgstr ""
+
+#: includes/hooks/options/license.php:38
+msgid "TIP"
+msgstr ""
+
+#: includes/hooks/options/license.php:39
+msgid "You need to re-activate your license using your new key."
+msgstr ""
+
+#: includes/hooks/options/license.php:40
+msgid ""
+"We have e-mailed you your new key. But you can find it also on your My "
+"Account"
+msgstr ""
+
+#: includes/hooks/options/license.php:44
+msgid "What's my new key?"
+msgstr ""
+
+#: includes/hooks/options/license.php:45
+msgid "Click to find out what your new key is"
+msgstr ""
+
+#: includes/hooks/options/markup.php:57
+#, php-format
+msgid ""
+"%sImprove visitors user experience allowing them to search content by author "
+"name.%s %sBy default, WordPress search only looks into post content.%s "
+"%sEnable this setting so searching by author name returns content authored "
+"by that author.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:58
+msgid ""
+"Enhance default search functionality allowing visitors to search content by "
+"author name"
+msgstr ""
+
+#: includes/hooks/options/markup.php:89
+#, php-format
+msgid ""
+"%sGive more visibility to your guests including their archive page on search "
+"results.%s %sIf a search by author name is made, not only that author's "
+"posts will be displayed but also that author archive page.%s %sOnly applies "
+"to guest authors. Doesn't work with registered users.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:90
+msgid ""
+"Include guest author pages in search results if searched string matches the "
+"guest author name"
+msgstr ""
+
+#: includes/hooks/options/markup.php:121
+#, php-format
+msgid "Make Guest Author custom post type available at %s%s%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:156
+msgid "Hide other authors' posts for these user roles:"
+msgstr ""
+
+#: includes/hooks/options/markup.php:159
+#, php-format
+msgid ""
+"%sBy default, WordPress users in the admin area can see all the Posts on the "
+"site, regardless of whether they are the author.%s %sThis is not a problem "
+"for many sites. After all, most Posts on most sites are publicly available – "
+"there's no need to hide them.%s %sHowever, in some situations, site owners "
+"don't want authors to see other users' posts to keep the Dashboard as clean "
+"as possible.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:197
+msgid "Add an 'authors' field to the post object returned by the REST API."
+msgstr ""
+
+#: includes/hooks/options/markup.php:233
+msgid ""
+"Select which user roles the plugin will take into account to populate "
+"authors dropdown selector, authors list and other stuff. Custom user roles "
+"are supported."
+msgstr ""
+
+#: includes/hooks/options/markup.php:269
+#, php-format
+msgid ""
+"%sSelect where in the admin menu to add a new item to manage guest authors."
+"%s %sIn order to this setting to take effect, a page reload is required.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:270
+#, php-format
+msgid "Add %sGuest Authors%s link as %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:276
+msgid "a top level menu item"
+msgstr ""
+
+#: includes/hooks/options/markup.php:281
+#, php-format
+msgid "a sub-menu item to the %sUsers%s menu"
+msgstr ""
+
+#: includes/hooks/options/markup.php:286
+#, php-format
+msgid "a sub-menu item to the %sPosts%s menu"
+msgstr ""
+
+#: includes/hooks/options/markup.php:291
+#, php-format
+msgid "a sub-menu item to the %sPages%s menu"
+msgstr ""
+
+#: includes/hooks/options/markup.php:331
+#, php-format
+msgid "%sHide%s the author box on these %spost categories%s:"
+msgstr ""
+
+#: includes/hooks/options/markup.php:334
+#, php-format
+msgid ""
+"%sThis setting might be overridden by post configuration, so exceptions can "
+"be handled on a per post basis.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:376
+#, php-format
+msgid ""
+"%sOther plugins may also add their stuff to post content, so the author box "
+"might be displayed somewhere different than expected. Making the plugin to "
+"add the author box before that third-party content (lowering the priority "
+"number) should move the box up, while adding it later (increasing the "
+"priority number) should move the box down.%s %sA value below 10 may cause "
+"issues with your content.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:377
+#, php-format
+msgid ""
+"Add the author box at a priority of %s %s%sChange only if author box is not "
+"displayed where expected%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:412
+msgid "Encode e-mail addresses to prevent them getting spammed."
+msgstr ""
+
+#: includes/hooks/options/markup.php:429
+msgid ""
+"Encode phone numbers to prevent them getting annoying scam calls and texts."
+msgstr ""
+
+#: includes/hooks/options/markup.php:465
+#, php-format
+msgid "Show %s bio when available"
+msgstr ""
+
+#: includes/hooks/options/markup.php:471
+msgid "short"
+msgstr ""
+
+#: includes/hooks/options/markup.php:476
+msgid "full"
+msgstr ""
+
+#: includes/hooks/options/markup.php:517
+#, php-format
+msgid "Display %s entries as related posts."
+msgstr ""
+
+#: includes/hooks/options/markup.php:533
+#, php-format
+msgid "%sThe criteria to sort related entries.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:534
+#, php-format
+msgid "Sort related entries by %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:540
+msgid "title"
+msgstr ""
+
+#: includes/hooks/options/markup.php:545
+msgid "date on which the post was written"
+msgstr ""
+
+#: includes/hooks/options/markup.php:550
+msgid "date on which the post was last modified"
+msgstr ""
+
+#: includes/hooks/options/markup.php:555
+msgid "comment count"
+msgstr ""
+
+#: includes/hooks/options/markup.php:560
+msgid "random order"
+msgstr ""
+
+#: includes/hooks/options/markup.php:578
+#, php-format
+msgid "%sThe order by which to list related entries.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:579
+#, php-format
+msgid "Sort related entries in %s order"
+msgstr ""
+
+#: includes/hooks/options/markup.php:585
+msgid "ascending"
+msgstr ""
+
+#: includes/hooks/options/markup.php:590
+msgid "descending"
+msgstr ""
+
+#: includes/hooks/options/markup.php:612
+#, php-format
+msgid "Post types to retrieve %sas related entries%s:"
+msgstr ""
+
+#: includes/hooks/options/markup.php:613
+#, php-format
+msgid ""
+"%sPost types listed as related items.%s %sOnly those post types where plugin "
+"functionality is enabled on are listed. If you have just enabled some an "
+"they are not listed here, save settings and refresh this page.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:643
+msgid "Written by "
+msgstr ""
+
+#: includes/hooks/options/markup.php:651
+#, php-format
+msgid ""
+"%sDoesn't remove nor replace any modifier added by your theme, like the "
+"widely used 'By'.%s %sHTML markup is accepted, so you can add your own "
+"styles and custom elements.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:654
+#, php-format
+msgid "At the very beginning of each byline, prepend this string: %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:665
+msgid " et al."
+msgstr ""
+
+#: includes/hooks/options/markup.php:673
+#, php-format
+msgid ""
+"%sDoesn't remove nor replace any modifier added by your theme or any other "
+"plugin.%s %sHTML markup is accepted, so you can add your own styles and "
+"custom elements.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:676
+#, php-format
+msgid "At the end of each byline, append this string: %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:708
+#, php-format
+msgid ""
+"%sGuest Archives are pages listing all posts from a given guest author. This "
+"is the same functionality WordPress provides for registered users but "
+"extended to guest authors.%s %sIf enabled, guest names become a link to "
+"these pages.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:709
+msgid "Enable Guest Author Archives."
+msgstr ""
+
+#: includes/hooks/options/markup.php:725 includes/hooks/options/markup.php:742
+#: includes/hooks/options/markup.php:921 includes/hooks/options/markup.php:938
+#, php-format
+msgid "By default, only %sposts%s are listed."
+msgstr ""
+
+#: includes/hooks/options/markup.php:726
+#, php-format
+msgid "Include %spages%s authored by the guest author in the archive."
+msgstr ""
+
+#: includes/hooks/options/markup.php:743 includes/hooks/options/markup.php:939
+msgid ""
+"Include custom post types where plugin functionality is enabled in the "
+"archive."
+msgstr ""
+
+#: includes/hooks/options/markup.php:762
+#, php-format
+msgid ""
+"%sEasily change permalink structure for guest author archives pages.%s %sYou "
+"can provide any string but %smake sure not to overlap any other existing URL "
+"on your site.%s%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:765
+#, php-format
+msgid "Add a custom slug to guest author page URL: %s%s%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:776 includes/hooks/options/markup.php:777
+#: includes/hooks/options/markup.php:950 includes/hooks/options/markup.php:951
+msgid "author"
+msgstr ""
+
+#: includes/hooks/options/markup.php:784 includes/hooks/options/markup.php:958
+#, php-format
+msgid ""
+"%sBy default, author archive pages are accessible at: %s%s %sYou can easily "
+"change that %sauthor%s part with any other custom string of your choice.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:787
+#, php-format
+msgid "Make guest author pages accessible at: %s%s%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:806 includes/hooks/options/markup.php:997
+#, php-format
+msgid ""
+"%sWordPress takes the %sauthor.php%s, %sarchive.php%s or %sindex.php%s "
+"template to display author archives.%s %sOverrule that providing an existing "
+"alternative template to use instead.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:809 includes/hooks/options/markup.php:1000
+#, php-format
+msgid "Force author pages to use this template: %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:827
+#, php-format
+msgid ""
+"%sThis option adds a %snoindex%s robots tag to your guest author pages.%s "
+"%sIf you have a SEO plugin, you might want to use it for this instead.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:828
+msgid "Prevent guest author pages to be indexed by search engines"
+msgstr ""
+
+#: includes/hooks/options/markup.php:840 includes/hooks/options/markup.php:1031
+msgid "Articles by"
+msgstr ""
+
+#: includes/hooks/options/markup.php:848 includes/hooks/options/markup.php:1061
+#, php-format
+msgid ""
+"%sThis might not work for all themes or if you use a theme builder.%s "
+"%sDefaults to an empty string.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:851 includes/hooks/options/markup.php:1042
+#, php-format
+msgid "At the very beginning of the page title, prepend this string: %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:870 includes/hooks/options/markup.php:1039
+#, php-format
+msgid ""
+"%sThis might not work for all themes.%s %sDefaults to an empty string.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:873 includes/hooks/options/markup.php:1064
+#, php-format
+msgid "At the end of the page title, append this string: %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:904
+#, php-format
+msgid ""
+"%sUser Archives are pages listing all posts from a given user.%s %sIf "
+"enabled, user names become a link to these pages.%s %sThis functionality is "
+"provided by WordPress by default. In some cases, you might want to disable "
+"user archives to prevent content duplicity or for security reasons.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:905
+msgid "Enable User Archives."
+msgstr ""
+
+#: includes/hooks/options/markup.php:922
+#, php-format
+msgid "Include %spages%s authored by the user in the archive."
+msgstr ""
+
+#: includes/hooks/options/markup.php:961
+#, php-format
+msgid "Make author pages accessible at: %s%s%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:977
+#, php-format
+msgid ""
+"%sThis allows you to control author permalinks by using the user "
+"%sdisplay_name%s instead of the %susername%s.%s %sSo author permalinks will "
+"look like %s instead of %s.%s %sUser display name can be easily edited at "
+"the user-edit screen.%s %sAvoiding the use of usernames in permalinks helps "
+"to improve the security of your site.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:978
+msgid "Use author display name instead of username in author permalinks."
+msgstr ""
+
+#: includes/hooks/options/markup.php:1018
+#, php-format
+msgid ""
+"%sThis option adds a %snoindex%s robots tag to your user pages.%s %sIf you "
+"have a SEO plugin, you might want to use it for this instead.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1019
+msgid "Prevent author pages to be indexed by search engines"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1081
+#, php-format
+msgid ""
+"Redirect visitors to the %s page if they try to access to an author archive "
+"page."
+msgstr ""
+
+#: includes/hooks/options/markup.php:1099
+#, php-format
+msgid "Upon redirection let the web server return a status code of %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1105
+msgid "301 - Moved Permanently"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1110
+msgid "307 - Temporary Redirect"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1115
+msgid "308 - Permanent Redirect"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1120
+msgid "403 - Forbidden"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1125
+msgid "404 - Not Found"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1162
+#, php-format
+msgid "On co-authored posts add %s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1168
+msgid "as many meta tag as authors the post has"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1173
+msgid "one meta tag containing all authors"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1178
+msgid "one meta tag containing main author only"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1211
+#: includes/hooks/options/markup.php:1288
+#, php-format
+msgid ""
+"%sSelecting a value inline with the structure of your page might improve SEO."
+"%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1212
+#, php-format
+msgid "Use %s tag for %sauthor name%s shown within the author box"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1218
+#: includes/hooks/options/markup.php:1295
+msgid "h1"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1223
+#: includes/hooks/options/markup.php:1300
+msgid "h2"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1228
+#: includes/hooks/options/markup.php:1305
+msgid "h3"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1233
+#: includes/hooks/options/markup.php:1310
+msgid "h4"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1238
+#: includes/hooks/options/markup.php:1315
+msgid "h5"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1243
+#: includes/hooks/options/markup.php:1320
+msgid "h6"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1248
+#: includes/hooks/options/markup.php:1325
+msgid "div"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1253
+#: includes/hooks/options/markup.php:1330
+msgid "p"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1289
+#, php-format
+msgid "Use %s tag for the %sheadline%s shown above the author box"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1360
+msgid "Export posts authorship to have a backup"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1366
+#: includes/hooks/options/markup.php:1449
+msgid "Export"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1367
+msgid "Export posts authorship"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1381
+msgid "Import posts authorship from a previous exported backup file"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1387
+#: includes/hooks/options/markup.php:1470
+msgid "Import"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1388
+msgid "Import posts authorship"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1404
+msgid "Remove all posts authorship"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1410
+#: includes/hooks/options/markup.php:1494 includes/hooks/options/scripts.php:83
+#: includes/hooks/options/scripts.php:112
+msgid "Delete"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1411
+msgid "Delete posts authorship"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1443
+msgid ""
+"Export Guest Authors to have a backup or import them on another installation"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1450
+msgid "Export Guest Authors"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1464
+msgid "Import Guest Authors from a previous exported backup file"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1471
+msgid "Import Guest Authors"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1488
+msgid "Remove all Guest Authors"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1495
+msgid "Delete Guest Authors"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1520
+#, php-format
+msgid ""
+"%sPost types in which to automatically insert the author box. Leave it blank "
+"and use the setting below if you want to manually select on which items to "
+"add the author box.%s %sAuthor Boxes are usually displayed on blog posts. "
+"However, you may want to show them on a custom post type (like %sproducts%s, "
+"%scourses%s, %sprojects%s or %sleads%s).%s %s%sAuthor and post configuration "
+"might override this setting%s.%s "
+msgstr ""
+
+#: includes/hooks/options/markup.php:1524
+#, php-format
+msgid ""
+"%sPost types for which you want to have the option to configure —on a post "
+"level— whether to display the author box or not. Configuration is made from "
+"the edit screen.%s %sLeave it blank and use the setting above if you want "
+"the author box to be shown automatically on selected post types.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:1528
+#, php-format
+msgid ""
+"%sWhen enabled, the author box will not display for authors without a "
+"description. %sUnless author is configured otherwise%s.%s"
+msgstr ""
+
+#: includes/hooks/options/scripts.php:62 includes/hooks/options/scripts.php:91
+msgid "File upload failed"
+msgstr ""
+
+#: includes/hooks/options/scripts.php:63 includes/hooks/options/scripts.php:92
+msgid "Failed to load file."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:64 includes/hooks/options/scripts.php:93
+msgid "Wrong file type"
+msgstr ""
+
+#: includes/hooks/options/scripts.php:65 includes/hooks/options/scripts.php:94
+msgid "Only valid .JSON files are accepted."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:66 includes/hooks/options/scripts.php:79
+#: includes/hooks/options/scripts.php:95 includes/hooks/options/scripts.php:108
+msgid "Warning"
+msgstr ""
+
+#: includes/hooks/options/scripts.php:67
+msgid ""
+"You are about to import guest authors. If imported authors already exist in "
+"this site, they will be duplicated! Please confirm this action."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:70 includes/hooks/options/scripts.php:99
+msgid "Success!"
+msgstr ""
+
+#: includes/hooks/options/scripts.php:71
+msgid "Guest authors have been imported successfully."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:72 includes/hooks/options/scripts.php:85
+#: includes/hooks/options/scripts.php:101
+#: includes/hooks/options/scripts.php:114
+msgid "Error"
+msgstr ""
+
+#: includes/hooks/options/scripts.php:73 includes/hooks/options/scripts.php:102
+msgid ""
+"Uploaded file is either wrong or empty. Please provide a valid file with "
+"data to import."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:74
+msgid ""
+"Something went wrong and some guest authors couldn't be restored. Please "
+"make sure uploaded file has content and try uploading the file again."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:75 includes/hooks/options/scripts.php:87
+#: includes/hooks/options/scripts.php:104
+#: includes/hooks/options/scripts.php:116
+msgid ""
+"Something went wrong and couldn't connect to the server. Please, try again."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:80
+msgid ""
+"You are about to delete all guest authors in your site. All guest data will "
+"be lost! Please confirm this action."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:84
+msgid "Guest Authors deleted successfully."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:86
+msgid ""
+"Something went wrong and guest authors couldn't be deleted correctly. "
+"Please, try again."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:96
+msgid ""
+"You are about to import posts authorship. This only makes sense if you are "
+"importing data previously exported from this very same site! Please confirm "
+"this action."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:100
+msgid "Post authorship imported successfully."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:103
+msgid ""
+"Something went wrong and some authorship couldn't be restored. Please make "
+"sure uploaded file has content and try uploading the file again."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:109
+msgid ""
+"You are about to delete all posts authorship. Data will be lost! Please "
+"confirm this action."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:113
+msgid "Posts authorship deleted successfully."
+msgstr ""
+
+#: includes/hooks/options/scripts.php:115
+msgid ""
+"Something went wrong and authorship couldn't be deleted correctly. Please, "
+"try again."
+msgstr ""
+
+#: includes/hooks/post/bulk-edit.php:52
+msgid "Authorship Data"
+msgstr ""
+
+#: includes/hooks/post/bulk-edit.php:55
+msgid "Authors"
+msgstr ""
+
+#: includes/hooks/user/list.php:34 views/user/html-admin-profile-tools.php:33
+msgid "Convert to Guest"
+msgstr ""
+
+#: includes/hooks/user/list.php:59
+msgid ""
+"The 'Guest Authors' feature is disabled! Enable it in the plugin settings "
+"page in order to proceed."
+msgstr ""
+
+#: includes/hooks/user/list.php:64
+msgid "No user to convert has been supplied!"
+msgstr ""
+
+#: includes/hooks/user/scripts.php:59
+msgid "User to Guest Conversion"
+msgstr ""
+
+#: includes/hooks/user/scripts.php:60
+msgid ""
+"This user will be removed and a new Guest Author created. Do you want to "
+"continue?"
+msgstr ""
+
+#: includes/hooks/user/scripts.php:64
+msgid ""
+"Can't convert yourself to a guest author. Do it logged in as another user."
+msgstr ""
+
+#: includes/plugin.php:90
+msgid "Cloning instances of this class is forbidden."
+msgstr ""
+
+#: includes/plugin.php:104
+msgid "Unserializing instances of this class is forbidden."
+msgstr ""
+
+#: includes/plugin.php:343
+#, php-format
+msgid ""
+"%1$sMolongui Authorship Pro%2$s requires the core free plugin to be "
+"installed and activated. Because it is not, the plugin is currently %3$sNOT "
+"RUNNING%4$s."
+msgstr ""
+
+#: includes/plugin.php:350
+msgid "Activate It Now"
+msgstr ""
+
+#: includes/plugin.php:355
+msgid "Install It Now"
+msgstr ""
+
+#: includes/plugin.php:404
+#, php-format
+msgid ""
+"%1$sMolongui Authorship Pro%2$s requires Molongui Authorship version %3$s or "
+"greater. Because you are using an earlier version, the plugin is currently "
+"%4$sNOT RUNNING%5$s."
+msgstr ""
+
+#: includes/plugin.php:409
+msgid "Update It Now"
+msgstr ""
+
+#: includes/plugin.php:430
+#, php-format
+msgid ""
+"Installed version of %1$sMolongui Authorship Pro%2$s is too old to run on "
+"your site. So the plugin is currently %3$sNOT RUNNING%4$s. Please update it."
+msgstr ""
+
+#: includes/plugin.php:431
+msgid "Update Plugin"
+msgstr ""
+
+#: includes/shortcodes/author/author-box.php:49
+msgid ""
+"You need to enable the author box feature in the plugin settings page in "
+"order this shortcode to work."
+msgstr ""
+
+#: includes/shortcodes/author/author-data.php:357
+msgid "You need to provide a key to retrieve in order this shortcode to work."
+msgstr ""
+
+#: includes/shortcodes/author/author-data.php:394
+msgid "Sorry, provided key does not have a valid URL value."
+msgstr ""
+
+#: includes/shortcodes/author/author-data.php:463
+#, php-format
+msgid "No avatar available for %s with id %s."
+msgstr ""
+
+#: includes/shortcodes/author/author-data.php:463
+msgid "guest author"
+msgstr ""
+
+#: includes/shortcodes/author/author-data.php:463
+msgid "user"
+msgstr ""
+
+#: includes/shortcodes/author/author-list.php:156
+#: includes/shortcodes/author/author-list.php:172
+msgid "Select an author"
+msgstr ""
+
+#: includes/shortcodes/author/author-list.php:387
+#: includes/shortcodes/author/author-posts.php:250
+msgid "&larr;"
+msgstr ""
+
+#: includes/shortcodes/author/author-list.php:388
+#: includes/shortcodes/author/author-posts.php:251
+msgid "&rarr;"
+msgstr ""
+
+#: includes/shortcodes/author/author-list.php:398
+msgid "No authors found."
+msgstr ""
+
+#: includes/shortcodes/author/author-posts.php:63
+#, php-format
+msgid ""
+"Doing it wrong. Optional \"author\" attribute must be an integer (the author "
+"ID). %sLearn more%s"
+msgstr ""
+
+#: includes/shortcodes/author/author-posts.php:259
+msgid "There are no posts to list."
+msgstr ""
+
+#: includes/shortcodes/post/avatars.php:101
+#, php-format
+msgid ""
+"%sThis shortcode requires you to provide a post ID when running outside The "
+"Loop.%s"
+msgstr ""
+
+#: includes/shortcodes/post/avatars.php:104
+#, php-format
+msgid ""
+"%sProvided post ID is wrong. Make sure it is an integer for an existing post."
+"%s"
+msgstr ""
+
+#: includes/shortcodes/post/byline.php:35
+msgid ""
+"You have plugin template tags disabled. Probably using the 'authorship/"
+"template_tags' filter. Remove that filter to get this shortcode working."
+msgstr ""
+
+#: includes/update/license.php:319
+msgid ""
+"Attempt to migrate data failed. Deactivate then reactive this plugin, then "
+"enter your License Key on the settings screen to receive software updates. "
+"Contact support if assistance is required."
+msgstr ""
+
+#: includes/update/license.php:471
+#, php-format
+msgid ""
+"<b>Warning!</b> You're blocking external requests which means you won't be "
+"able to get %s updates. Please add %s to %s."
+msgstr ""
+
+#: includes/update/license.php:509
+msgid "License not activated"
+msgstr ""
+
+#: includes/update/license.php:510
+#, php-format
+msgid ""
+"No license for %s has been found, so the plugin won't work! %sClick here%s "
+"to activate your copy of the plugin."
+msgstr ""
+
+#: includes/update/license.php:522
+msgid "Activate plugin"
+msgstr ""
+
+#: includes/update/license.php:581
+msgid "Your license expires soon."
+msgstr ""
+
+#: includes/update/license.php:582
+#, php-format
+msgid ""
+"%sRenew your license today%s to keep getting feature updates and premium "
+"support for %s plugin."
+msgstr ""
+
+#: includes/update/license.php:592 includes/update/license.php:640
+msgid "Renew license"
+msgstr ""
+
+#: includes/update/license.php:629
+msgid "Your license has expired!"
+msgstr ""
+
+#: includes/update/license.php:630
+#, php-format
+msgid ""
+"%sRenew your license today%s to get feature updates and premium support for "
+"%s plugin."
+msgstr ""
+
+#: includes/update/license.php:789
+msgid "Plugin activated."
+msgstr ""
+
+#: includes/update/license.php:804 includes/update/license.php:977
+msgid ""
+"Connection failed to the Molongui Licensing Server. Try again later. There "
+"may be a problem on your server preventing outgoing requests, or the store "
+"is blocking your request to activate the plugin."
+msgstr ""
+
+#: includes/update/license.php:853
+msgid ""
+"Security token check failed. Please make sure you're activating the license "
+"from the plugin settings page. If you already are, please refresh the page."
+msgstr ""
+
+#: includes/update/license.php:861
+msgid ""
+"It is like the provided license key is already active on this site. Please "
+"log in to your My Account and check your key state."
+msgstr ""
+
+#: includes/update/license.php:958
+msgid "License activated."
+msgstr ""
+
+#: includes/update/license.php:1033
+msgid ""
+"The license could not be deactivated. Use the Deactivate button to manually "
+"deactivate your key before activating a new one. If all else fails, go to "
+"Plugins, then deactivate and reactivate this plugin, then go to the settings "
+"page for this plugin and enter your License information again to activate "
+"it. Also check the My Account dashboard to see if your key was still active "
+"for this site before the error message was displayed."
+msgstr ""
+
+#: includes/update/license.php:1057
+msgid ""
+"Security token check failed. Please make sure you're deactivating the "
+"license from the plugin settings page. If you already are, please refresh "
+"the page."
+msgstr ""
+
+#: includes/update/license.php:1065
+msgid ""
+"It is like there is no active license key to deactivate. Please log in to My "
+"Account dashboard to see if your key is still active for this site."
+msgstr ""
+
+#: includes/update/license.php:1096
+msgid "License key deactivated."
+msgstr ""
+
+#: includes/update/update.php:297
+#, php-format
+msgid ""
+"%sError%s: Checking for %s updates failed. It might just be a temporary "
+"issue. If the issue persists for days, please open a support ticket %shere%s."
+msgstr ""
+
+#: molongui-authorship-pro.php:94
+#, php-format
+msgid ""
+"%1$sMolongui Authorship Pro%2$s requires PHP version %3$s or greater. "
+"Because you are using an earlier version, the plugin is currently %4$sNOT "
+"RUNNING%5$s."
+msgstr ""
+
+#: molongui-authorship-pro.php:95
+msgid "How to update PHP?"
+msgstr ""
+
+#: molongui-authorship-pro.php:113
+#, php-format
+msgid ""
+"%1$sMolongui Authorship Pro%2$s requires WordPress version %3$s+. Because "
+"you are using an earlier version, the plugin is currently %4$sNOT RUNNING"
+"%5$s."
+msgstr ""
+
+#: views/author-box/profile/html-layout-7.php:92
+msgid "This author does not have any more posts."
+msgstr ""
+
+#: views/authors-list/html-basic.php:33 views/authors-list/html-grid.php:89
+msgid "at"
+msgstr ""
+
+#: views/authors-list/html-basic.php:59 views/authors-list/html-basic.php:67
+#: views/authors-list/html-grid.php:179 views/authors-list/html-grid.php:187
+#, php-format
+msgid "%1$s %2$s "
+msgid_plural "%1$s %3$s "
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/authors-list/html-basic.php:116 views/authors-list/html-grid.php:153
+msgid "Website"
+msgstr ""
+
+#: views/guest-author/html-admin-convert-metabox.php:27
+msgid ""
+"Convert this guest author to a registered WP user with just 1-click. Current "
+"guest will be removed and a new user created. Posts authorship will be kept."
+msgstr ""
+
+#: views/guest-author/html-admin-convert-metabox.php:29
+#: views/user/html-admin-profile-tools.php:35
+msgid "Convert"
+msgstr ""
+
+#: views/guest-author/html-admin-seo-metabox.php:23
+msgid "Author Page"
+msgstr ""
+
+#: views/guest-author/html-admin-seo-metabox.php:29
+msgid ""
+"Do not allow search engines to show this author's archives in search results"
+msgstr ""
+
+#: views/guest-author/html-admin-short-bio-metabox.php:26
+msgid ""
+"Provide a short description that can be displayed on the author box instead "
+"of the full author biography. On author archive pages full bio is displayed, "
+"if your theme supports it."
+msgstr ""
+
+#: views/posts-list/html-cards.php:46 views/posts-list/html-flat.php:48
+#: views/posts-list/html-preview.php:46 views/posts-list/html-thumbs.php:48
+msgid "By"
+msgstr ""
+
+#: views/posts-list/html-cards.php:54 views/posts-list/html-flat.php:56
+#: views/posts-list/html-preview.php:54 views/posts-list/html-thumbs.php:56
+msgid "on"
+msgstr ""
+
+#: views/user/html-admin-profile-bio.php:25
+msgid "Biographical Info"
+msgstr ""
+
+#: views/user/html-admin-profile-bio.php:30
+msgid "Full Bio"
+msgstr ""
+
+#: views/user/html-admin-profile-bio.php:33
+msgid ""
+"Biographical information to be shown publicly on several places on your site."
+msgstr ""
+
+#: views/user/html-admin-profile-bio.php:39
+msgid "Short Bio"
+msgstr ""
+
+#: views/user/html-admin-profile-bio.php:42
+msgid ""
+"Concise biographical paragraph you can display on author boxes instead of "
+"full bio to keep them slim."
+msgstr ""
+
+#: views/user/html-admin-profile-tools.php:20
+msgid "Author Tools"
+msgstr ""
+
+#: views/user/html-admin-profile-tools.php:27
+msgid "Archive Author"
+msgstr ""
+
+#: views/user/html-admin-profile-tools.php:28
+msgid ""
+"Check this box to archive this author so he/she won't be displayed as an "
+"eligible author for your posts. Won't be listed in the authors dropdown in "
+"your edit-post screen."
+msgstr ""

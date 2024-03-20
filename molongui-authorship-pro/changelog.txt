@@ -1,0 +1,422 @@
+=== Molongui Authorship Pro ===
+
+Requires PHP: 5.5.0
+Requires WP : 5.2.0
+Requires MA : 4.6.0
+
+== Changelog ==
+
+= 1.5.11 (2023-05-02) =
+
+* Guest to user conversion is available only to users with 'create_users' capability
+* Fixed PHP warning regarding shortcodes with no attributes
+* Added WordPress 6.2 compatibility
+
+= 1.5.10 (2023-02-15) =
+
+* Fixed guest author pages showing wrong data
+
+= 1.5.9 (2023-02-14) =
+
+* Added filter to control which profile to display when an author has both, user and guest author profiles
+* Fixed author template override not working in some cases
+
+= 1.5.8 (2022-12-08) =
+
+* Added filter to "molongui_byline" shortcode's output
+* Added WordPress 6.1 compatibility
+
+= 1.5.7 (2022-09-06) =
+
+* Fixed author avatar and name not linking to author page when author box is displayed using the "molongui_author_list" shortcode
+
+= 1.5.6 (2022-08-11) =
+
+* Added show_post_count_total attribute to the "molongui_author_list" shortcode
+* Custom PHP template file for author archives can now be placed outside default theme hierarchy
+* Fixed social icons missing style when author box displayed via shortcode
+
+= 1.5.5 (2022-07-06) =
+
+* Fixed PHP fatal error caused by the "molongui_author_list" shortcode
+* Fixed PHP fatal error when converting a user to a guest author
+
+= 1.5.4 (2022-06-09) =
+
+* Added automatic pagination to molongui_author_list when users to list is bigger than 30
+* Fixed minor bugs
+
+= 1.5.3 (2022-06-01) =
+
+* Added option to hide other authors' posts
+* Added option to noindex author pages (available for WP > 5.7)
+* Fixed molongui_author_box shortcode not working without attributes in some cases
+* Fixed bulk editing post authors not working on WP 6.0
+* Fixed bulk editing guest authors not working on WP 6.0
+
+= 1.5.2 (2022-05-27) =
+
+* Added min_post_count attribute to the "molongui_author_list" shortcode
+* Added filters to provide a custom template for authors and author posts lists
+* Fixed some author box styles
+* Fixed some tools not working
+
+= 1.5.1 (2022-05-16) =
+
+* Fixed PHP fatal error when doing "molongui_author_box" shortcode without attributes
+* Fixed PHP fatal error when rendering the author_box
+
+= 1.5.0 (2022-05-16) =
+
+* Added 'grid' layout to the "molongui_author_list" shortcode
+* Added option to the "molongui_author_list" shortcode to not list archived authors
+* Added option to the "molongui_author_list" shortcode to allow select's default option label customization
+* Added option to select number of columns to display as related posts when using template #3
+* Fixed plugin update not available when compatibility check fail
+* Fixed author profile template #8 not loading
+* Users sitemap removed when author pages disabled
+* Guest authors sitemap removed when guest author pages disabled
+* Raised minimum core version to 4.6.0
+* Added WordPress 6.0 compatibility
+
+= 1.4.0 (2022-02-22) =
+
+* Reduced number of queries
+* Fixed "molongui_author_bio" shortcode ignoring length attribute
+* Fixed reset plugin settings not working
+* Updated database schema
+* Raised minimum core version to 4.5.0
+* Added WordPress 5.9 compatibility
+
+= 1.3.5 (2021-12-14) =
+
+* Fixed guest author pages permalink
+* Fixed author posts list styles
+* Fixed "Edit User" admin bar item on guest author pages
+
+= 1.3.4 (2021-12-10) =
+
+* Fixed missing compatibility functions
+* Fixed some settings reverting to default on save
+* Raised minimum core version to 4.4.3
+
+= 1.3.3 (2021-12-06) =
+
+* Fixed several features not working (guest author pages, bylines, bulk and quick editors...)
+* Fixed author box shortcode styling
+* Fixed author list missing social icons
+
+= 1.3.2 (2021-12-06) =
+
+* Fixed author list missing styles
+* Fixed author list basic layout
+* Fixed other minor PHP warnings
+
+= 1.3.1 (2021-12-06) =
+
+* Fixed fatal error when running in PHP 8
+* Fixed Author class not instantiated correctly
+* Fixed undefined constant on author list basic layout
+
+= 1.3.0 (2021-12-05) =
+
+* Added option to make the "post_avatars" shortcode display the author name towards author avatar
+* Improved compatibility with Polylang (when PLL_FILTER_HOME_URL constant not defined or false)
+* Reduced PHP memory usage
+* Reduced server load
+* Reduced page load
+* Updated framework files to version 2.1.0
+* Updated database schema
+* Hook prefix changed from 'authorship/pro' to 'authorship_pro'
+* Raised minimum PHP version to 5.5... come on, you should be running 7.4 already
+* Raised minimum WP version to 5.2
+* Raised minimum core version to 4.4.0
+* Major code refactor
+
+= 1.2.0 (2021-11-01) =
+
+* Added "post_avatars" shortcode to display post authors avatars
+* Added ability to display post count with the "molongui_author_list" shortcode
+* Fixed author pages not found error
+* Fixed video embedding on author bio also when using the "molongui_author_bio" shortcode
+* Fixed admin styles being loaded on screens other than the plugin settings page
+* Minor code refactor
+
+= 1.1.18 (2021-10-15) =
+
+* Added 'MBA Chic' social network
+* Fixed video embedding on author bio. Just paste video URL and get the video player
+
+= 1.1.17 (2021-09-17) =
+
+* Added 'Substack' social network
+* Added ability to display either long or short bio with the "molongui_author_bio" shortcode
+* Fixed the "Use author display name instead of username in author permalinks" setting not working when display names have special characters
+* Fixed guest author pages not working for secondary languages on multilingual sites
+* Requires Molongui Authorship 4.3.10 or higher
+
+= 1.1.16 (2021-08-20) =
+
+* Removed 'user to guest' conversion links if the guest authors feature is disabled
+
+= 1.1.15 (2021-08-05) =
+
+* Made some author box settings available also at the plugin settings page
+* Requires Molongui Authorship 4.3.8 or higher
+
+= 1.1.14 (2021-07-29) =
+
+* Added filters to customize post thumbnail size for posts listings
+* Fixed other minor issues
+
+= 1.1.13 (2021-07-28) =
+
+* Added option to archive authors so they are not displayed as an eligible author for your posts
+* Requires Molongui Authorship 4.3.7 or higher
+
+= 1.1.12 (2021-07-20) =
+
+* Added 'bio_format' attribute to [molongui_author_list] so you can display short bio instead of full
+* Fixed authors list box layout
+
+= 1.1.11 (2021-07-15) =
+
+* Fixed missing styles issue introduced in previous update 1.1.10
+
+= 1.1.10 (2021-07-15) =
+
+* Added pagination to [molongui_author_posts]
+* Added option to filter users to be listed with [molongui_author_list] by user role
+* Added option to display author bio in [molongui_author_list]
+* [molongui_author_posts] shortcode on BuddyBoss member pages now displays posts authored by the displayed user
+* Added WordPress 5.8 compatibility
+
+= 1.1.9 (2021-04-09) =
+
+* Added 'list_id', 'list_class' and 'list_atts' attributes to the 'molongui_author_list' shortcode
+* Fixed full bio editor not rendering properly on some installations
+* Fixed other minor issues
+* Some code refactor
+
+= 1.1.8 (2021-03-23) =
+
+* Added 'width' and 'height' attributes to the 'molongui_author_avatar' shortcode
+* Fixed short bio not clearing on save when removed
+* Fixed missing meta description tag added by Yoast SEO on guest author pages
+* Fixed other minor issues
+* Requires Molongui Authorship 4.2.17 or higher
+
+= 1.1.7 (2021-03-03) =
+
+* Enhanced search by author compatibility with third party plugins altering the search WP_Query
+* Enhanced compatibility with WPML and Polylang. Custom strings are now translatable too
+* Fixed search by author not working when Relevanssi plugin enabled
+* Fixed custom bulk fields displayed wrong when using the secondary/bottom selector
+* Fixed wrong REST API link displayed on guest author pages' head
+* Added WordPress 5.7 compatibility
+
+= 1.1.6 (2021-02-19) =
+
+* Added new option to custom order the list provided by the 'molongui_authors_list' shortcode
+* Added new attributes to customize 'molongui_byline' shortcode's output markup
+* 'Website' string now accepts the {author_name} tag. Which gets replaced by the actual author name in the author box
+* '+ posts' string now accepts the {author_name} tag. Which gets replaced by the actual author name in the author box
+* 'Bio' string now accepts the {author_name} tag. Which gets replaced by the actual author name in the author box
+* Fixed post_author defaulting to current user ID when bulk editing posts
+* Fixed co-authors not being saved when adding/updating a post via WP REST API
+* Requires Molongui Authorship 4.2.16 or higher
+
+= 1.1.5 (2021-01-26) =
+
+* Guest authors export tool now includes 'pending' and 'draft' post status
+* Fixed PHP fatal error requiring file from old location when Yoast SEO is active
+* Fixed 'molongui_byline' shortcode not taking provided post ID
+* Fixed 'molongui_byline' shortcode lowercasing text modifiers
+* Fixed error message displayed even when 'display_errors' attribute enabled in molongui_author_avatar shortcode
+* Some minor code refactor
+* Requires Molongui Authorship 4.2.14 or higher
+
+= 1.1.4 (2020-12-07) =
+
+* Fixed author avatar not displaying on author box in some installations
+* Added WordPress 5.6 compatibility
+
+= 1.1.3 (2020-11-15) =
+
+* Fixed Ko-fi icon being displayed too big.
+* Enhanced compatibility with tagDiv Cloud Library plugin. There are still known issues
+
+= 1.1.2 (2020-11-09) =
+
+* Fixed '#molongui-disabled-link' being displayed on Yoast SEO guest author sitemap when byline configured to not link to author archives
+
+= 1.1.1 (2020-10-27) =
+
+* Fixed error loading compatibility file for GeoPlaces theme
+
+= 1.1.0 (2020-10-23) =
+
+* Author Archives:
+    * Added option to use author display name instead of username in author permalinks
+* Author Conversion:
+    * Fixed user to guest conversion trashing single guest-authored posts
+    * Fixed user to guest conversion trashing unattached media
+* Options:
+    * Fixed related post types not showing added post types in Main tab
+* Compatibility:
+    * Enhanced compatibility with Yoast SEO plugin
+    * Enhanced compatibility with GeoPlaces theme
+* Other:
+    * Added support for plugin auto-updates
+    * Some code refactor and file renames
+
+= 1.0.9 (2020-10-06) =
+
+* Author Box:
+    * Fixed avatar unaligned on responsive mode when configured to be displayed top/bottom aligned
+* Posts List:
+    * Fixed empty list being shown
+* Guest Archive:
+    * Fixed guest author bio not being displayed when no authored posts
+* Author Conversion:
+    * Fixed user to guest conversion trashing posts
+
+= 1.0.8 (2020-09-28) =
+
+* Author List:
+    * Social Media icons added to the "basic" layout
+* SEO:
+    * Fixed guest authors sitemap being added when no guest authors defined
+    * Added guest author entries to the sitemap generated by Rank Math SEO plugin
+* Compatibility:
+    * Dropped usage of some anonymous functions in hooks to allow third-party to unhook them
+    * Requires Molongui Authorship 4.2.4 or higher
+
+= 1.0.7 (2020-09-14) =
+
+* Enhancements:
+    * Added Ko-fi social network.
+    * Added fully qualified function (FQN) calls for global functions
+* Bugfixes:
+    * Fixed fatal error when updating Lite to 4.2.0 before Pro
+    * Fixed premium social networks being disabled
+* Compatibility:
+    * Requires Molongui Authorship 4.2.1 or higher
+
+= 1.0.6 (2020-09-14) =
+
+* Guest Authors:
+    * Added options to export and import guest authors
+    * Added 1-click option to remove all guest authors
+    * Added more guest author information to the REST API
+    * Fixed unindexing option not showing
+    * Fixed Yoast sitemap not showing last modification date
+* Bulk Edit:
+    * Fixed post author bulk-editing not working.
+* Authors Search:
+    * Fixed no results showing when searching for a guest without a match on the users table
+* Authors List:
+    * Fixed list pagination not working when shortcode added on posts
+* Posts List:
+    * Added option to control excerpt length
+* SEO:
+    * Added guest author entries to the sitemap generated by WordPress 5.5 and above
+* Compatibility:
+    * Requires Molongui Authorship 4.2.0 or higher
+    * Added WordPress 5.5 compatibility
+
+= 1.0.5 (2020-07-10) =
+
+* Author Box:
+    * Fixed website link getting 'http://' appended
+* Bugfixes:
+    * Fixed enhanced author search not working for those posts added before plugin installation and not edited ever since
+
+= 1.0.4 (2020-07-06) =
+
+* Authors:
+    * Added option to select user roles to retrieve users as eligible authors
+    * Added custom user roles support
+    * Added an option to add a short bio
+    * HTML now allowed in user bio (and short bio)
+* Author Box:
+    * Added an option to display short bio instead of full bio.
+    * Website custom string now accepts {raw_link} tag that gets replaced by the actual author website URL on the frontend
+* Bugfixes:
+    * Fixed guest author archives title ignoring Yoast SEO settings
+* Compatibility:
+    * Added an option to enhance compatibility with CDNs
+    * Added WordPress 5.4.2 compatibility
+    * Requires Molongui Authorship 4.1.0 or higher
+
+= 1.0.3 (2020-05-31) =
+
+* Authors:
+    * Author conversion now handles scheduled, private and trashed posts
+* Shortcodes:
+    * Added [molongui_author_link] shortcode that provides an HTML <a> tag to the given social network or website
+    * Enhanced [molongui_author_posts] compatibility
+    * Enhanced [molongui_byline] compatibility with theme builder templates
+* Compatibility:
+    * Requires Molongui Authorship 4.0.8 or higher
+    * Enhanced Divi Builder compatibility
+
+= 1.0.2 (2020-05-09) =
+
+* Author Box:
+    * Fixed related posts not showing configured number of items
+* Author List:
+    * Fixed 'with_posts' attribute preventing all authors to be listed
+    * Added 'post_types' attribute
+* Compatibility:
+    * Requires Molongui Authorship 4.0.6 or higher
+
+= 1.0.1 (2020-05-07) =
+
+* Author Box:
+    * Fixed social icons displayed in column on profile template 7 and 8
+* Shortcodes:
+    * Added 'category' attribute to [molongui_author_posts]
+    * Added 'name_format' attribute to [molongui_author_list]
+    * Added pagination to [molongui_author_list]
+* Other:
+    * Fixed "Activate Authorship Now" button not working when base plugin not active
+
+
+= 1.0.0 (2020-05-04) =
+
+First release as an add-on to the Molongui Authorship plugin. Changes from version 3.2.28 are:
+
+* Author Box:
+    * Custom related entries title now accepts {author_name} tag that gets replaced by the actual author name on the frontend
+* Guest Authors:
+    * Added option to clone a guest author
+    * Added option to convert guest author to a user
+    * Added option to not allow search engines to show a guest author archive in search results
+    * Added option to import guest authors
+    * Added option to remove all guest authors
+    * Added option to expose guest authors in WordPress REST API
+    * Added option to add an 'authors' field to the post object returned by a WordPress REST API response
+* Users:
+    * Added option to convert user to a guest author
+* Bylines:
+    * Added option to prepend and append custom text to post byline
+* Author Archives:
+    * Added option to prepend and append custom text to archive title
+* Enhanced Search:
+    * Fixed custom post types not being listed on search results
+    * Fixed guest author name not linking to author archive page
+* Shortcodes:
+    * 4 new layouts added to [molongui_author_posts]
+    * Added sorting attributes to [molongui_author_posts]
+* Performance:
+    * Reduced PHP memory usage
+    * Reduced server load by loading resources only where needed: backend, frontend or Customizer
+    * Reduced page load by loading script and stylesheet files only where needed
+    * Reduced page load by reducing script and stylesheet files size
+* Compatibility:
+    * Added WordPress 5.4.1 compatibility
+* Other:
+    * Renamed 'Molongui Authorship Premium' to 'Molongui Authorship Pro'
+    * Repackaged as an add-on plugin
+    * Added options to import and reset plugin settings

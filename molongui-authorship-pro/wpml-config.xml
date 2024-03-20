@@ -1,0 +1,16 @@
+<wpml-config>
+    <admin-texts>
+        <key name="molongui_authorship_byline">
+            <key name="byline_multiauthor_separator" />
+            <key name="byline_multiauthor_last_separator" />
+            <key name="byline_prefix" />
+            <key name="byline_suffix" />
+        </key>
+        <key name="molongui_authorship_archives">
+            <key name="guest_archive_title_prefix" />
+            <key name="guest_archive_title_suffix" />
+            <key name="user_archive_title_prefix" />
+            <key name="user_archive_title_suffix" />
+        </key>
+    </admin-texts>
+</wpml-config>

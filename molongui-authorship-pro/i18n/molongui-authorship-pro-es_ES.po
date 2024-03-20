@@ -1,0 +1,300 @@
+# Spanish translations for molongui-authorship-pro package
+# Traducciones al español para el paquete molongui-authorship-pro.
+# Copyright (C) 2020 THE molongui-authorship-pro'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the molongui-authorship-pro package.
+# <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: molongui-authorship-pro 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-26 13:34+0200\n"
+"PO-Revision-Date: 2020-04-26 15:30+0200\n"
+"Last-Translator: EMAIL@ADDRESS\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CP1252\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: admin/class-admin.php:123
+msgid "Authorship Data"
+msgstr "Configuración de autoría"
+
+#: admin/class-admin.php:126
+msgid "Authors"
+msgstr "Autores"
+
+#: admin/class-admin.php:153
+msgid "Author Box"
+msgstr "Caja de autor"
+
+#: admin/class-admin.php:155 admin/class-admin.php:239
+#: includes/class-guest.php:399
+msgid "&mdash; No Change &mdash;"
+msgstr "&mdash; Sin Cambios &mdash;"
+
+#: admin/class-admin.php:156 includes/class-guest.php:400
+msgid "Default"
+msgstr "Por defecto"
+
+#: admin/class-admin.php:157 includes/class-guest.php:401
+msgid "Show"
+msgstr "Mostrar"
+
+#: admin/class-admin.php:158 includes/class-guest.php:402
+msgid "Hide"
+msgstr "Ocultar"
+
+#: admin/views/guest/html-convert-metabox.php:20 includes/class-guest.php:244
+msgid "Convert to User"
+msgstr "Convertir a Usuario"
+
+#: admin/views/guest/html-convert-metabox.php:22
+msgid ""
+"Convert this guest author to a registered WP user with just 1-click. Current "
+"guest will be removed and a new user created. Posts authorship will be kept."
+msgstr ""
+"Convierta este autor invitado en un usuario de WP registrado con solo 1 "
+"clic. Se eliminará el invitado actual y se creará un nuevo usuario. Se "
+"mantendrá la autoría de las publicaciones."
+
+#: admin/views/guest/html-convert-metabox.php:24
+#: admin/views/user/html-convert-field.php:29
+msgid "Convert"
+msgstr "Convertir"
+
+#: admin/views/guest/html-seo-metabox.php:22
+msgid "Author Page"
+msgstr "Página del Autor"
+
+#: admin/views/guest/html-seo-metabox.php:28
+msgid ""
+"Do not allow search engines to show this author's archives in search results"
+msgstr ""
+"No permitir a los motores de búsqueda indexar la página de archivo de este "
+"autor para evitar que se muestre como resultado en buscadores"
+
+#: admin/views/user/html-convert-field.php:20
+msgid "Author Tools"
+msgstr "Herramientas de autor"
+
+#: admin/views/user/html-convert-field.php:27 includes/class-user.php:141
+msgid "Convert to Guest"
+msgstr "Convertir a Invitado"
+
+#: includes/class-activator.php:181
+msgid "Contributors"
+msgstr "Colaboradores"
+
+#: includes/class-activator.php:182
+msgid ""
+"Many people have contributed to this website and we are thankful to them all "
+"for their hard work."
+msgstr ""
+"Muchas personas han colaborado aportando sus artículos a esta web, por lo "
+"que nos gustaría reconocerles su esfuerzo y trabajo."
+
+#: includes/class-extend-wp-rest-api.php:173
+msgid "Failed to update post authors."
+msgstr "Error al actualizar los autores."
+
+#: includes/class-extend-wp-rest-api.php:183
+msgid "Molongui authors"
+msgstr "Autores Molongui"
+
+#: includes/class-guest.php:135
+msgid "Guest to User Conversion"
+msgstr "Conversión de Invitado a Usuario"
+
+#: includes/class-guest.php:136
+msgid ""
+"This guest author will be removed and a new WordPress user with role "
+"'author' created. Do you want to continue?"
+msgstr ""
+"El autor invitado seleccionado será borrado y un nuevo Usuario con rol "
+"\"Autor\" creado ¿Quieres continuar?"
+
+#: includes/class-guest.php:137 includes/class-user.php:119
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: includes/class-guest.php:138 includes/class-user.php:120
+msgid "OK"
+msgstr "Continuar"
+
+#: includes/class-guest.php:139
+msgid "Provide a password for the new user:"
+msgstr "Indica una contraseña para el nuevo Usuario:"
+
+#: includes/class-guest.php:140 includes/class-user.php:121
+msgid "Converting..."
+msgstr "Convirtiendo..."
+
+#: includes/class-guest.php:158
+msgid "Role"
+msgstr "Rol"
+
+#: includes/class-guest.php:224
+msgid "Duplicate this guest author"
+msgstr "Crear un duplicado de este autor"
+
+#: includes/class-guest.php:224
+msgid "Clone"
+msgstr "Clonar"
+
+#: includes/class-guest.php:270
+msgid "No guest to convert has been supplied!"
+msgstr "No has seleccionado ningún autor invitado que convertir!"
+
+#: includes/class-guest.php:397
+msgid "Author box"
+msgstr "Caja de autor"
+
+#: includes/class-user.php:117
+msgid "User to Guest Conversion"
+msgstr "Conversión de Usuario a Autor Invitado"
+
+#: includes/class-user.php:118
+msgid ""
+"This user will be removed and a new Guest Author created. Do you want to "
+"continue?"
+msgstr ""
+"El usuario seleccionado será borrado y un nuevo autor invitado creado "
+"¿Quieres continuar?"
+
+#: includes/class-user.php:122
+msgid ""
+"Can't convert yourself to a guest author. Do it logged in as another user."
+msgstr ""
+"¡No puedes convertir tu propio usuario! Prueba desde otra cuenta de usuario."
+
+#: includes/class-user.php:173
+msgid "No user to convert has been supplied!"
+msgstr "No has seleccionado ningún usuario que convertir!"
+
+#: includes/compat/admin/yoast.php:35
+msgid "Yoast SEO Settings"
+msgstr "Configuración para Yoast SEO"
+
+#: includes/shortcodes/author-data.php:280
+#, php-format
+msgid "No avatar available for %s with id %s."
+msgstr "El %s con id %s no tiene ningún avatar configurado."
+
+#: includes/shortcodes/author-data.php:280
+msgid "guest author"
+msgstr "autor invitado"
+
+#: includes/shortcodes/author-data.php:280
+msgid "user"
+msgstr "usuario"
+
+#: includes/shortcodes/author-list.php:129
+msgid "No authors found."
+msgstr "No se han encontrado autores."
+
+#: includes/shortcodes/author-posts.php:58
+#, php-format
+msgid ""
+"Doing it wrong. Optional \"author\" attribute must be an integer (the author "
+"ID). %sLearn more%s"
+msgstr ""
+"Uso incorrecto. El atributo opcional \"author\" debe ser un número entero "
+"(el del ID de autor). %sSaber más%s"
+
+#: includes/shortcodes/author-posts.php:136
+msgid "There are no posts to list."
+msgstr "No hay entradas que listar."
+
+#: includes/shortcodes/byline.php:31
+msgid ""
+"You need to go to the Authorship Settings page and enable template tags to "
+"use this shortcode."
+msgstr ""
+"Debes habilitar el uso de \"Template Tags\" desde la página de configuración "
+"del plugin para utilizar este shortcode."
+
+#: molongui-authorship-pro.php:257
+#, php-format
+msgid ""
+"Molongui Authorship Pro is not working because you are running a PHP version "
+"(%s) on your web host older than %s. Please update your PHP version."
+msgstr ""
+"Molongui Authorship Pro no puede funcionar porque la versión de PHP "
+"instalada (%s) en tu servidor es anterior a la mínima requerida por el "
+"plugin (%s). Por favor, actualízala para poder utilizar el plugin."
+
+#: molongui-authorship-pro.php:258
+msgid "How to update your PHP version"
+msgstr "Cómo actualizar la versión de PHP"
+
+#: molongui-authorship-pro.php:283
+msgid ""
+"Molongui Authorship Pro is not working because you need to activate the "
+"Molongui Authorship plugin."
+msgstr ""
+"Activa el plugin Molongui Authorship para que Molongui Authorship Pro pueda "
+"funcionar."
+
+#: molongui-authorship-pro.php:284
+msgid "Activate Authorship Now"
+msgstr "Activar Molongui Authorship Ahora"
+
+#: molongui-authorship-pro.php:292
+msgid ""
+"Molongui Authorship Pro is not working because you need to install the "
+"Molongui Authorship plugin."
+msgstr ""
+"Molongui Authorship Pro requiere de Molongui Authorship para funcionar. Por "
+"favor, instálalo ahora."
+
+#: molongui-authorship-pro.php:293
+msgid "Install Authorship Now"
+msgstr "Instalar Molongui Authorship Ahora"
+
+#: molongui-authorship-pro.php:313
+msgid ""
+"Molongui Authorship Pro is not working because you are using an old version "
+"of Molongui Authorship plugin. Please update it to the latest."
+msgstr ""
+"Molongui Authorship Pro no puede funcionar porque la versión instalada del "
+"plugin Molongui Authorship está obsoleta. Por favor, actualízala para poder "
+"utilizar el plugin."
+
+#: molongui-authorship-pro.php:315
+msgid "Update Authorship Now"
+msgstr "Actualizar Molongui Authorship Ahora"
+
+#: public/views/html-author-box-profile-layout-7.php:93
+msgid "This author does not have any more posts."
+msgstr "Este autor no tiene más entradas."
+
+#: public/views/html-author-list-basic.php:33
+msgid "at"
+msgstr "en"
+
+#: public/views/html-author-list-basic.php:84
+msgid "Website"
+msgstr "Web"
+
+#: public/views/html-author-list-select.php:23
+#: public/views/html-author-list-select.php:32
+msgid "Select an author"
+msgstr "Selecciona un autor"
+
+#: public/views/html-posts-list-cards.php:45
+#: public/views/html-posts-list-flat.php:47
+#: public/views/html-posts-list-preview.php:45
+#: public/views/html-posts-list-thumbs.php:47
+msgid "By"
+msgstr "Por"
+
+#: public/views/html-posts-list-cards.php:53
+#: public/views/html-posts-list-flat.php:55
+#: public/views/html-posts-list-preview.php:53
+#: public/views/html-posts-list-thumbs.php:55
+msgid "on"
+msgstr "el"
