@@ -30,7 +30,8 @@ function authorship_dump( $data, $backtrace = false, $in_admin = true, $die = fa
     $debug = print_r( $debug, true );
     if ( is_admin() )
     {
-        if ( !did_action( 'admin_notices' ) and !$die )
+        $force_inline = apply_filters( '_authorship/force_inline_dump', false );
+        if ( !did_action( 'admin_notices' ) and !$die and !$force_inline )
         {
             add_action( 'admin_notices', function() use ( $debug )
             {
@@ -83,3 +84,14 @@ function authorship_dump_filter( $value )
     authorship_dump( $value );
     return $value;
 }
+add_filter( '_authorship/force_inline_dump', function()
+{
+    $elementor_preview_active = false;
+
+    if ( did_action( 'elementor/loaded' ) )
+    {
+        $elementor_preview_active = \Elementor\Plugin::$instance->editor->is_edit_mode();
+    }
+
+    return $elementor_preview_active;
+});

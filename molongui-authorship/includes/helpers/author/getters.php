@@ -123,7 +123,7 @@ function molongui_find_authors()
 }
 if ( !function_exists('authorship_get_users') )
 {
-    function authorship_get_users($args = null )
+    function authorship_get_users( $args = null )
     {
         $defaults = array
         (
@@ -345,7 +345,19 @@ if ( !function_exists( 'molongui_get_authors' ) )
                 foreach ( $guests as $guest ) $authors[] = array( 'id' => $guest->ID, 'type' => 'guest', 'ref' => 'guest-'.$guest->ID, 'name' => $guest->post_title );
             }
         }
-        if ( in_array( $orderby, array( 'include', 'post__in' ) ) ) return $authors;
+
+        /*!
+         * FILTER HOOK
+         *
+         * Allows preventing the list of authors to be further sorted.
+         *
+         * @param bool  By default, skip sorting if items are already ordered.
+         * @since 4.7.8
+         */
+        if ( apply_filters( 'authorship/get_authors/dont_sort', in_array( $orderby, array( 'include', 'post__in' ) ) ) )
+        {
+            return $authors;
+        }
         switch ( $original_orderby )
         {
             case 'user_roles':

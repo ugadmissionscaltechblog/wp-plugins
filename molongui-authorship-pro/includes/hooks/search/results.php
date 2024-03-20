@@ -3,7 +3,7 @@
 use Molongui\Authorship\Includes\Author;
 defined( 'ABSPATH' ) or exit;
 if ( !molongui_is_request( 'frontend' ) ) return;
-if ( authorship_is_feature_enabled( 'author_search' ) )
+if ( apply_filters( 'authorship_pro/search_by_author_name', true ) and authorship_is_feature_enabled( 'author_search' ) )
 {
     add_filter( 'posts_join',    'molongui_filter_join',    10, 2 );
     add_filter( 'posts_where',   'molongui_filter_search',  10, 2 ); //add_filter( 'posts_search',  'molongui_filter_search', 10, 2 );

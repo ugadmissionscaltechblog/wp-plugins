@@ -10,7 +10,16 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
     {
         if ( !authorship_is_feature_enabled( 'box' ) )
         {
-            return '<code class="m-a-warning">' . __( "You need to enable the author box feature in the plugin settings page in order this shortcode to work.", 'molongui-authorship-pro' ) . '</code>';
+            authorship_debug( null, "The shortcode is not displaying any author box because the feature is disabled on the plugin settings page" );
+
+            if ( is_user_logged_in() and current_user_can( 'manage_options' ) )
+            {
+                return '<code class="m-a-warning">' . __( "You need to enable the author box feature in the plugin settings page in order this shortcode to work.", 'molongui-authorship-pro' ) . '</code>';
+            }
+            else
+            {
+                return '';
+            }
         }
         add_filter( '_authorship/doing_shortcode', '__return_true' );
         add_filter( '_authorship/doing_shortcode/author_box', '__return_true' );
@@ -18,17 +27,20 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
         if ( !empty( $atts ) and is_array( $atts ) )
         {
             $original_atts = $atts;
-            if ( isset( $atts['headline_style'] ) ) $atts['headline_text_style'] = $atts['headline_style'];
-            if ( isset( $atts['headline_align'] ) ) $atts['headline_text_align'] = $atts['headline_align'];
-            if ( isset( $atts['headline_color'] ) ) $atts['headline_text_color'] = $atts['headline_color'];
-            if ( isset( $atts['headline_size']  ) ) $atts['headline_text_size']  = $atts['headline_size'];
-            if ( isset( $atts['author'] ) ) $atts['id']   = $atts['author'];
-            if ( isset( $atts['guest']  ) ) $atts['type'] = ( strtolower( $atts['guest'] ) == 'yes' ? 'guest' : 'user' );
-            if ( function_exists( 'authorship_options_update_20' ) )
+            if ( apply_filters( '_authorship_pro/enable_shortcode_attribute_bc', true ) )
             {
-                $atts = authorship_options_update_20( $atts );
-                if ( !isset( $original_atts['name_link_to_archive'] ) ) unset( $atts['author_box_name_link'] );
-                if ( !isset( $original_atts['avatar_link_to_archive'] ) ) unset( $atts['author_box_avatar_link'] );
+                if ( isset( $atts['headline_style'] ) ) $atts['headline_text_style'] = $atts['headline_style'];
+                if ( isset( $atts['headline_align'] ) ) $atts['headline_text_align'] = $atts['headline_align'];
+                if ( isset( $atts['headline_color'] ) ) $atts['headline_text_color'] = $atts['headline_color'];
+                if ( isset( $atts['headline_size']  ) ) $atts['headline_text_size']  = $atts['headline_size'];
+                if ( isset( $atts['author'] ) ) $atts['id']   = $atts['author'];
+                if ( isset( $atts['guest']  ) ) $atts['type'] = ( strtolower( $atts['guest'] ) == 'yes' ? 'guest' : 'user' );
+                if ( function_exists( 'authorship_options_update_20' ) )
+                {
+                    $atts = authorship_options_update_20( $atts );
+                    if ( !isset( $original_atts['name_link_to_archive'] ) ) unset( $atts['author_box_name_link'] );
+                    if ( !isset( $original_atts['avatar_link_to_archive'] ) ) unset( $atts['author_box_avatar_link'] );
+                }
             }
             $no_prefix = array
             (
@@ -38,6 +50,7 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
                 'hide_if_no_bio',
                 'guest_pages',
                 'show_bio',
+                'bio_length',
             );
             foreach ( $atts as $name => $value )
             {
@@ -54,8 +67,8 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
                 'force_display',
                 'hide_if_no_bio',
                 'guest_pages',
-                'show_bio',
                 'show_headline',
+                'show_bio',
                 'author_box_avatar_show',
                 'author_box_meta_show',
                 'author_box_social_show',
@@ -77,6 +90,7 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
                 'author_box_social_style'     => array( 'default', 'squared', 'circled', 'boxed', 'branded', 'branded-squared', 'branded-squared-reverse', 'branded-circled', 'branded-circled-reverse', 'branded-boxed' ),
                 'author_box_related_order_by' => array( 'date', 'modified', 'title', 'comment_count', 'rand' ),
                 'author_box_related_order'    => array( 'asc', 'desc' ),
+                'bio_length'                  => array( 'full', 'short', 'none' ),
             );
             foreach ( $select_atts as $key => $accepted )
             {
@@ -85,7 +99,19 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
                     $atts[$key] = in_array( strtolower( $atts[$key] ), $accepted ) ? $atts[$key] : $accepted[0];
                 }
             }
-            if ( isset( $atts['show_bio'] ) ) $atts['author_box_bio_source'] = $atts['show_bio'] ? $atts['author_box_bio_source'] : 'none';
+            if ( isset( $atts['bio_length'] ) )
+            {
+                $atts['author_box_bio_source'] = $atts['bio_length'];
+            }
+            if ( isset( $atts['show_bio'] ) )
+            {
+                if ( !$atts['show_bio'] )
+                {
+                    $atts['author_box_bio_source'] = 'none';
+                }
+            }
+            authorship_debug( $original_atts, "[molongui_author_box] provided attributes:" );
+            authorship_debug( $atts, "[molongui_author_box] sanitized attributes:" );
         }
         $options = shortcode_atts( array_merge( array
         (
@@ -94,6 +120,8 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
             'force_display' => true,
             'extra_content' => '',
         ), authorship_get_options() ), array_map( 'strtolower', (array)$atts ) );
+
+        authorship_debug( $options, "[molongui_author_box] configuration in use:" );
         $allowed_tags = array
         (
             'a' => array
@@ -106,7 +134,10 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
             'em'     => array(),
             'strong' => array(),
         );
-        if ( !empty( $options['extra_content'] ) ) $options['extra_content'] = wp_kses( html_entity_decode( $options['extra_content'] ), $allowed_tags );
+        if ( !empty( $options['extra_content'] ) )
+        {
+            $options['extra_content'] = wp_kses( html_entity_decode( $options['extra_content'] ), $allowed_tags );
+        }
         if ( empty( $options['id'] ) )
         {
             if ( !$authors = molongui_find_authors() )
@@ -130,9 +161,16 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
                 if ( !$author_class->get_bio() ) unset( $authors[$key] );
             }
         }
-        if ( empty( $authors ) ) return;
+        if ( empty( $authors ) )
+        {
+            return;
+        }
         global $post;
         add_filter( 'authorship/skip/query/alias', '__return_true' );
+        if ( !empty( $options['author_box_bio_source'] ) and 'short' === $options['author_box_bio_source'] )
+        {
+            add_filter( 'authorship_pro/force_short_bio', '__return_true' );
+        }
         add_filter( 'authorship/author_box_markup', function ( $markup, $post, $post_authors, $settings, $check, $box_ids ) use ( $options )
         {
             $markup .= '<style id="molongui-author-box-shortcode-inline-css" type="text/css">';
@@ -145,6 +183,10 @@ if ( !function_exists( 'authorship_author_box_shortcode' ) )
         }, 10, 6 );
         $markup = authorship_box_markup( $post, $authors, $options, !$options['force_display'] );
         remove_filter( 'authorship/skip/query/alias', '__return_true' );
+        if ( !empty( $options['author_box_bio_source'] ) and 'short' === $options['author_box_bio_source'] )
+        {
+            remove_filter( 'authorship_pro/force_short_bio', '__return_true' );
+        }
         remove_filter( '_authorship/doing_shortcode', '__return_true' );
         remove_filter( '_authorship/doing_shortcode/author_box', '__return_true' );
         return $markup;

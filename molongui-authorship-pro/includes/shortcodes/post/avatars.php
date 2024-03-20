@@ -33,7 +33,7 @@ if ( !function_exists( 'shortcode_authorship_post_avatars' ) )
         $atts['display_errors'] = ( in_array( strtolower( $atts['display_errors'] ), array( 'yes', 'true', 'on', 'display', 'show' ) ) ? true : false );
         if ( strpos( $atts['size'], ',' ) !== false )
         {
-            $no_whitespaces_size = preg_replace( '/\s*,\s*/', ',', filter_var( $atts['size'], FILTER_SANITIZE_STRING ) );
+            $no_whitespaces_size = preg_replace( '/\s*,\s*/', ',', strip_tags( $atts['size'] ) );
             $size_array = explode( ',', $no_whitespaces_size );
             $atts['size'] = array( $size_array[0], $size_array[1] );
         }

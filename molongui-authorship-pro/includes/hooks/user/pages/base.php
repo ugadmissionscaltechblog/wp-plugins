@@ -33,8 +33,15 @@ if ( !empty( $options['user_archive_slug'] ) )
             if ( $key )
             {
                 $wp_query->set( 'author_name', $key );
+
+                add_filter( 'authorship/pre_get_user_by', 'authorship_void_filter', 10, 2 );
                 $author = get_user_by( 'login', $key );
-                $wp_query->set( 'author', $author->ID );
+                remove_filter( 'authorship/pre_get_user_by', 'authorship_void_filter', 10 );
+
+                if ( is_object( $author ) and isset( $author->ID ) )
+                {
+                    $wp_query->set( 'author', $author->ID );
+                }
             }/*
             else
             {
@@ -52,7 +59,11 @@ if ( !empty( $options['user_archive_slug'] ) )
             $users = authorship_pro_get_sanitized_display_names();
             if ( array_key_exists( $author_nicename, $users ) )
             {
-                $link = str_replace( $author_nicename, $users[$author_nicename], $link );
+                $position = strrpos( $link, $author_nicename );
+                if ( false !== $position )
+                {
+                    $link = substr_replace( $link, $users[$author_nicename], $position, strlen( $author_nicename ) );
+                }
             }
 
             return $link;

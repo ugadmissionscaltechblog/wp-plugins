@@ -12,7 +12,7 @@ function authorship_render_box( $content )
     $post_authors = get_post_authors( $post_id );
     if ( empty( $post_authors ) or $post_authors[0]->id == 0 )
     {
-        authorship_debug( null, sprintf( __( "No author box is displayed because post %s has no authors.", 'molongui-authorship' ), $post->ID ) );
+        authorship_debug( null, sprintf( __( "The author box is not displayed because this post (%s) has no authors.", 'molongui-authorship' ), $post_id ) );
         return $content;
     }
     $options = authorship_get_options();
@@ -129,20 +129,36 @@ function authorship_hide_box( $post, $author, $options )
     $post_types      = array_unique( array_merge( $post_types_auto, $post_types_man ) );
     if ( !in_array( $post_type, $post_types ) )
     {
-        if ( !( authorship_has_pro() and get_option( MOLONGUI_AUTHORSHIP_PRO_CONTRIB_ID, 0 ) == $post->ID ) ) return true;
+        if ( !( authorship_has_pro() and get_option( MOLONGUI_AUTHORSHIP_PRO_CONTRIB_ID, 0 ) == $post->ID ) )
+        {
+            authorship_debug( null, __( "The plugin is not configured to display the author box on this post type.", 'molongui-authorship' ) );
+            return true;
+        }
     }
     $author_class = new Author( $author->id, $author->type );
     switch ( $author_class->get_meta( 'box_display' ) )
     {
-        case 'show': return false; break;
-        case 'hide': return true; break;
-        case 'default': break;
+        case 'show':
+            return false;
+            break;
+        case 'hide':
+            authorship_debug( null, sprintf( __( "The author (%s) for this post is configured to not display an author box.", 'molongui-authorship' ), $author->ref ) );
+            return true;
+            break;
+        case 'default':
+            break;
     }
     switch ( get_post_meta( $post->ID, '_molongui_author_box_display', true ) )
     {
-        case 'show': return false; break;
-        case 'hide': return true; break;
-        case 'default': break;
+        case 'show':
+            return false;
+            break;
+        case 'hide':
+            authorship_debug( null, sprintf( __( "The post (%s) is configured to not display any author box.", 'molongui-authorship' ), $post->ID ) );
+            return true;
+            break;
+        case 'default':
+            break;
     }
     if ( is_single() and !empty( $options['hide_on_categories'] ) and in_array( 'post', $post_types_auto ) )
     {
@@ -150,14 +166,31 @@ function authorship_hide_box( $post, $author, $options )
         $post_categories    = wp_get_post_categories( $post->ID );
         if ( is_array( $post_categories ) ) foreach ( $post_categories as $post_category )
         {
-            if ( in_array( $post_category, $hide_on_categories ) ) return true;
+            if ( in_array( $post_category, $hide_on_categories ) )
+            {
+                authorship_debug( null, sprintf( __( "The post (%s) belongs to a post category that is configured to not display any author box.", 'molongui-authorship' ), $post->ID ) );
+                return true;
+            }
         }
     }
-    if ( !empty( $options['hide_if_no_bio'] ) and !$author_class->get_bio() ) return true; // Hide author box.
-    if ( authorship_has_pro() and get_option( MOLONGUI_AUTHORSHIP_PRO_CONTRIB_ID, 0 ) == $post->ID ) return false; // Don't hide author box.
+    if ( !empty( $options['hide_if_no_bio'] ) and !$author_class->get_bio() )
+    {
+        authorship_debug( null, sprintf( __( "The author box is not displayed because the author (%s) has no bio and the plugin is configured to not display any author box with an empty bio.", 'molongui-authorship' ), $author->ref ) );
+        return true;
+    }
+    if ( authorship_has_pro() and get_option( MOLONGUI_AUTHORSHIP_PRO_CONTRIB_ID, 0 ) == $post->ID )
+    {
+        authorship_debug( null, __( "The author box is not displayed because this is the Contributors page.", 'molongui-authorship' ) );
+        return false;
+    }
     if ( in_array( $post_type, $post_types_man ) )
     {
-        if ( !in_array( $post_type, $post_types_auto ) ) return true;
+        if ( !in_array( $post_type, $post_types_auto ) )
+        {
+            authorship_debug( null, __( "If the author box is not shown in this post, it is because it belongs to a post type that is configured to have the author box added manually.", 'molongui-authorship' ) );
+
+            return true;
+        }
     }
     global $multipage;
     if ( $multipage )
@@ -169,15 +202,27 @@ function authorship_hide_box( $post, $author, $options )
         switch ( $box_position )
         {
             case 'above':
-                if ( $page != 1 ) return true;
+                if ( $page != 1 )
+                {
+                    authorship_debug( null, sprintf( __( "This is page %s from a paged post (totaling %s pages). The author box is configured to be displayed on the top of your post content, so it is displayed only on the first page.", 'molongui-authorship' ), $page, $numpages ) );
+                    return true;
+                }
             break;
 
             case 'below':
-                if ( $page != $numpages ) return true;
+                if ( $page != $numpages )
+                {
+                    authorship_debug( null, sprintf( __( "This is page %s from a paged post (totaling %s pages). The author box is configured to be displayed on the bottom of your post content, so it is displayed only on the last page.", 'molongui-authorship' ), $page, $numpages ) );
+                    return true;
+                }
             break;
 
             case 'both':
-                if ( $page != 1 and $page != $numpages ) return true;
+                if ( $page != 1 and $page != $numpages )
+                {
+                    authorship_debug( null, sprintf( __( "This is page %s from a paged post (totaling %s pages). The author box is configured to be displayed on the top and on the bottom of your post content, so it is displayed only on first and last pages.", 'molongui-authorship' ), $page, $numpages ) );
+                    return true;
+                }
             break;
         }
     }

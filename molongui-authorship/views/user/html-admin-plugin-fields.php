@@ -35,7 +35,7 @@ $networks = authorship_get_social_networks( 'enabled' );
 
                 <tr class="user-m-phone-wrap">
                     <th><label for="molongui_author_phone"><?php _e( "Phone", 'molongui-authorship' ); ?></label></th>
-                    <td><input type="text" name="molongui_author_phone" id="molongui_author_phone" value="<?php echo esc_attr( get_the_author_meta( 'molongui_author_phone', $user->ID ) ); ?>" class="regular-text" /></td>
+                    <td><input type="tel" name="molongui_author_phone" id="molongui_author_phone" value="<?php echo esc_attr( get_the_author_meta( 'molongui_author_phone', $user->ID ) ); ?>" class="regular-text" /></td>
                 </tr>
 
                 <tr class="user-m-job-wrap">

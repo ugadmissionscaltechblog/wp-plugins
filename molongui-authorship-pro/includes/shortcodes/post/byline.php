@@ -13,11 +13,12 @@ if ( !function_exists( 'shortcode_authorship_post_byline' ) )
         }
         add_filter( '_authorship/doing_shortcode', '__return_true' );
         add_filter( '_authorship/doing_shortcode/post_byline', '__return_true' );
+        authorship_debug( $atts, "[molongui_byline] provided attributes:" );
         $atts = shortcode_atts( array
         (
             'pid'            => null,
-            'separator'      => ', ',
-            'last_separator' => '',
+            'separator'      => null,
+            'last_separator' => null,
             'before'         => '',
             'after'          => '',
             'linked'         => 'yes',
@@ -32,8 +33,9 @@ if ( !function_exists( 'shortcode_authorship_post_byline' ) )
             $atts['pid'] = apply_filters( 'authorship_pro/sc/byline/post_id', $atts['pid'] );
         }
         else $atts['pid'] = (int) $atts['pid'];
+        authorship_debug( $atts, "[molongui_byline] sanitized attributes:" );
         $byline = '';
-        if ( strtolower( $atts['linked'] ) == 'yes' )
+        if ( 'yes' == strtolower( $atts['linked'] ) )
         {
             $byline = get_the_molongui_author_posts_link( $atts['pid'], $atts['separator'], $atts['last_separator'], $atts['before'], $atts['after'] );
         }
@@ -47,7 +49,7 @@ if ( !function_exists( 'shortcode_authorship_post_byline' ) )
         }
         remove_filter( '_authorship/doing_shortcode', '__return_true' );
         remove_filter( '_authorship/doing_shortcode/post_byline', '__return_true' );
-        return apply_filters( 'authorship_pro/post_byline', $byline );
+        return apply_filters( 'authorship_pro/post_byline', $byline, $atts );
     }
 }
 

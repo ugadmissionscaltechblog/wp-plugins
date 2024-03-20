@@ -33,7 +33,7 @@ if ( !empty( $options['author_box_tabs_position'] ) ) $position = explode('-', $
 $active_class = 'm-a-box-tab-active';
 ?>
 
-<script type="text/javascript" language="JavaScript">
+<script type="text/javascript">
 
 	function molonguiHandleTab(myRadio)
 	{
@@ -55,8 +55,8 @@ foreach ( $box_tabs['tabs'] as $box_tab ) :
     {
         if ( !$box_tab['display'] ) continue;
         ?>
-            <label for="<?php echo $box_tab['id']; ?>" class="m-a-box-tab <?php echo ( $box_tab['checked'] ? ' '.$active_class : '' ); ?>">
-                <span class="<?php echo $box_tab['class']; ?>"><?php echo $box_tab['label']; ?></span>
+            <label for="<?php echo esc_attr( $box_tab['id'] ); ?>" class="m-a-box-tab <?php echo ( $box_tab['checked'] ? ' '.$active_class : '' ); ?>">
+                <span class="<?php echo esc_attr( $box_tab['class'] ); ?>"><?php echo esc_html( $box_tab['label'] ); ?></span>
             </label>
         <?php
     }?>

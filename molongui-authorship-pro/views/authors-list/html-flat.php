@@ -8,7 +8,9 @@
         <li class="m-a-list-item" <?php echo ( $add_microdata ? 'itemprop="name"' : '' ); ?>>
             <i class="m-a-icon-<?php echo $atts['list_icon']; ?>"></i>
             &nbsp;&nbsp;
-            <a href="<?php echo esc_url( $author['archive'] ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php echo $author['name']; ?></a>
+            <?php if ( $atts['name_link'] ) : ?><a href="<?php echo esc_url( $author['archive'] ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php endif; ?>
+                <?php echo $author['name']; ?>
+            <?php if ( $atts['name_link'] ) : ?></a><?php endif; ?>
         </li>
     <?php endforeach; ?>
 </ul>

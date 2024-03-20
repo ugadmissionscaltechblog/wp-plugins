@@ -54,7 +54,11 @@ if ( !empty( $list_styles ) or !empty( $item_styles ) )
                     case 'avatar':
 
                         ?>
-                        <div class="m-a-list-author__avatar"><a href="<?php echo esc_url( $author['archive'] ); ?>"><?php echo $author['img']; ?></a></div>
+                        <div class="m-a-list-author__avatar">
+                            <?php if ( $atts['avatar_link'] ) : ?><a href="<?php echo esc_url( $author['archive'] ); ?>"><?php endif; ?>
+                                <?php echo $author['img']; ?>
+                            <?php if ( $atts['avatar_link'] ) : ?></a><?php endif; ?>
+                        </div>
                         <?php
 
                     break;
@@ -62,7 +66,11 @@ if ( !empty( $list_styles ) or !empty( $item_styles ) )
                     case 'name':
 
                         ?>
-                        <div class="m-a-list-author__name" <?php echo ( $add_microdata ? 'itemprop="name"' : '' ); ?>><a href="<?php echo esc_url( $author['archive'] ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php echo $author['name']; ?></a></div>
+                        <div class="m-a-list-author__name" <?php echo ( $add_microdata ? 'itemprop="name"' : '' ); ?>>
+                            <?php if ( $atts['name_link'] ) : ?><a href="<?php echo esc_url( $author['archive'] ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php endif; ?>
+                                <?php echo $author['name']; ?>
+                            <?php if ( $atts['name_link'] ) : ?></a><?php endif; ?>
+                        </div>
                         <?php
 
                     break;
@@ -188,6 +196,16 @@ if ( !empty( $list_styles ) or !empty( $item_styles ) )
                     case 'social':
 
                         include MOLONGUI_AUTHORSHIP_DIR . 'views/author-box/parts/html-socialmedia.php';
+
+                    break;
+
+                    case 'archive':
+
+                        if ( $atts['show_archive_link'] ) : ?>
+                        <div class="m-a-list-author__archive-link">
+                            <a href="<?php echo esc_url( $author['archive'] ); ?>" target="_blank" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php echo ( $options['author_box_meta_web'] ? $options['author_box_meta_web'] : __( "Website", 'molongui-authorship-pro' ) ); ?></a>
+                        </div>
+                        <?php endif;
 
                     break;
                 }

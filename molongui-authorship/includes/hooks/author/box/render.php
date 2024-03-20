@@ -3,7 +3,11 @@ defined( 'ABSPATH' ) or exit;
 function authorship_autoadd_box()
 {
     $options = authorship_get_options();
-    if ( empty( $options['author_box'] ) ) return;
+    if ( empty( $options['author_box'] ) )
+    {
+        authorship_debug( null, __( "The author box feature is disabled.", 'molongui-authorship' ) );
+        return;
+    }
     if ( empty( $options['box_hook_priority'] ) ) $options['box_hook_priority'] = 11;
     if ( $options['box_hook_priority'] <= 10 )
     {
@@ -33,12 +37,24 @@ function authorship_dont_autoadd_box()
                 {
                     $autoadd = true;
                 }
+                else
+                {
+                    authorship_debug( null, __( "Automatic display for the author box has been disabled because we are running out of the Loop.", 'molongui-authorship' ) );
+                }
             }
+        }
+        else
+        {
+            authorship_debug( null, __( "Automatic display for the author box has been disabled because it is not the main query.", 'molongui-authorship' ) );
         }
     }
     elseif ( wp_doing_ajax() and is_main_query() )
     {
         $autoadd = true;
+    }
+    else
+    {
+        authorship_debug( null, __( "Automatic display for the author box has been disabled because the request is not for a post/page nor an ajax request.", 'molongui-authorship' ) );
     }
 
     return $autoadd;

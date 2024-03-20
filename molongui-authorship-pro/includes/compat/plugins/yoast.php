@@ -26,63 +26,66 @@ if ( !function_exists( 'authorship_pro_render_yoast_metabox' ) )
     }
 }
 if ( molongui_is_request( 'admin' ) ) return;
-add_filter( 'wpseo_robots'                       , 'authorship_pro_wpseo_robots'               , 999, 1 );
-add_filter( 'wpseo_replacements'                 , 'authorship_pro_wpseo_replacements'         , 999, 2 );
-add_filter( 'wpseo_metadesc'                     , 'authorship_pro_wpseo_metadesc'             , 999, 1 );
-add_filter( 'get_the_author_wpseo_title'         , 'authorship_pro_wpseo_clear_author_meta'    , 999, 3 );
-add_filter( 'get_the_author_wpseo_metadesc'      , 'authorship_pro_wpseo_clear_author_meta'    , 999, 3 );
-add_filter( 'get_the_author_wpseo_noindex_author', 'authorship_pro_wpseo_clear_author_meta'    , 999, 3 );
-add_filter( 'wpseo_should_save_indexable'        , 'authorship_pro_wpseo_should_save_indexable', 999, 2 );
+add_filter( 'wpseo_robots'                       , 'authorship_pro_wpseo_robots'               , PHP_INT_MAX , 1 );
+add_filter( 'wpseo_replacements'                 , 'authorship_pro_wpseo_replacements'         , PHP_INT_MAX , 2 );
+add_filter( 'wpseo_metadesc'                     , 'authorship_pro_wpseo_metadesc'             , PHP_INT_MAX , 1 );
+add_filter( 'get_the_author_wpseo_title'         , 'authorship_pro_wpseo_clear_author_meta'    , PHP_INT_MAX , 3 );
+add_filter( 'get_the_author_wpseo_metadesc'      , 'authorship_pro_wpseo_clear_author_meta'    , PHP_INT_MAX , 3 );
+add_filter( 'get_the_author_wpseo_noindex_author', 'authorship_pro_wpseo_clear_author_meta'    , PHP_INT_MAX , 3 );
+add_filter( 'wpseo_should_save_indexable'        , 'authorship_pro_wpseo_should_save_indexable', PHP_INT_MAX , 2 );
 
 add_filter( 'authorship_pro/author/url'          , 'authorship_pro_guest_url_sitemap'          ,  10, 2 );
 if ( !function_exists( 'authorship_pro_wpseo_robots' ) )
 {
-    function authorship_pro_wpseo_robots( $robotsstr )
+    function authorship_pro_wpseo_robots( $robots_string )
     {
         if ( is_guest_author() )
         {
             global $wp_query;
-
             $robots           = array();
             $robots['index']  = 'index';
             $robots['follow'] = 'follow';
-            $robots['other']  = array();
-
-            if ( WPSEO_Options::get( 'noindex-author-wpseo', false ) )
+            if ( class_exists( 'WPSEO_Options' ) )
             {
-                $robots['index'] = 'noindex';
-            }
-
-            if ( isset( $wp_query->guest_author_id ) )
-            {
-                global $wpdb;
-                $guest_posts = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_molongui_author' AND meta_value = 'guest-{$wp_query->guest_author_id}'", ARRAY_A );
-                if ( WPSEO_Options::get( 'noindex-author-noposts-wpseo', false ) and empty( $guest_posts ) )
+                if ( WPSEO_Options::get( 'noindex-author-wpseo', false ) )
                 {
-                    $robots['index'] = 'noindex';
+                    $robots['index']  = 'noindex';
+                    $robots['follow'] = 'nofollow';
+                }
+                elseif ( WPSEO_Options::get( 'noindex-author-noposts-wpseo', false ) )
+                {
+                    if ( !empty( $wp_query->guest_author_id ) )
+                    {
+                        global $wpdb;
+                        $guest_posts = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '_molongui_author' AND meta_value = 'guest-{$wp_query->guest_author_id}'", ARRAY_A );
+
+                        if ( empty( $guest_posts ) )
+                        {
+                            $robots['index']  = 'noindex';
+                            $robots['follow'] = 'nofollow';
+                        }
+                    }
                 }
             }
             if ( '0' === (string) get_option( 'blog_public' ) || isset( $_GET['replytocom'] ) )
             {
-                $robots['index'] = 'noindex';
+                $robots['index']  = 'noindex';
+                $robots['follow'] = 'nofollow';
             }
-
-            $robotsstr = $robots['index'] . ',' . $robots['follow'];
-
-            $robotsstr = preg_replace( '`^index,follow,?`', '', $robotsstr );
-            $robotsstr = str_replace( array( 'noodp,', 'noodp' ), '', $robotsstr );
-
-            if ( strpos( $robotsstr, 'noindex' ) === false && strpos( $robotsstr, 'nosnippet' ) === false )
-            {
-                if ( $robotsstr !== '' )
-                {
-                    $robotsstr .= ', ';
-                }
-                $robotsstr .= 'max-snippet:-1, max-image-preview:large, max-video-preview:-1';
-            }
+            $search = array( 'noindex, ', 'noindex,', 'noindex', 'index,', 'index', 'nofollow, ', 'nofollow,', 'nofollow', 'follow,', 'follow' );
+            $robots_string = trim( trim( str_replace( $search, '', $robots_string ), ',' ) );
+            $robots_string = $robots['index'] . ', ' . $robots['follow'] . ( empty( $robots_string ) ? '' : ', ' . $robots_string );
         }
 
-        return $robotsstr;
+        /*!
+         * FILTER HOOK
+         *
+         * Allows filtering the meta robots output.
+         *
+         * @param  string  $robots_string  The meta robots directives to be echoed.
+         * @since  1.6.3
+         */
+        return apply_filters( 'authorship_pro/wpseo_robots', $robots_string );
     }
 }
 if ( !function_exists( 'authorship_pro_wpseo_replacements' ) )

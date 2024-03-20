@@ -8,13 +8,21 @@
         <div class="m-a-list-item">
 
             <!-- Author profile picture -->
-            <div class="m-a-list-item-img"><a href="<?php echo esc_url( $author['archive'] ); ?>"><?php echo $author['img']; ?></a></div>
+            <div class="m-a-list-item-img">
+                <?php if ( $atts['avatar_link'] ) : ?><a href="<?php echo esc_url( $author['archive'] ); ?>"><?php endif; ?>
+                    <?php echo $author['img']; ?>
+                <?php if ( $atts['avatar_link'] ) : ?></a><?php endif; ?>
+            </div>
 
             <!-- Author data -->
             <div class="m-a-list-item-data">
 
                 <!-- Author name -->
-                <div class="m-a-list-item-name" <?php echo ( $add_microdata ? 'itemprop="name"' : '' ); ?>><a href="<?php echo esc_url( $author['archive'] ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php echo $author['name']; ?></a></div>
+                <div class="m-a-list-item-name" <?php echo ( $add_microdata ? 'itemprop="name"' : '' ); ?>>
+                    <?php if ( $atts['name_link'] ) : ?><a href="<?php echo esc_url( $author['archive'] ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>><?php endif; ?>
+                        <?php echo $author['name']; ?>
+                    <?php if ( $atts['name_link'] ) : ?></a><?php endif; ?>
+                </div>
 
                 <!-- Author job -->
                 <div class="m-a-list-item-job">

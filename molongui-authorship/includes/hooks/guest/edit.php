@@ -22,7 +22,6 @@ function authorship_guest_save( $post_id )
         '_molongui_guest_author_display_name',
         '_molongui_guest_author_mail',
         '_molongui_guest_author_phone',
-        '_molongui_guest_author_web',
         '_molongui_guest_author_job',
         '_molongui_guest_author_company',
     );
@@ -33,6 +32,7 @@ function authorship_guest_save( $post_id )
     }
     $urls = array
     (
+        '_molongui_guest_author_web',
         '_molongui_guest_author_company_link',
         '_molongui_guest_author_custom_link',
     );
@@ -273,15 +273,15 @@ add_filter( 'authorship/admin/guest/convert/metabox', function()
 function authorship_guest_render_profile_metabox( $post )
 {
     wp_nonce_field( 'molongui_authorship_guest', 'molongui_authorship_guest_nonce' );
-    $guest_author_first_name   = get_post_meta( $post->ID, '_molongui_guest_author_first_name', true );
-    $guest_author_last_name    = get_post_meta( $post->ID, '_molongui_guest_author_last_name', true );
-    $guest_author_display_name = get_post_meta( $post->ID, '_molongui_guest_author_display_name', true ); //get_the_title( $post->ID );
-    $guest_author_mail         = get_post_meta( $post->ID, '_molongui_guest_author_mail', true );
-    $guest_author_phone        = get_post_meta( $post->ID, '_molongui_guest_author_phone', true );
-    $guest_author_web          = get_post_meta( $post->ID, '_molongui_guest_author_web', true );
-    $guest_author_job          = get_post_meta( $post->ID, '_molongui_guest_author_job', true );
-    $guest_author_company      = get_post_meta( $post->ID, '_molongui_guest_author_company', true );
-    $guest_author_company_link = get_post_meta( $post->ID, '_molongui_guest_author_company_link', true );
+    $guest_author_first_name   = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_first_name', true ) );
+    $guest_author_last_name    = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_last_name', true ) );
+    $guest_author_display_name = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_display_name', true ) ); //get_the_title( $post->ID );
+    $guest_author_mail         = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_mail', true ) );
+    $guest_author_phone        = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_phone', true ) );
+    $guest_author_web          = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_web', true ) );
+    $guest_author_job          = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_job', true ) );
+    $guest_author_company      = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_company', true ) );
+    $guest_author_company_link = esc_attr( get_post_meta( $post->ID, '_molongui_guest_author_company_link', true ) );
     include MOLONGUI_AUTHORSHIP_DIR . 'views/guest-author/html-admin-profile-metabox.php';
 }
 function authorship_guest_render_bio_metabox( $post )

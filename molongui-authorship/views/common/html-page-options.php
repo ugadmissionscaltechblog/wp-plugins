@@ -133,7 +133,7 @@ defined( 'ABSPATH' ) or exit;
 
     ?>
 
-    <?php authorship_enqueue_common_options_scripts(); ?>
+    <?php authorship_enqueue_options_scripts(); ?>
     <?php authorship_enqueue_common_options_styles();  ?>
     <?php do_action( 'authorship/options/after_footer' ); ?>
 

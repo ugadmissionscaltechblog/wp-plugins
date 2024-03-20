@@ -24,3 +24,19 @@ add_filter( 'get_the_author_user_email', function( $value, $user_id = null, $ori
     }
     return $value;
 }, 10, 3 );
+add_filter( 'get_the_author_description', function( $value, $user_id, $original_user_id )
+{
+    if ( is_author() )
+    {
+        $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 15 );
+        $fn  = 'astra_archive_page_info';
+
+        if ( $key = array_search( $fn, array_column( $dbt, 'function' ) ) )
+        {
+            $value = wpautop( $value ); // Doesn't add any extra spacing between new lines. Check CSS
+        }
+    }
+
+    return $value;
+
+}, 10, 3 );

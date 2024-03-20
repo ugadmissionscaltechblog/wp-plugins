@@ -25,7 +25,7 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Update' ) )
                 'plugin_name'  => $this->plugin_name,
                 'version'      => $this->software_version,
                 'product_id'   => $this->product_id,
-                'api_key'      => $this->data[$this->wc_am_api_key_key],
+                'api_key'      => !empty( $this->data[$this->wc_am_api_key_key] ) ? $this->data[$this->wc_am_api_key_key] : '',
                 'instance'     => $this->wc_am_instance_id,
             );
             $response = \json_decode( $this->send_query( $args ), true );
@@ -59,7 +59,7 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Update' ) )
                 );
                 if ( isset( $new_ver ) and isset( $curr_ver ) )
                 {
-                    if ( $response !== false and \version_compare( $new_ver, $curr_ver, '>' ) )
+                    if ( \version_compare( $new_ver, $curr_ver, '>' ) )
                     {
                         $update_available = true;
                         $transient->response[$this->plugin_name] = (object) $package;
@@ -110,7 +110,7 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Update' ) )
                 'plugin_name'  => $this->plugin_name,
                 'version'      => $this->software_version,
                 'product_id'   => $this->product_id,
-                'api_key'      => $this->data[$this->wc_am_api_key_key],
+                'api_key'      => !empty( $this->data[$this->wc_am_api_key_key] ) ? $this->data[$this->wc_am_api_key_key] : '',
                 'instance'     => $this->wc_am_instance_id,
                 'object'       => $this->wc_am_domain,
             );
@@ -134,6 +134,127 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Update' ) )
             }
 
             return $result;
+        }
+        public function try_automatic_updates()
+        {
+            global $wp_version;
+
+            if ( version_compare( $wp_version, '5.5', '>=' ) )
+            {
+                    add_filter( 'auto_update_plugin', array( $this, 'maybe_auto_update' ), 10, 2 );
+            }
+        }
+        public function maybe_auto_update( $update, $item )
+        {
+            if ( isset( $item->slug ) and $item->slug == $this->slug )
+            {
+                if ( $this->is_auto_update_disabled() )
+                {
+                    return false;
+                }
+                if ( !$this->is_active() or !$this->is_active( true ) )
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            return $update;
+        }
+        public function is_auto_update_disabled()
+        {
+            if ( defined( 'DISALLOW_FILE_MODS' ) and DISALLOW_FILE_MODS )
+            {
+                return true;
+            }
+
+            if ( defined( 'WP_INSTALLING' ) )
+            {
+                return true;
+            }
+
+            $wp_updates_disabled = defined( 'AUTOMATIC_UPDATER_DISABLED' ) and AUTOMATIC_UPDATER_DISABLED;
+            $wp_updates_disabled = apply_filters( 'authorship_pro/automatic_updater_disabled', $wp_updates_disabled );
+
+            if ( $wp_updates_disabled )
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public function auto_update_message( $html, $plugin_file, $plugin_data )
+        {
+            if ( $this->wc_am_plugin_name == $plugin_file )
+            {
+                global $status, $page;
+                if ( !$this->is_active() or !$this->is_active( true ) )
+                {
+                    return esc_html__( 'Auto-updates unavailable', 'molongui-authorship-pro' );
+                }
+
+                $auto_updates = (array) get_site_option( 'auto_update_plugins', array() );
+                $html         = array();
+
+                if ( !empty( $plugin_data[ 'auto-update-forced' ] ) )
+                {
+                    if ( $plugin_data[ 'auto-update-forced' ] )
+                    {
+                        $text = __( 'Auto-updates enabled' );
+                    }
+                    else
+                    {
+                        $text = __( 'Auto-updates disabled' );
+                    }
+
+                    $action     = 'unavailable';
+                    $time_class = ' hidden';
+                }
+                elseif ( in_array( $plugin_file, $auto_updates, true ) )
+                {
+                    $text       = __( 'Disable auto-updates' );
+                    $action     = 'disable';
+                    $time_class = '';
+                }
+                else
+                {
+                    $text       = __( 'Enable auto-updates' );
+                    $action     = 'enable';
+                    $time_class = ' hidden';
+                }
+
+                $query_args = array(
+                    'action'        => "{$action}-auto-update",
+                    'plugin'        => $plugin_file,
+                    'paged'         => $page,
+                    'plugin_status' => $status,
+                );
+
+                $url = add_query_arg( $query_args, 'plugins.php' );
+
+                if ( 'unavailable' === $action )
+                {
+                    $html[] = '<span class="label">' . $text . '</span>';
+                }
+                else
+                {
+                    $html[] = sprintf( '<a href="%s" class="toggle-auto-update aria-button-if-js" data-wp-action="%s">', wp_nonce_url( $url, 'updates' ), $action );
+
+                    $html[] = '<span class="dashicons dashicons-update spin hidden" aria-hidden="true"></span>';
+                    $html[] = '<span class="label">' . $text . '</span>';
+                    $html[] = '</a>';
+                }
+
+                if ( !empty( $plugin_data[ 'update' ] ) )
+                {
+                    $html[] = sprintf( '<div class="auto-update-time%s">%s</div>', $time_class, wp_get_auto_update_message() );
+                }
+
+                $html = implode( '', $html );
+            }
+
+            return $html;
         }
         public function display_error()
         {

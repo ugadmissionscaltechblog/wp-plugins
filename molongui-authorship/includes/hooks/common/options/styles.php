@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) or exit;
 function authorship_register_common_options_styles()
 {
     if ( apply_filters( 'authorship/options/enqueue_colorpicker', false ) ) wp_enqueue_style( 'wp-color-picker' );
-    $file = apply_filters( 'authorship/options/common_styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/options-rtl.140b.min.css' : '/assets/css/common/options.1909.min.css' ) );
+    $file = apply_filters( 'authorship/options/common_styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/options-rtl.aeec.min.css' : '/assets/css/common/options.c589.min.css' ) );
     $deps = array();
 
     authorship_register_style( $file, 'common_options', $deps );
@@ -11,7 +11,7 @@ function authorship_register_common_options_styles()
 add_action( 'admin_enqueue_scripts', 'authorship_register_common_options_styles' );
 function authorship_enqueue_common_options_styles()
 {
-    $file = apply_filters( 'authorship/options/common_styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/options-rtl.140b.min.css' : '/assets/css/common/options.1909.min.css' ) );
+    $file = apply_filters( 'authorship/options/common_styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/options-rtl.aeec.min.css' : '/assets/css/common/options.c589.min.css' ) );
 
     authorship_enqueue_style( $file, 'common_options', true );
 }

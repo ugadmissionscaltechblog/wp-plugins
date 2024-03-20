@@ -10,8 +10,6 @@
 <div id="mab-<?php echo $random_id; ?>"
      class="m-a-box <?php echo ( !empty( $options['author_box_custom_css_class'] ) ? $options['author_box_custom_css_class'] : '' ); ?>"
     <?php echo ( apply_filters( '_authorship/doing_shortcode/author_box', false ) ? 'data-is-shortcode="yes"' : '' ); ?>
-     data-plugin-release="<?php echo MOLONGUI_AUTHORSHIP_VERSION; ?>"
-     data-plugin-version="<?php echo authorship_has_pro() ? 'pro' : 'lite'; ?>"
      data-box-layout="<?php echo ( isset( $options['author_box_layout'] ) ? $options['author_box_layout'] : '' ); ?>"
      data-box-position="<?php echo ( isset( $options['box_position'] ) ? $options['box_position'] : '' ); ?>"
      data-multiauthor="<?php echo ( $is_multiauthor ? 'true' : 'false' ); ?>"

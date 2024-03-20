@@ -143,7 +143,7 @@ function authorship_pro_options_license_markup( $fw_options )
             'desc'    => '',
             'help'    => __( "Click here to get some help", 'molongui-authorship-pro' ),
             'label'   => __( "Can't activate your license? Get help", 'molongui-authorship-pro' ),
-            'href'    => 'https://www.molongui.com/docs/'.MOLONGUI_AUTHORSHIP_TITLE.'/license-activation/',
+            'href'    => 'https://www.molongui.com/help/docs/'.MOLONGUI_AUTHORSHIP_TITLE.'/license-activation/',
             'target'  => '_blank',
         );
         $fw_options[] = array

@@ -163,10 +163,13 @@ function authorship_author_link( $link, $post_id = null )
                     foreach( $authors as $author )
                     {
                         $author_class = new Author( $author->id, $author->type );
-                        $data[] = array( 'type' => $author->type, 'id' => $author->id, 'name' => $author_class->get_name(), 'url' => $author_class->get_url() );
+                        $data[] = array( 'type' => $author->type, 'id' => $author->id, 'name' => esc_html( $author_class->get_name() ), 'url' => esc_url( $author_class->get_url() ) );
                     }
 
-                    if ( !empty( $data ) ) echo '<script data-type="'.MOLONGUI_AUTHORSHIP_NAME.'-byline-data" data-id="'.$post_id.'">var molongui_authorship_byline_data_'.$post_id.' = '.json_encode( $data ).';' . '</script>';
+                    if ( !empty( $data ) )
+                    {
+                        echo '<script data-type="'.MOLONGUI_AUTHORSHIP_NAME.'-byline-data" data-id="'.$post_id.'">var molongui_authorship_byline_data_'.$post_id.' = '.json_encode( $data ).';' . '</script>';
+                    }
                 });
 
                 $author_class = new Author( $authors[0]->id, $authors[0]->type );

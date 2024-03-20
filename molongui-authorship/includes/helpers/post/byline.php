@@ -53,8 +53,14 @@ if ( !function_exists( 'get_byline' ) )
         {
             $divider = ( $i == 0 ? '' : ( $i == ( $names_to_display - 1 ) ? $last_separator : $separator ) );
             $author_class = new Author( $author->id, $author->type );
-            if ( $linked ) $item = $author_class->get_link();
-            else $item = $author_class->get_name();
+            if ( $linked )
+            {
+                $item = $author_class->get_link();
+            }
+            else
+            {
+                $item = esc_html( $author_class->get_name() );
+            }
             $item = apply_filters( 'authorship/byline_item', $divider.$item, $item, $divider, $i, $author, $names_to_display );
             $byline .= $item;
             ++$i;

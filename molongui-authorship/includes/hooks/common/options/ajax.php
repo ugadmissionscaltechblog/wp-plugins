@@ -6,7 +6,10 @@ function authorship_save_options()
     if ( !wp_verify_nonce( $_POST['nonce'], 'mfw_save_options_nonce' ) ) return;
     if ( !current_user_can( 'manage_options' ) ) return;
     $options = wp_unslash( $_POST['data'] );
-    foreach ( $options as $key => $value ) $options[$key] = sanitize_text_field( $value );
+    foreach ( $options as $key => $value )
+    {
+        $options[$key] = apply_filters( 'authorship/sanitize_option', sanitize_text_field( $value ), $key, $value );
+    }
 
     if ( isset( $options ) and is_array( $options ) )
     {
@@ -25,7 +28,7 @@ add_action( 'wp_ajax_'.MOLONGUI_AUTHORSHIP_PREFIX.'_save_options', 'authorship_s
 function authorship_export_options()
 {
     if ( !isset( $_POST['nonce'] ) ) return;
-    if ( !wp_verify_nonce( $_POST['nonce'], 'mfw_tools_nonce' ) ) return;
+    if ( !wp_verify_nonce( $_POST['nonce'], 'mfw_export_options_nonce' ) ) return;
     if ( !current_user_can( 'manage_options' ) ) return;
     $options = authorship_get_config();
     $options['plugin_id']      = MOLONGUI_AUTHORSHIP_PREFIX;

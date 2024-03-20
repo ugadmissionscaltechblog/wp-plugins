@@ -6,23 +6,40 @@ function authorship_user_add_profile_fields( $user )
 {
     if ( is_object( $user ) )
     {
-        if ( !current_user_can( 'edit_user', $user->ID ) ) return;
+        if ( !current_user_can( 'edit_user', $user->ID ) )
+        {
+            if ( !current_user_can( 'read', $user_id ) or get_current_user_id() !== $user_id )
+            {
+                return;
+            }
+        }
         $match = array_intersect( $user->roles, apply_filters( 'authorship/user/roles', array( 'administrator', 'editor', 'author', 'contributor' ) ) );
-        if ( empty( $match ) ) return;
+        if ( empty( $match ) )
+        {
+            return;
+        }
     }
     else
     {
-        if ( 'add-new-user' !== $user ) return;
+        if ( 'add-new-user' !== $user )
+        {
+            return;
+        }
 
         $user     = new stdClass();
         $user->ID = 0;
     }
     authorship_enqueue_edit_user_scripts();
     wp_nonce_field('molongui_authorship_update_user', 'molongui_authorship_update_user_nonce');
-    if ( authorship_is_feature_enabled( 'user_profile' ) ) include MOLONGUI_AUTHORSHIP_DIR . 'views/user/html-admin-plugin-fields.php';
-    elseif ( authorship_is_feature_enabled( 'avatar' ) ) include MOLONGUI_AUTHORSHIP_DIR . 'views/user/html-admin-profile-picture.php';
+    if ( authorship_is_feature_enabled( 'user_profile' ) )
+    {
+        include MOLONGUI_AUTHORSHIP_DIR . 'views/user/html-admin-plugin-fields.php';
+    }
+    elseif ( authorship_is_feature_enabled( 'avatar' ) )
+    {
+        include MOLONGUI_AUTHORSHIP_DIR . 'views/user/html-admin-profile-picture.php';
+    }
 }
-
 add_action( 'edit_user_profile', 'authorship_user_add_profile_fields', 0 ); // Edit user screen
 add_action( 'show_user_profile', 'authorship_user_add_profile_fields', 0 ); // Profile screen
 function authorship_user_filter_profile_picture_description( $description, $profileuser )
@@ -48,15 +65,24 @@ function authorship_user_filter_profile_picture_description( $description, $prof
 add_filter( 'user_profile_picture_description', 'authorship_user_filter_profile_picture_description', 10, 2 );
 function authorship_user_save_profile_fields( $user_id )
 {
-    if ( !current_user_can( 'edit_user', $user_id ) ) return $user_id;
-    if ( !isset( $_POST['molongui_authorship_update_user_nonce'] ) or !wp_verify_nonce( $_POST['molongui_authorship_update_user_nonce'], 'molongui_authorship_update_user' ) ) return $user_id;
+    if ( !current_user_can( 'edit_user', $user_id ) )
+    {
+        if ( !current_user_can( 'read', $user_id ) or get_current_user_id() !== $user_id )
+        {
+            return $user_id;
+        }
+    }
+    if ( !isset( $_POST['molongui_authorship_update_user_nonce'] ) or !wp_verify_nonce( $_POST['molongui_authorship_update_user_nonce'], 'molongui_authorship_update_user' ) )
+    {
+        return $user_id;
+    }
     if ( authorship_is_feature_enabled( 'user_profile' ) )
     {
-        update_user_meta( $user_id, 'molongui_author_phone', $_POST['molongui_author_phone'] );
-        update_user_meta( $user_id, 'molongui_author_job', $_POST['molongui_author_job'] );
-        update_user_meta( $user_id, 'molongui_author_company', $_POST['molongui_author_company'] );
-        update_user_meta( $user_id, 'molongui_author_company_link', $_POST['molongui_author_company_link'] );
-        update_user_meta( $user_id, 'molongui_author_custom_link', $_POST['molongui_author_custom_link'] );
+        update_user_meta( $user_id, 'molongui_author_phone', ( isset( $_POST['molongui_author_phone'] ) ? sanitize_text_field( $_POST['molongui_author_phone'] ) : '' ) );
+        update_user_meta( $user_id, 'molongui_author_job', ( isset( $_POST['molongui_author_job'] ) ? sanitize_text_field( $_POST['molongui_author_job'] ) : '' ) );
+        update_user_meta( $user_id, 'molongui_author_company', ( isset( $_POST['molongui_author_company'] ) ? sanitize_text_field( $_POST['molongui_author_company'] ) : '' ) );
+        update_user_meta( $user_id, 'molongui_author_company_link', ( isset( $_POST['molongui_author_company_link'] ) ? sanitize_url( $_POST['molongui_author_company_link'] ) : '' ) );
+        update_user_meta( $user_id, 'molongui_author_custom_link', ( isset( $_POST['molongui_author_custom_link'] ) ? sanitize_url( $_POST['molongui_author_custom_link'] ) : '' ) );
 
         foreach ( authorship_get_social_networks( 'enabled' ) as $id => $network )
         {
@@ -84,9 +110,9 @@ function authorship_user_save_profile_fields( $user_id )
     {
         if ( current_user_can( 'upload_files', $user_id ) )
         {
-            if ( isset( $_POST['molongui_author_image_id']   ) ) update_user_meta( $user_id, 'molongui_author_image_id'  , $_POST['molongui_author_image_id']   );
-            if ( isset( $_POST['molongui_author_image_url']  ) ) update_user_meta( $user_id, 'molongui_author_image_url' , $_POST['molongui_author_image_url']  );
-            if ( isset( $_POST['molongui_author_image_edit'] ) ) update_user_meta( $user_id, 'molongui_author_image_edit', $_POST['molongui_author_image_edit'] );
+            if ( isset( $_POST['molongui_author_image_id']   ) ) update_user_meta( $user_id, 'molongui_author_image_id'  , sanitize_text_field( $_POST['molongui_author_image_id'] ) );
+            if ( isset( $_POST['molongui_author_image_url']  ) ) update_user_meta( $user_id, 'molongui_author_image_url' , sanitize_url( $_POST['molongui_author_image_url'] )  );
+            if ( isset( $_POST['molongui_author_image_edit'] ) ) update_user_meta( $user_id, 'molongui_author_image_edit', sanitize_url( $_POST['molongui_author_image_edit'] ) );
         }
     }
 }

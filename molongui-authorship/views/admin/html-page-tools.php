@@ -35,7 +35,6 @@ $tools = array_merge_recursive( isset( $tools ) ? $tools : array(), isset( $fw_t
     include  MOLONGUI_AUTHORSHIP_DIR . 'views/common/parts/html-part-footer.php';
 
     authorship_enqueue_common_options_styles();
-    authorship_enqueue_common_options_scripts();
     authorship_enqueue_options_scripts();
 
     ?>

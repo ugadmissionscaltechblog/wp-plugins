@@ -8,6 +8,12 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Key' ) )
 	{
 		public function activate( $args )
 		{
+            if ( empty( $args ) )
+            {
+                \add_settings_error( 'not_activated_text', 'not_activated_error', \esc_html__( 'The license key is missing from the deactivation request.', 'molongui-authorship-pro' ), 'updated' );
+                return false;
+            }
+
 			$defaults = array
             (
 				'wc_am_action'     => 'activate',
@@ -23,6 +29,12 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Key' ) )
 		}
 		public function deactivate( $args )
 		{
+            if ( empty( $args ) )
+            {
+                \add_settings_error( 'not_deactivated_text', 'not_deactivated_error', \esc_html__( 'The license key is missing from the deactivation request.', 'molongui-authorship-pro' ), 'updated' );
+                return false;
+            }
+
 			$defaults = array
             (
 				'wc_am_action' => 'deactivate',
@@ -37,6 +49,11 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Key' ) )
 		}
 		public function status( $args )
 		{
+            if ( empty( $this->data[$this->wc_am_api_key_key] ) )
+            {
+                return false;
+            }
+
 			$defaults = array
             (
 				'wc_am_action' => 'status',
@@ -47,6 +64,7 @@ if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Key' ) )
 			);
 
             $response = $this->send_query( $args, $defaults );
+            $response = \json_decode( $response, true );
 
 			return $response;
 		}
