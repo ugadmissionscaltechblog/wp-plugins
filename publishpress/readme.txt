@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 5.5
 Requires PHP: 7.2.5
-Tested up to: 6.3
-Stable tag: 3.12.1
+Tested up to: 6.4
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,52 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.0.3] - 23 Jan 2024 =
+
+* Fixed : Time no longer showing on the calendar for some statuses, #1533
+* Update : Update Content Calendar statuses default color, #1523
+* Fixed : Fix missing translation string for calendar “view X more” and “hide the X last items”, #1536
+* Fixed : Calendar filters too cramped with the X, #1535
+* Fixed : Settings default to "Features" instead of first tab, #1524
+* Fixed : Deprecation issue, #1540
+* Fixed : Cannot use object of type WP_Error as array, #1525
+* Update : Re-enable Dashboard Widgets, #1505
+* Update : Translation Updates Planner, January 2024, #1522
+
+= [4.0.2] - 04 Jan 2024 =
+
+* Fixed : Calendar did not show status colors if PublishPress Statuses plugin is not activated
+* Compat: PublishPress Statuses - iframe Install Now button did not work
+
+= [4.0.1] - 04 Jan 2024 =
+
+* Compat: PublishPress Statuses plugin integration
+* Update: Add first name and last name to Notification shortcode, #1500
+* Update: Make Content Overview default date filters to 1 month back and 1 month ahead, #1503
+* Update: Remove javascript from href attributes on components, #1511
+* Fixed: User type metadata displaying user id instead of display name in notification, #1515
+* Fixed: Invalid use of props on select component in the calendar screen, #1508
+* Fixed: Warning on console: Each child in a list should have a unique "key" prop, #1507
+* Fixed: Warning on console: ReactDOM.render is no longer supported in React 18, #1506
+* Update: Planner FREE V4.0.0 Translation Updates ES-FR-IT, #1512
+
+= [3.12.2] - 28 Sept 2023 =
+
+* Update: Show only users who have written a comment in Editorial Comment User filtter, #1220
+* Fixed: "Save as" button contains duplicated text in Safari, #1389
+* Fixed: Migration from Edit-Flow not importing Editorial Metadata fields, #1459
+* Update: Remove the Dashboard Widgets, #1449
+* Update: Add a promo sidebar in the Free version, #1203
+* Fixed: Critial Error on the plugin settings page when some features are disabled, #1469
+* Update: Move the Notifications Log to a button, #1407
+* Fixed: Post without post_date_gmt or post_modified_date_gmt not showing in google calendar export, #1461
+* Fixed: Metadata not showing on the Calendar when viewable is enabled, #1216
+* Fixed: Content Overview dates filter reset not working, #1378
+* Update: Adjust Content Overview Filter and Reset buttons, #1406
+* Update: Replace the penguins with normal page headers, #1402
+* Update: PLANNER PRO: ES-FR-IT_Transaltions Updates September 2023, #1457
+* Update: PLANNER FREE- Translation Updates September 10, 2023, #1458
 
 = [3.12.1] - 06 Sept 2023 =
 

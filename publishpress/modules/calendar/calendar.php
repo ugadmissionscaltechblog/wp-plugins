@@ -167,7 +167,7 @@ if (! class_exists('PP_Calendar')) {
 
             // Register the module with PublishPress
             $args = [
-                'title' => __('Calendar', 'publishpress'),
+                'title' => __('Content Calendar', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -178,6 +178,7 @@ if (! class_exists('PP_Calendar')) {
                     'enabled' => 'on',
                     'post_types' => $this->pre_select_all_post_types(),
                     'ics_subscription' => 'on',
+                    'ics_subscription_public_visibility' => 'off',
                     'ics_secret_key' => wp_generate_password(),
                     'show_posts_publish_time' => ['publish' => 'on', 'future' => 'on'],
                     'default_publish_time' => '',
@@ -185,6 +186,7 @@ if (! class_exists('PP_Calendar')) {
                 ],
                 'messages' => [
                     'post-date-updated' => __('Post date updated.', 'publishpress'),
+                    'status-updated' => __('Post status updated.', 'publishpress'),
                     'update-error' => __(
                         'There was an error updating the post. Please try again.',
                         'publishpress'
@@ -543,7 +545,7 @@ if (! class_exists('PP_Calendar')) {
                 }
                 $postStatuses[] = [
                     'value' => esc_attr($status->slug),
-                    'text' => esc_html($status->name),
+                    'text' => esc_html($status->label),
                 ];
             }
 
@@ -650,6 +652,7 @@ if (! class_exists('PP_Calendar')) {
                         true
                     );
 
+                    // TODO: Replace react and react-dom with the wp.element dependency
                     wp_enqueue_script(
                         'publishpress-async-calendar-js',
                         $this->module_url . 'lib/async-calendar/js/index.min.js',
@@ -663,6 +666,7 @@ if (! class_exists('PP_Calendar')) {
                             'jquery-ui-droppable',
                             'jquery-inputmask',
                             'wp-i18n',
+                            'wp-element',
                             'date_i18n',
                         ],
                         PUBLISHPRESS_VERSION,
@@ -723,7 +727,7 @@ if (! class_exists('PP_Calendar')) {
                             $calendar_request_filter['post_type'] = $postType;
                         }
                     }
-                    
+
                     if (isset($userFilters['weeks'])) {
                         $weeks = sanitize_key($userFilters['weeks']);
 
@@ -793,7 +797,8 @@ if (! class_exists('PP_Calendar')) {
                             'loadingItem' => esc_js(__('Loading item...', 'publishpress')),
                             'clickToAdd' => esc_js(__('Click to add', 'publishpress')),
                             'movingTheItem' => esc_js(__('Moving the item...', 'publishpress')),
-                            'clickToAdd' => esc_js(__('Click to add', 'publishpress')),
+                            'hideItems' => esc_js(__('Hide the %s last items', 'publishpress')),
+                            'showMore' => esc_js(__('Show %s more', 'publishpress')),
                             'untitled' => esc_js(__('Untitled', 'publishpress')),
                             'close' => esc_js(__('Close', 'publishpress')),
                             'save' => esc_js(__('Save', 'publishpress')),
@@ -919,79 +924,80 @@ if (! class_exists('PP_Calendar')) {
             $t_std = null;
             $t_dst = null;
             $tzfrom = 0;
-
-            foreach ($transitions as $i => $trans) {
-                if ($i == 0) {
-                    $tzfrom = $trans['offset'] / 3600;
-                    continue;
-                }
-
-                // daylight saving time definition
-                if ($trans['isdst']) {
-                    $t_dst = $trans['ts'];
-                    $dt = new DateTime($trans['time']);
-                    $offset = $trans['offset'] / 3600;
-
-                    $daylight = $vTimeZone->add(
-                        'DAYLIGHT',
-                        [
-                            'DTSTART' => $dt->format('Ymd\THis'),
-                            'TZOFFSETFROM' => sprintf(
-                                '%s%02d%02d',
-                                $tzfrom >= 0 ? '+' : '',
-                                floor($tzfrom),
-                                ($tzfrom - floor($tzfrom)) * 60
-                            ),
-                            'TZOFFSETTO' => sprintf(
-                                '%s%02d%02d',
-                                $offset >= 0 ? '+' : '',
-                                floor($offset),
-                                ($offset - floor($offset)) * 60
-                            ),
-                        ]
-                    );
-
-                    // add abbreviated timezone name if available
-                    if (! empty($trans['abbr'])) {
-                        $daylight->add('TZNAME', [$trans['abbr']]);
+            if (is_array($transitions) || is_object($transitions)) {
+                foreach ($transitions as $i => $trans) {
+                    if ($i == 0) {
+                        $tzfrom = $trans['offset'] / 3600;
+                        continue;
                     }
 
-                    $tzfrom = $offset;
-                } else {
-                    $t_std = $trans['ts'];
-                    $dt = new DateTime($trans['time']);
-                    $offset = $trans['offset'] / 3600;
+                    // daylight saving time definition
+                    if ($trans['isdst']) {
+                        $t_dst = $trans['ts'];
+                        $dt = new DateTime($trans['time']);
+                        $offset = $trans['offset'] / 3600;
 
-                    $standard = $vTimeZone->add(
-                        'STANDARD',
-                        [
-                            'DTSTART' => $dt->format('Ymd\THis'),
-                            'TZOFFSETFROM' => sprintf(
-                                '%s%02d%02d',
-                                $tzfrom >= 0 ? '+' : '',
-                                floor($tzfrom),
-                                ($tzfrom - floor($tzfrom)) * 60
-                            ),
-                            'TZOFFSETTO' => sprintf(
-                                '%s%02d%02d',
-                                $offset >= 0 ? '+' : '',
-                                floor($offset),
-                                ($offset - floor($offset)) * 60
-                            ),
-                        ]
-                    );
+                        $daylight = $vTimeZone->add(
+                            'DAYLIGHT',
+                            [
+                                'DTSTART' => $dt->format('Ymd\THis'),
+                                'TZOFFSETFROM' => sprintf(
+                                    '%s%02d%02d',
+                                    $tzfrom >= 0 ? '+' : '',
+                                    floor($tzfrom),
+                                    ($tzfrom - floor($tzfrom)) * 60
+                                ),
+                                'TZOFFSETTO' => sprintf(
+                                    '%s%02d%02d',
+                                    $offset >= 0 ? '+' : '',
+                                    floor($offset),
+                                    ($offset - floor($offset)) * 60
+                                ),
+                            ]
+                        );
 
-                    // add abbreviated timezone name if available
-                    if (! empty($trans['abbr'])) {
-                        $standard->add('TZNAME', [$trans['abbr']]);
+                        // add abbreviated timezone name if available
+                        if (! empty($trans['abbr'])) {
+                            $daylight->add('TZNAME', [$trans['abbr']]);
+                        }
+
+                        $tzfrom = $offset;
+                    } else {
+                        $t_std = $trans['ts'];
+                        $dt = new DateTime($trans['time']);
+                        $offset = $trans['offset'] / 3600;
+
+                        $standard = $vTimeZone->add(
+                            'STANDARD',
+                            [
+                                'DTSTART' => $dt->format('Ymd\THis'),
+                                'TZOFFSETFROM' => sprintf(
+                                    '%s%02d%02d',
+                                    $tzfrom >= 0 ? '+' : '',
+                                    floor($tzfrom),
+                                    ($tzfrom - floor($tzfrom)) * 60
+                                ),
+                                'TZOFFSETTO' => sprintf(
+                                    '%s%02d%02d',
+                                    $offset >= 0 ? '+' : '',
+                                    floor($offset),
+                                    ($offset - floor($offset)) * 60
+                                ),
+                            ]
+                        );
+
+                        // add abbreviated timezone name if available
+                        if (! empty($trans['abbr'])) {
+                            $standard->add('TZNAME', [$trans['abbr']]);
+                        }
+
+                        $tzfrom = $offset;
                     }
 
-                    $tzfrom = $offset;
-                }
-
-                // we covered the entire date range
-                if ($standard && $daylight && min($t_std, $t_dst) < $from && max($t_std, $t_dst) > $to) {
-                    break;
+                    // we covered the entire date range
+                    if ($standard && $daylight && min($t_std, $t_dst) < $from && max($t_std, $t_dst) > $to) {
+                        break;
+                    }
                 }
             }
 
@@ -1009,7 +1015,7 @@ if (! class_exists('PP_Calendar')) {
          *
          * @since 0.8
          */
-        public function handle_ics_subscription() // GUUTZ HACKED
+        public function handle_ics_subscription()
         {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
 
@@ -1032,14 +1038,35 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Set up the post data to be printed
-            $post_query_args = [
-                'post_type' => 'post', // Adjust post type if needed
-                'post_status' => array('future', 'propose-post', 'draft', 'draft-completed', 'edit-completed', 'pending', 'publish'), // Include both statuses
-                'posts_per_page' => -1, // Retrieve all scheduled and in-preparation posts
-                'date_query' => array(
-                    'after' => '2023-08-01',
-                ),
-            ];
+            $post_query_args = [];
+            $calendar_filters = $this->calendar_filters();
+            foreach ($calendar_filters as $filter) {
+                if (isset($_GET[$filter]) && false !== ($value = $this->sanitize_filter(
+                        $filter,
+                        sanitize_text_field(
+                            $_GET[$filter]
+                        )
+                    ))) {
+                    $post_query_args[$filter] = $value;
+                }
+            }
+
+            // Set the start date for the posts_where filter
+            $this->start_date = sanitize_text_field(
+                apply_filters(
+                    'pp_calendar_ics_subscription_start_date',
+                    $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp'))) // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                )
+            );
+
+            $this->total_weeks = sanitize_text_field(
+                apply_filters(
+                    'pp_calendar_total_weeks',
+                    $this->total_weeks,
+                    $this->start_date,
+                    'ics_subscription'
+                )
+            );
 
             $vCalendar = new Sabre\VObject\Component\VCalendar(
                 [
@@ -1058,58 +1085,63 @@ if (! class_exists('PP_Calendar')) {
 
             $timeZone = new DateTimeZone($timezoneString);
 
-            $query = new WP_Query($post_query_args);
-
-            if ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    $query->the_post();
-
-                    $start_date = new DateTime(get_post_time('Ymd'));
-                    $start_date = $start_date->format('Ymd');
-                    $end_date = new DateTime(get_post_time('Ymd') . '+1 day');
-					$end_date = $end_date->format('Ymd');
-
-                    // Remove the convert chars and wptexturize filters from the title
-                    remove_filter('the_title', 'convert_chars');
-                    remove_filter('the_title', 'wptexturize');
-
-                    // Description should include everything visible in the calendar popup
-                    $information_fields = $this->get_post_information_fields(get_post());
-                    $eventDescription = '';
-                    $categories = '';
-                    $author = get_the_author_meta('display_name', get_the_author_meta('ID'));
-                    $author_initials = preg_replace('/[^A-Z]+/', '', $author);
-                    if (!empty($information_fields)) {
-                        foreach ($information_fields as $key => $values) {
-                            $eventDescription .= $values['label'] . ': ' . $values['value'] . "\n";
-                            if ($values['label'] == 'Categories') {
-                                $categories = $values['value'];
-                            }
+            for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++) {
+                // We need to set the object variable for our posts_where filter
+                $this->current_week = $current_week;
+                $week_posts = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
+                foreach ($week_posts as $date => $day_posts) {
+                    foreach ($day_posts as $num => $post) {
+                        if (empty($post->post_date_gmt) || $post->post_date_gmt == '0000-00-00 00:00:00') {
+                            $calendar_date = get_gmt_from_date($post->post_date);
+                        } else {
+                            $calendar_date = $post->post_date_gmt;
                         }
-                        $eventDescription = get_edit_post_link() . PHP_EOL . rtrim($eventDescription);
-                    }
 
-                    $vCalendar->add(
-                        'VEVENT',
-                        [
-                            'UID' => get_the_guid(),
-                            'SUMMARY' => $author_initials . ' | ' . $categories . ' | '
-                                . $this->get_post_status_friendly_name(get_post_status()) . ' | '
-                                . $this->do_ics_escaping(apply_filters('the_title', get_the_title())),
-                            'DTSTART;VALUE=DATE' => $start_date,
-                            'DTEND;VALUE=DATE' => $end_date,
-                            'URL' => get_edit_post_link(),
-                            'DESCRIPTION' => $eventDescription,
-                            'X-MICROSOFT-CDO-ALLDAYEVENT' => 'TRUE',
-                            'X-MICROSOFT-CDO-BUSYSTATUS' => 'FREE',
-                            'X-MICROSOFT-CDO-INTENDEDSTATUS' => 'FREE',
-                            'TRANSP' => 'TRANSPARENT',
-                        ]
-                    );
+                        $start_date = new DateTime($calendar_date);
+                        $start_date->setTimezone($timeZone);
+
+                        $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($calendar_date) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+                        $end_date->setTimezone($timeZone);
+
+                        if (empty($post->post_modified_gmt) || $post->post_modified_gmt == '0000-00-00 00:00:00') {
+                            $calendar_modified_date = get_gmt_from_date($post->post_modified);
+                        } else {
+                            $calendar_modified_date = $post->post_modified_gmt;
+                        }
+
+                        $last_modified = new DateTime($calendar_modified_date);
+                        $last_modified->setTimezone($timeZone);
+
+                        // Remove the convert chars and wptexturize filters from the title
+                        remove_filter('the_title', 'convert_chars');
+                        remove_filter('the_title', 'wptexturize');
+
+                        // Description should include everything visible in the calendar popup
+                        $information_fields = $this->get_post_information_fields($post);
+                        $eventDescription = '';
+                        if (! empty($information_fields)) {
+                            foreach ($information_fields as $key => $values) {
+                                $eventDescription .= $values['label'] . ': ' . $values['value'] . "\n";
+                            }
+                            $eventDescription = rtrim($eventDescription);
+                        }
+
+                        $vCalendar->add(
+                            'VEVENT',
+                            [
+                                'UID' => $post->guid,
+                                'SUMMARY' => $this->do_ics_escaping(apply_filters('the_title', $post->post_title))
+                                    . ' - ' . $this->get_post_status_friendly_name(get_post_status($post->ID)),
+                                'DTSTART' => $start_date,
+                                'DTEND' => $end_date,
+                                'LAST-MODIFIED' => $last_modified,
+                                'URL' => get_post_permalink($post->ID),
+                                'DESCRIPTION' => $eventDescription,
+                            ]
+                        );
+                    }
                 }
             }
-
-            wp_reset_postdata();
 
             // Render the .ics template and set the content type
             header('Content-type: text/calendar; charset=utf-8');
@@ -1409,7 +1441,7 @@ if (! class_exists('PP_Calendar')) {
 
                 <a href="#TB_inline?width=550&height=270&inlineId=publishpress-calendar-ics-subs" class="thickbox">
                     <?php
-                    echo esc_html__('Click here to Subscribe in iCal or Google Calendar', 'publishpress'); ?>
+                    echo esc_html__('Click here to subscribe in iCal or Google Calendar', 'publishpress'); ?>
                 </a>
                 <?php
                 $description .= ob_get_clean();
@@ -1667,7 +1699,7 @@ if (! class_exists('PP_Calendar')) {
             global $publishpress;
 
             // Check if we have a custom icon for this post_status
-            $term = $publishpress->custom_status->get_custom_status_by('slug', $post_status);
+            $term = $publishpress->getPostStatusBy('slug', $post_status);
 
             // Icon
             $icon = null;
@@ -1688,9 +1720,25 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Color
-            $color = PP_Custom_Status::DEFAULT_COLOR;
             if (! empty($term->color)) {
                 $color = $term->color;
+            } else {
+                $default_status_colors = [
+                    'pitch' => '#cc0000',
+                    'assigned' => '#00bcc5',
+                    'in-progress' => '#ccc500',
+                    'draft' => '#f91d84',
+                    'pending' => '#d87200',
+                    'private' => '#000000',
+                    'future' => '#655997',
+                    'publish' => '#655997',
+                ];
+
+                if (isset($default_status_colors[$post_status])) {
+                    $color = $default_status_colors[$post_status];
+                } else {
+                    $color = (class_exists('PublishPress_Statuses')) ? \PublishPress_Statuses::DEFAULT_COLOR : '#78645a';
+                }
             }
 
             return [
@@ -2230,7 +2278,7 @@ if (! class_exists('PP_Calendar')) {
             if (isset($this->module->options->sort_by)) {
                 add_filter('posts_orderby', [$this, 'filterPostsOrderBy'], 10);
             }
-            
+
             $post_results = new WP_Query($args);
 
             $posts = [];
@@ -2283,7 +2331,7 @@ if (! class_exists('PP_Calendar')) {
             $args = array_merge($defaults, $args);
 
             // Unpublished as a status is just an array of everything but 'publish'
-            if ($args['post_status'] == 'unpublish') {
+            if ($args['post_status'] == 'unpublish' || $context == 'ics_subscription') {
                 $args['post_status'] = '';
                 $post_statuses = $this->get_post_statuses();
                 foreach ($post_statuses as $post_status) {
@@ -2294,8 +2342,14 @@ if (! class_exists('PP_Calendar')) {
                 if (apply_filters('pp_show_scheduled_as_unpublished', true)) {
                     $args['post_status'] .= ', future';
                 }
-            }
+                if ($context == 'ics_subscription') {
+                    $args['post_status'] .= ', publish';
+                }
 
+                if (isset($this->module->options->ics_subscription_public_visibility) && 'on' === $this->module->options->ics_subscription_public_visibility) {
+                    $args['suppress_filters'] = true;
+                }
+            }
             // The WP functions for printing the category and author assign a value of 0 to the default
             // options, but passing this to the query is bad (trashed and auto-draft posts appear!), so
             // unset those arguments.
@@ -2512,8 +2566,16 @@ if (! class_exists('PP_Calendar')) {
 
             add_settings_field(
                 'ics_subscription',
-                __('Subscription in iCal or Google Calendar', 'publishpress'),
+                __('Enable subscriptions in iCal or Google Calendar', 'publishpress'),
                 [$this, 'settings_ics_subscription_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_general'
+            );
+
+            add_settings_field(
+                'ics_subscription_public_visibility',
+                __('Allow public access to subscriptions in iCal or Google Calendar', 'publishpress'),
+                [$this, 'settings_ics_subscription_public_visibility_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -2641,15 +2703,37 @@ if (! class_exists('PP_Calendar')) {
         }
 
         /**
+         * Enable calendar subscriptions via .ics in iCal or Google Calendar
+         *
+         * @since 0.8
+         */
+        public function settings_ics_subscription_public_visibility_option()
+        {
+
+
+            echo '<div class="c-input-group">';
+
+            echo sprintf(
+                '<input type="checkbox" name="%s" value="on" %s>',
+                esc_attr($this->module->options_group_name) . '[ics_subscription_public_visibility]',
+                'on' === $this->module->options->ics_subscription_public_visibility ? 'checked' : ''
+            );
+
+            echo '</div>';
+        }
+
+        /**
          * Option that define either Posts publish times are displayed or not.
          *
          * @since 1.20.0
          */
         public function settings_show_posts_publish_time_option()
         {
+            global $publishpress;
+
             $field_name = esc_attr($this->module->options_group_name) . '[show_posts_publish_time]';
 
-            $customStatuses = PP_Custom_Status::getCustomStatuses();
+            $customStatuses = $publishpress->getCustomStatuses();
 
             if (empty($customStatuses)) {
                 $statuses = [
@@ -2660,7 +2744,7 @@ if (! class_exists('PP_Calendar')) {
                 $statuses = [];
 
                 foreach ($customStatuses as $status) {
-                    $statuses[$status->slug] = $status->name;
+                    $statuses[$status->slug] = ['title' => $status->label, 'status_obj' => $status];
                 }
             }
 
@@ -2672,21 +2756,77 @@ if (! class_exists('PP_Calendar')) {
                 ];
             }
 
-            foreach ($statuses as $status => $title) {
-                $id = esc_attr($status) . '-display-publish-time';
+            if (empty($customStatuses)) {
+                foreach ($statuses as $status => $title) {
+                    $id = esc_attr($status) . '-display-publish-time';
 
-                echo '<label for="' . $id . '">';
-                echo '<input id="' . $id . '" name="'
-                    . $field_name . '[' . esc_attr($status) . ']"';
+                    echo '<div><label for="' . $id . '">';
+                    echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
 
-                if (isset($this->module->options->show_posts_publish_time[$status])) {
-                    checked($this->module->options->show_posts_publish_time[$status], 'on');
+                    if (isset($this->module->options->show_posts_publish_time[$status])) {
+                        checked($this->module->options->show_posts_publish_time[$status], 'on');
+                    }
+
+                    // Defining post_type_supports in the functions.php file or similar should disable the checkbox
+                    disabled(post_type_supports($status, $this->module->post_type_support), true);
+
+                    echo ' type="checkbox" value="on" />&nbsp;'
+                    . esc_html($title)
+                    . '</span>'
+                    . '</label>';
+
+                    echo '</div>';
+                }
+            } else {
+                echo '<style>div.pp-calendar-settings div {padding: 4px 0 8px 0;} div.pp-calendar-settings a {vertical-align: bottom}</style>';
+
+                echo '<div class="pp-calendar-settings">';
+
+                foreach ($statuses as $status => $arr_status) {
+                    $id = esc_attr($status) . '-display-publish-time';
+
+                    echo '<div><label for="' . $id . '">';
+                    echo '<input id="' . $id . '" name="' . $field_name . '[' . esc_attr($status) . ']"';
+
+                    if (isset($this->module->options->show_posts_publish_time[$status])) {
+                        checked($this->module->options->show_posts_publish_time[$status], 'on');
+                    }
+
+                    // Defining post_type_supports in the functions.php file or similar should disable the checkbox
+                    disabled(post_type_supports($status, $this->module->post_type_support), true);
+
+                    echo ' type="checkbox" value="on" />&nbsp;';
+
+                    echo '<span class="dashicons ' . esc_html($arr_status['status_obj']->icon) . '"></span>&nbsp;';
+
+                    $style = 'background:' . $arr_status['status_obj']->color . '; color:white';
+
+                    echo '<span class="pp-status-color pp-status-color-title" style="' . esc_attr($style) . '">'
+                    . esc_html($arr_status['title'])
+                    . '</span>'
+                    . '</label>';
+
+                    if (class_exists('PublishPress_Statuses')) {
+                        $_args = [
+                            'action' => 'edit-status',
+                            'return_module' => 'pp-calendar-settings',
+                        ];
+
+                        $_args['name'] = $arr_status['status_obj']->name;
+
+                        $item_edit_link = esc_url(
+                            PublishPress_Statuses::get_link(
+                                $_args
+                            )
+                        );
+
+                        echo ' <a href="' . $item_edit_link . '">' . __('edit') . '</a>';
+                    }
+
+                    echo '</div>';
                 }
 
-                // Defining post_type_supports in the functions.php file or similar should disable the checkbox
-                disabled(post_type_supports($status, $this->module->post_type_support), true);
-                echo ' type="checkbox" value="on" />&nbsp;&nbsp;&nbsp;' . esc_html($title) . '</label>';
-                echo '<br />';
+                echo '</div>';
             }
         }
 
@@ -2912,6 +3052,12 @@ if (! class_exists('PP_Calendar')) {
                 $options['show_calendar_posts_full_title'] = 'off';
             }
 
+            if (isset($new_options['ics_subscription_public_visibility'])) {
+                $options['ics_subscription_public_visibility'] = 'on';
+            } else {
+                $options['ics_subscription_public_visibility'] = 'off';
+            }
+
             // Default publish time
             if (isset($new_options['default_publish_time'])) {
                 $options['default_publish_time'] = sanitize_text_field($new_options['default_publish_time']);
@@ -3029,8 +3175,8 @@ if (! class_exists('PP_Calendar')) {
                  * @param array $args
                  */
                 $results = apply_filters(
-                    'publishpress_search_authors_with_args_results_pre_search', 
-                    [], 
+                    'publishpress_search_authors_with_args_results_pre_search',
+                    [],
                     ['search' => $queryText, 'role__in' => $user_roles]
                 );
             }
@@ -3110,21 +3256,8 @@ if (! class_exists('PP_Calendar')) {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
             $postTypeObject = $this->getPostTypeObject($post->post_type);
 
-            $information_fields = $this->get_post_information_fields($post);
-            $categories = '';
-            if (!empty($information_fields)) {
-                foreach ($information_fields as $key => $values) {
-                    if ($values['label'] == 'Categories') {
-                        $categories = $values['value'];
-                    }
-                }
-            }
-            $author = get_the_author_meta('display_name', $post->post_author);
-            $author_initials = preg_replace('/[^A-Z]+/', '', $author);
-            $display_title = $author_initials . ' | ' . $categories . ' | ' . $this->get_post_status_friendly_name($post->post_status) . ' | ' . $post->post_title;
-
             return [
-                'label' => esc_html($display_title),
+                'label' => esc_html($post->post_title),
                 'id' => (int)$post->ID,
                 'timestamp' => esc_attr($post->post_date),
                 'icon' => esc_attr($postTypeOptions['icon']),
@@ -3300,7 +3433,7 @@ if (! class_exists('PP_Calendar')) {
          * Update the current user's filters for calendar display with the filters in $_GET($request_filter). The filters
          * in $_GET($request_filter) take precedence over the current users filters if they exist.
          * @param array $request_filter
-         * 
+         *
          * @return array $filters updated filter
          */
         public function update_user_filters($request_filter)
@@ -3360,7 +3493,7 @@ if (! class_exists('PP_Calendar')) {
 
             foreach ($postStatuses as $postStatus) {
                 if ($postStatus->slug === $postStatusSlug) {
-                    return $postStatus->name;
+                    return $postStatus->label;
                 }
             }
 
@@ -3499,7 +3632,7 @@ if (! class_exists('PP_Calendar')) {
         public function getPostTypeFields()
         {
             global $publishpress;
-            
+
             if (! wp_verify_nonce(sanitize_text_field($_GET['nonce']), 'publishpress-calendar-get-data')) {
                 wp_send_json([], 403);
             }
@@ -3925,7 +4058,7 @@ if (! class_exists('PP_Calendar')) {
                             echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                     $post_status->slug,
                                     $filters['post_status']
-                                ) . '>' . esc_html($post_status->name) . '</option>';
+                                ) . '>' . esc_html($post_status->label) . '</option>';
                         }
                         ?>
                     </select>

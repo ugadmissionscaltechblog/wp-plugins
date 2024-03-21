@@ -2,16 +2,16 @@
 /**
  * Plugin Name: PublishPress Planner
  * Plugin URI: https://publishpress.com/
- * Description: Features include a content calendar, notifications, and custom statuses. OUTLOOK CALENDAR EXPORT HACKED BY GUUTZ
- * Author: PublishPress, HACKED BY GUUTZ
+ * Description: PublishPress Planner helps you plan and publish content with WordPress. Features include a content calendar, notifications, and custom statuses.
+ * Version: 4.0.3
+ * Author: PublishPress
  * Author URI: https://publishpress.com
- * Version: 3.12.1 DON'T UPDATE hehe
  * Text Domain: publishpress
  * Domain Path: /languages
  * Requires at least: 5.5
  * Requires PHP: 7.2.5
  *
- * Copyright (c) 2022 PublishPress
+ * Copyright (c) 2024 PublishPress
  *
  * ------------------------------------------------------------------------------
  * Based on Edit Flow
@@ -36,9 +36,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @package     PublishPress
- * @category    Core
  * @author      PublishPress
- * @copyright   Copyright (C) 2022 PublishPress. All rights reserved.
+ * @copyright   Copyright (C) 2024 PublishPress. All rights reserved.
+ * @link        https://publishpress.com/
+ * 
  */
 
 use PPVersionNotices\Module\MenuLink\Module;
@@ -108,6 +109,8 @@ add_action('plugins_loaded', function () {
              */
             public $modules;
 
+            public $custom_status; // back compat
+
             /**
              * @var array
              */
@@ -169,7 +172,7 @@ add_action('plugins_loaded', function () {
 
                 add_filter('debug_information', [$this, 'filterDebugInformation']);
 
-                add_filter('cme_publishpress_capabilities', [$this, 'filterCapabilities']);
+                add_filter('cme_plugin_capabilities', [$this, 'filterCapabilities']);
             }
 
             /**
@@ -314,6 +317,13 @@ add_action('plugins_loaded', function () {
 
                 $this->class_names = $class_names;
 
+                // back compat for any existing $publishpress->custom_status->get_custom_status_by() calls
+                if (class_exists('PublishPress_Statuses')) {
+                    $this->custom_status = \PublishPress_Statuses::instance();
+                } else {
+                    $this->custom_status = new \PP_Module();
+                }
+
                 // Supplementary plugins can hook into this, include their own modules
                 // and add them to the $publishpress object
                 do_action('pp_modules_loaded');
@@ -333,7 +343,6 @@ add_action('plugins_loaded', function () {
                     'async-notifications' => PUBLISHPRESS_BASE_PATH,
                     'notifications-log' => PUBLISHPRESS_BASE_PATH,
                     'editorial-metadata' => PUBLISHPRESS_BASE_PATH,
-                    'custom-status' => PUBLISHPRESS_BASE_PATH,
                     'editorial-comments' => PUBLISHPRESS_BASE_PATH,
                     'efmigration' => PUBLISHPRESS_BASE_PATH,
                     'debug' => PUBLISHPRESS_BASE_PATH,
@@ -1170,23 +1179,10 @@ add_action('plugins_loaded', function () {
              *
              * @return array
              */
-            public function filterCapabilities($capabilities)
+            public function filterCapabilities($pluginCaps)
             {
-                $deprecatedCapabilities = [
-                    'edit_metadata',
-                    'ppma_edit_orphan_post',
-                    'pp_editorial_metadata_user_can_edit',
-                ];
 
-                foreach ($deprecatedCapabilities as $capability) {
-                    $key = array_search($capability, $capabilities, true);
-
-                    if (false !== $key) {
-                        unset($capabilities[$key]);
-                    }
-                }
-
-                $newCapabilities = [
+                $caps = [
                     'pp_edit_editorial_metadata',
                     'pp_view_editorial_metadata',
                     'pp_delete_editorial_comment',
@@ -1194,13 +1190,89 @@ add_action('plugins_loaded', function () {
                     'pp_edit_editorial_comment',
                     'pp_edit_others_editorial_comment',
                 ];
+                
+                $pluginCaps['PublishPress Planner'] = $caps;
 
-                foreach ($newCapabilities as $capability) {
-                    $capabilities[] = $capability;
+                return $pluginCaps;
+            }
+
+            /**
+             * Returns the a single status object based on ID, title, or slug
+             *
+             * @param string|int $string_or_int The status to search for, either by slug, name or ID
+             *
+             * @return object|WP_Error|false $status The object for the matching status
+             */
+            public function getPostStatusBy($field, $value) {
+                if (class_exists('PublishPress_Statuses')) {
+                    return \PublishPress_Statuses::getStatusBy($field, $value);
                 }
 
-                return $capabilities;
+                if (! in_array($field, ['id', 'slug', 'name', 'label'])) {
+                    return false;
+                }
+
+                if (in_array($field, ['id', 'slug'])) {
+                    $field = 'name';
+                }
+
+                // New and auto-draft do not exists as status. So we map them to draft for now.
+                if ('name' === $field && in_array($value, ['new', 'auto-draft'])) {
+                    $value = 'draft';
+                }
+
+                $status = wp_filter_object_list($this->getCorePostStatuses(), [$field => $value]);
+
+                if (!empty($status)) {
+                    return array_shift($status);
+                }
+
+                return false;
             }
+
+            public function getPostStatuses()
+            {
+                if (class_exists('PublishPress_Statuses')) {
+                    return \PublishPress_Statuses::instance()->getPostStatuses([], 'object');   // note: static method is getPostStati()
+                } else {
+                    return $this->getCorePostStatuses();
+                }
+            }
+
+            public function getCustomStatuses() {
+                if (class_exists('PublishPress_Statuses')) {
+                    return \PublishPress_Statuses::getCustomStatuses([], 'object');
+                } else {
+                    return [];
+                }
+            }
+
+            public function getCorePostStatuses() {
+                return [
+                    (object)[
+                        'label'        => __('Draft'),
+                        'description' => '',
+                        'name'        => 'draft',
+                        'slug'        => 'draft',  // include slug property as a back compat fallback
+                        'position'    => 1,
+                    ],
+                    (object)[
+                        'label'        => __('Pending Review'),
+                        'description' => '',
+                        'name'        => 'pending',
+                        'slug'        => 'pending',
+                        'position'    => 2,
+                    ],
+                    (object)[
+                        'label'        => __('Published'),
+                        'description' => '',
+                        'name'        => 'publish',
+                        'slug'        => 'publish',
+                        'position'    => 3,
+                    ],
+                ];
+            }
+
         }
     }
 
