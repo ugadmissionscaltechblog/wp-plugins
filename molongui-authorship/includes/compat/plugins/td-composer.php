@@ -37,3 +37,18 @@ add_filter( '_authorship/get_user_by/post_id', function( $post_id, $user, $field
     }
     return $post_id;
 }, 10, 4 );
+add_filter( 'molongui_edit_main_query_only', function( $default, &$query )
+{
+    if ( !$query->is_author() ) return $default;
+    $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 20 );
+    if ( empty( $dbt ) ) return $default;
+    $fn    = 'render';
+    $class = 'td_block';
+    if ( $key = array_search( $fn, array_column( $dbt, 'function' ) )
+         and
+         isset( $dbt[$key]['class'] ) and ( $dbt[$key]['class'] == $class ) )
+    {
+        return false;
+    }
+    return $default;
+}, 10, 2 );

@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) or exit;
 function authorship_pro_admin_styles( $default )
 {
-    return apply_filters( 'authorship_pro/admin/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/admin-rtl.4e67.min.css' : '/assets/css/admin.8d87.min.css' ), $default );
+    return apply_filters( 'authorship_pro/admin/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/admin-rtl.6ee0.min.css' : '/assets/css/admin.1a88.min.css' ), $default );
 }
 add_filter( 'authorship/admin/styles', 'authorship_pro_admin_styles' );
 function authorship_pro_admin_extra_styles( $css )

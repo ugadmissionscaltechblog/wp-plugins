@@ -15,5 +15,7 @@ function authorship_add_author_meta_query( &$wp_query, $author_type = 'user', $a
             'compare' => '==',
         ),
     );
+    $meta_query = apply_filters( 'authorship/author_meta_query', $meta_query, $wp_query, $author_type, $author_id );
+
     $wp_query->set( 'meta_query', $meta_query );
 }

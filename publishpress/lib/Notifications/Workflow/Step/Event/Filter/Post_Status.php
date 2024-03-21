@@ -70,7 +70,7 @@ class Post_Status extends Base implements Filter_Interface
         foreach ($statuses as $status) {
             $options[] = [
                 'value'    => esc_attr($status->slug),
-                'label'    => esc_html($status->name),
+                'label'    => esc_html($status->label),
                 'selected' => in_array($status->slug, $metadata[$group]),
             ];
         }
@@ -145,12 +145,12 @@ class Post_Status extends Base implements Filter_Interface
     {
         // From
         // $query_args['meta_query'][] = [
-        //     [
+            //     [
         //         'key'     => static::META_KEY_POST_STATUS_FROM,
-        //         'value'   => $event_args['params']['old_status'],
-        //         'type'    => 'CHAR',
-        //         'compare' => '=',
-        //     ],
+                //         'value'   => $event_args['params']['old_status'],
+                //         'type'    => 'CHAR',
+                //         'compare' => '=',
+            //     ],
         // ]; COMMENTED OUT BY GUUTZ
 
         // To

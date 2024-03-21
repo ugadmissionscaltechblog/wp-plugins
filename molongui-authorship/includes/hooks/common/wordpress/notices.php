@@ -124,8 +124,8 @@ function authorship_recommended_pro_warning()
     {
         if ( defined( 'MOLONGUI_AUTHORSHIP_PRO_VERSION' ) and  defined( 'MOLONGUI_AUTHORSHIP_RECOMMENDED_PRO' ) and version_compare( MOLONGUI_AUTHORSHIP_PRO_VERSION, MOLONGUI_AUTHORSHIP_RECOMMENDED_PRO, '<' ) )
         {
-            /*! translators: 1: <strong> 2: </strong> 3: <strong> 4: </strong> */
-            $message  = sprintf( esc_html__( '%1$sYou are running an old version of Molongui Authorship Pro%2$s. Some plugin features might not work as expected. %3$sPlease update the plugin%4$s to the latest available version.', 'molongui-authorship' ), '<strong>', '</strong>', '<strong>', '</strong>' );
+            /*! translators: 1: <strong> 2: Plugin tag 3: </strong> 4: <strong> 5: </strong> */
+            $message  = sprintf( esc_html__( '%1$sYou are running an old version of Molongui %2$s Pro%3$s. Some plugin features might not work as expected. %4$sPlease update the plugin%5$s to the latest available version.', 'molongui-authorship' ), '<strong>', MOLONGUI_AUTHORSHIP_TAG, '</strong>', '<strong>', '</strong>' );
 
             if ( current_user_can( 'activate_plugins' ) )
             {
@@ -171,7 +171,7 @@ function authorship_display_rate_notice()
             'image'   => '',
             'icon'    => '',
             'title'   => sprintf( __( "Like %s?", 'molongui-authorship' ), MOLONGUI_AUTHORSHIP_TITLE ),
-            'message' => sprintf( __( "Hey %s, hope you're happy with %s plugin. We would really appreciate it if you dropped us a quick rating!", 'molongui-authorship' ), $current_user->display_name, MOLONGUI_AUTHORSHIP_TITLE ),
+            'message' => sprintf( __( "Hey %s, hope you're happy with the %s plugin. We would really appreciate it if you dropped us a quick rating!", 'molongui-authorship' ), $current_user->display_name, MOLONGUI_AUTHORSHIP_TITLE ),
             'buttons' => array(),
             'button'  => array
             (

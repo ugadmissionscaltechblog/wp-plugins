@@ -2,9 +2,9 @@
 defined( 'ABSPATH' ) or exit;
 if ( !function_exists( 'authorship_get_post' ) )
 {
-    function authorship_get_post()
+    function authorship_get_post( $post = null )
     {
-        $post = get_post();
+        $post = get_post( $post );
         if ( !$post or empty( $post->ID ) )
         {
             global $wp_query;
@@ -34,16 +34,21 @@ if ( !function_exists( 'authorship_get_post' ) )
 }
 if ( !function_exists( 'authorship_get_post_id' ) )
 {
-    function authorship_get_post_id()
+    function authorship_get_post_id( $post = null )
     {
-        $post = authorship_get_post();
+        if ( is_int( $post ) )
+        {
+            return $post;
+        }
+
+        $post = authorship_get_post( $post );
 
         if ( !$post or !$post->ID or $post->ID == 0 )
         {
             return null;
         }
 
-        return $post->ID;
+        return (int) $post->ID;
     }
 }
 if ( !function_exists( 'authorship_get_post_type' ) )

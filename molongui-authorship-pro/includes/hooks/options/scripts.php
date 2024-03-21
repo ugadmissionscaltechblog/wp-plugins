@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) or exit;
 function authorship_pro_options_scripts( $default )
 {
-    return apply_filters( 'authorship_pro/options/script', MOLONGUI_AUTHORSHIP_PRO_FOLDER . '/assets/js/options.65be.min.js', $default );
+    return apply_filters( 'authorship_pro/options/script', MOLONGUI_AUTHORSHIP_PRO_FOLDER . '/assets/js/options.60d8.min.js', $default );
 }
 add_filter( 'authorship/options/script', 'authorship_pro_options_scripts' );
 function authorship_pro_options_script_params( $params )

@@ -22,7 +22,7 @@ function authorship_box_extra_styles()
     $bp  = empty( $options['breakpoint'] ) ? '600' : $options['breakpoint'];
     $bp_low_limit = $bp - 1;
     $css .= ":root{ --m-a-box-bp: " . $bp . "px; --m-a-box-bp-l: " . $bp_low_limit . "px; }";
-    if ( $options['enable_cdn_compat'] )
+    if ( !empty( $options['enable_cdn_compat'] ) )
     {
         $item_spacing = '20';
         $eqcss        = '';
@@ -185,7 +185,7 @@ function authorship_get_box_styles( $options = array(), $box_id = '' )
     $styles .= !empty( $options['author_box_border_color'] ) ? 'border-color:'.$options['author_box_border_color'].';' : ''; // '' = inherit
     $styles .= !empty( $options['author_box_border_radius'] ) ? 'border-radius:'.$options['author_box_border_radius'].'px;' : '';
     $styles .= !empty( $options['author_box_background_color'] ) ? 'background-color:'.$options['author_box_background_color'].';' : ''; // '' = inherit
-    $styles .= 'box-shadow:' . ( $options['author_box_shadow_h_offset'] ? $options['author_box_shadow_h_offset'].'px ' : '' ) . ( $options['author_box_shadow_v_offset'] ? $options['author_box_shadow_v_offset'].'px ' : '' ) . ( $options['author_box_shadow_blur'] ? $options['author_box_shadow_blur'].'px ' : '' ) . ( $options['author_box_shadow_spread'] ? $options['author_box_shadow_spread'].'px ' : '' ) . $options['author_box_shadow_color'] . ' ' . ( $options['author_box_shadow_inset'] ? 'inset' : '' ) . ';';
+    $styles .= 'box-shadow:' . ( empty( $options['author_box_shadow_h_offset'] ) ? '0' : $options['author_box_shadow_h_offset'].'px' ) . ' ' . ( empty( $options['author_box_shadow_v_offset'] ) ? '0' : $options['author_box_shadow_v_offset'].'px' ) . ' ' . ( empty( $options['author_box_shadow_blur'] ) ? '0' : $options['author_box_shadow_blur'].'px' ) . ' ' .  ( empty( $options['author_box_shadow_spread'] ) ? '0' : $options['author_box_shadow_spread'].'px' ) . ' ' . $options['author_box_shadow_color'] . ' ' . ( $options['author_box_shadow_inset'] ? 'inset' : '' ) . ';';
     if ( !empty( $styles ) ) $css .= $box_id.' .m-a-box-container {' . $styles . '}';
     $styles  = '';
     $styles .= ( !empty( $options['author_box_profile_valign'] ) and $options['author_box_profile_valign'] != 'center' ) ? 'align-self:'.$options['author_box_profile_valign'].' !important;' : '';

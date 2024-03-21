@@ -131,6 +131,23 @@ class Amox_Carousel extends Group_Control_Query
 			]
 		);
 
+		$this->add_responsive_control(
+			'image_height',
+			[
+				'label'     => esc_html__('Image Height', 'ultimate-post-kit') . BDTUPK_NC,
+				'type'      => Controls_Manager::SLIDER,
+				'range'     => [
+					'px' => [
+						'min' => 100,
+						'max' => 800,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .upk-amox-carousel .upk-img-wrap' => 'height: {{SIZE}}px;',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
@@ -707,7 +724,7 @@ class Amox_Carousel extends Group_Control_Query
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .upk-amox-carousel .upk-category a+a' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .upk-amox-carousel .upk-category' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -798,7 +815,7 @@ class Amox_Carousel extends Group_Control_Query
 		$this->end_controls_section();
 
 		//Navigation Global Controls
-		$this->register_navigation_style('amox');
+		$this->register_navigation_style('swiper');
 	}
 
 	/**
@@ -872,7 +889,7 @@ class Amox_Carousel extends Group_Control_Query
 									<?php if (_is_upk_pro_activated()) :
 										if ('yes' === $settings['show_reading_time']) : ?>
 											<div class="upk-reading-time" data-separator="<?php echo esc_html($settings['meta_separator']); ?>">
-												<?php ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
+												<?php echo ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
 											</div>
 										<?php endif; ?>
 									<?php endif; ?>

@@ -72,7 +72,7 @@ if ( !function_exists( 'shortcode_molongui_author_posts' ) )
             }
             else
             {
-//                 wp_reset_query();
+                wp_reset_query();
                 global $post;
 
                 $main_author    = get_main_author( $post->ID );
@@ -84,6 +84,8 @@ if ( !function_exists( 'shortcode_molongui_author_posts' ) )
         $atts['include_posts'] = is_array( $atts['include_posts'] ) ? $atts['include_posts'] : molongui_parse_array_attribute( $atts['include_posts'] );
         $atts['exclude_posts'] = is_array( $atts['exclude_posts'] ) ? $atts['exclude_posts'] : molongui_parse_array_attribute( $atts['exclude_posts'] );
         $atts = apply_filters( 'authorship_pro/sc/author_posts/atts', $atts, $attributes );
+        authorship_debug( $attributes, "[molongui_author_posts] provided attributes:" );
+        authorship_debug( $atts, "[molongui_author_posts] sanitized attributes:" );
         $author = new Author( $atts['author'], $atts['guest'] );
         $posts  = $author->get_posts( array( 'post_type' => $atts['post_types'], 'post_status' => 'publish', 'cat' => $atts['category'], 'post__not_in' => $atts['exclude_posts'], 'post__in' => $atts['include_posts'], 'order' => $atts['order'], 'orderby' => $atts['orderby'], 'posts_per_page' => $atts['count'], 'meta_query' => $meta_query ) );
         $add_microdata = authorship_is_feature_enabled( 'microdata' );
@@ -129,9 +131,8 @@ if ( !function_exists( 'shortcode_molongui_author_posts' ) )
         }
         else
         {
-            echo '<p>';
-            _e( 'There are no posts to list.', 'molongui-authorship-pro' );
-            echo '</p>';
+            $no_posts = '<p>' . __( 'There are no posts to list.', 'molongui-authorship-pro' ) . '</p>';
+            echo wp_kses_post( apply_filters( 'authorship_pro/author_posts/no_posts', $no_posts ) );
         }
         remove_filter( '_authorship/doing_shortcode', '__return_true' );
         remove_filter( '_authorship/doing_shortcode/author_posts', '__return_true' );

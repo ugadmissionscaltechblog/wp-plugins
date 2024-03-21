@@ -7,6 +7,7 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Background;
 use Elementor\Plugin;
@@ -417,6 +418,15 @@ class Noxe_Slider extends Group_Control_Query {
 				'name'     => 'title_text_shadow',
 				'label'    => __('Text Shadow', 'ultimate-post-kit'),
 				'selector' => '{{WRAPPER}} .upk-noxe-slider .upk-title',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name'      => 'title_text_stroke',
+				'label'     => __('Text Stroke', 'ultimate-post-kit') . BDTUPK_NC,
+				'selector'  => '{{WRAPPER}} .upk-noxe-slider .upk-title',
 			]
 		);
 
@@ -1061,7 +1071,7 @@ class Noxe_Slider extends Group_Control_Query {
 								<?php if (_is_upk_pro_activated()) :
 									if ('yes' === $settings['show_reading_time']) : ?>
 										<div class="upk-reading-time" data-separator="<?php echo esc_html($settings['meta_separator']); ?>">
-											<?php ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
+											<?php echo ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
 										</div>
 									<?php endif; ?>
 								<?php endif; ?>

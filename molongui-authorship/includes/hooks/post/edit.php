@@ -76,6 +76,15 @@ function authorship_post_remove_author_metabox()
 add_action( 'admin_menu', 'authorship_post_remove_author_metabox' );
 function authorship_post_add_meta_boxes( $post_type )
 {
+    /*!
+     * FILTER HOOK
+     *
+     * Allows changing the capabilities criteria followed to decide whether to add custom meta boxes.
+     *
+     * @param bool    Current user editor capabilities.
+     * @param string  Current post type.
+     * @since 4.4.0
+     */
     $editor_caps = apply_filters( 'authorship/editor_caps', current_user_can( 'edit_others_pages' ) or current_user_can( 'edit_others_posts' ), $post_type );
     if ( !$editor_caps ) return;
 
@@ -274,6 +283,16 @@ function authorship_post_save_authors( $data, $post_id, $class = '', $fn = '' )
     {
         $new_post_authors[0] = 'user-'.$data['post_author'];
     }
+    if ( !apply_filters( 'authorship/post_as_other_author', false ) )
+    {
+        if ( !current_user_can( 'administrator' ) and !current_user_can( 'editor' ) )
+        {
+            $current_user = wp_get_current_user();
+
+            $new_post_authors = array_merge( array( 'user-'.$current_user->ID ), $new_post_authors );
+            $new_post_authors = array_unique( $new_post_authors );
+        }
+    }
     delete_post_meta( $post_id, '_molongui_author' );
     foreach ( $new_post_authors as $author )
     {
@@ -314,8 +333,8 @@ function authorship_post_save( $post_id, $post )
     global $current_screen;
     if ( MOLONGUI_AUTHORSHIP_CPT == $current_screen->post_type ) return $post_id;
     authorship_post_save_authors( $_POST, $post_id );
-    if ( isset( $_POST['_molongui_author_box_display'] ) ) update_post_meta( $post_id, '_molongui_author_box_display', $_POST['_molongui_author_box_display'] );
-    if ( isset( $_POST['_molongui_author_box_position'] ) ) update_post_meta( $post_id, '_molongui_author_box_position', $_POST['_molongui_author_box_position'] );
+    if ( isset( $_POST['_molongui_author_box_display'] ) ) update_post_meta( $post_id, '_molongui_author_box_display', sanitize_text_field( $_POST['_molongui_author_box_display'] ) );
+    if ( isset( $_POST['_molongui_author_box_position'] ) ) update_post_meta( $post_id, '_molongui_author_box_position', sanitize_text_field( $_POST['_molongui_author_box_position'] ) );
     authorship_post_clear_object_cache();
 
     return $post_id;

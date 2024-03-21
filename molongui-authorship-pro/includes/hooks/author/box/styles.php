@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) or exit;
 function authorship_pro_box_styles( $default )
 {
-    return apply_filters( 'authorship_pro/box/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.e550.min.css' : '/assets/css/author-box.f708.min.css' ), $default );
+    return apply_filters( 'authorship_pro/box/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.71d9.min.css' : '/assets/css/author-box.f886.min.css' ), $default );
 }
 add_filter( 'authorship/box/styles', 'authorship_pro_box_styles' );
 function authorship_pro_box_extra_styles( $css = '', $options = array() )

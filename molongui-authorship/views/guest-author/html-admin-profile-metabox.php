@@ -73,7 +73,7 @@ defined( 'ABSPATH' ) or exit;
                                 <span class="m-tooltip__text"><?php _e( "Author's telephone number. This field is not displayed in the front-end unless configured so. See 'Author box settings' on this same page.", 'molongui-authorship' ); ?></span>
                             </div>
                         </label>
-                        <input type="text" name="_molongui_guest_author_phone" id="_molongui_guest_author_author_phone" value="<?php echo esc_attr( $guest_author_phone ); ?>" />
+                        <input type="tel" name="_molongui_guest_author_phone" id="_molongui_guest_author_author_phone" value="<?php echo esc_attr( $guest_author_phone ); ?>" />
                     </div>
 
                 </div>

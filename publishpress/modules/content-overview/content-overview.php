@@ -325,7 +325,7 @@ class PP_Content_Overview extends PP_Module
             $label = $taxonomy->label . ' (' . $value . ')';//some taxonomy can have same public name, so we should put unique name in bracket
 
             //let skip status from filter list since we already have it seperately
-            if ($value ==='post_status') {
+            if (in_array($value, ['post_status', 'post_status_core_wp_pp', 'post_visibility_pp'])) {
                 continue;
             }
 
@@ -864,11 +864,11 @@ class PP_Content_Overview extends PP_Module
         }
 
         if (! $user_filters['start_date']) {
-            $user_filters['start_date'] = date('Y-m-d'); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+            $user_filters['start_date'] = date('Y-m-d', strtotime('-30 days')); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         }
 
         if (! $user_filters['end_date']) {
-            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +10 day'));
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +30 day'));
         }
 
         $user_filters = apply_filters('PP_Content_Overview_filter_values', $user_filters, $current_user_filters);
@@ -914,13 +914,13 @@ class PP_Content_Overview extends PP_Module
  
         $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
-            ? current_time($date_format)
+            ? date($date_format, strtotime('-30 days'))
             : date($date_format, strtotime(sanitize_text_field($_REQUEST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
  
         $user_filters['end_date'] = $_REQUEST['pp-content-overview-end-date_hidden'];
  
         if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
-            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 day'));
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +30 day'));
         }
  
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
@@ -1022,7 +1022,7 @@ class PP_Content_Overview extends PP_Module
         $output .= ' class="button" value="' . esc_html__('Apply', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
-        $output .= ' class="button button-secondary hidden" value="' . esc_html__('Reset', 'publishpress') . '" />';
+        $output .= ' class="button button-secondary hidden" value="' . esc_attr__('Reset', 'publishpress') . '" />';
         $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
         $output .= '<a class="change-date-cancel hidden" href="#">' . esc_html__('Cancel', 'publishpress') . '</a>';
@@ -1141,10 +1141,12 @@ class PP_Content_Overview extends PP_Module
                             </tbody>
                         </table>
                     </div>
-                   <?php submit_button(esc_html__('Filter', 'publishpress'), '', '', false, ['id' => 'filter-submit']); ?>
-                   <input type="submit" id="post-query-clear" value="<?php
-                    echo esc_attr(__('Reset', 'publishpress')); ?>"
-                           class="button-secondary button"/>
+                    <div class="co-submit-wrap">
+                        <?php submit_button(esc_html__('Filter', 'publishpress'), 'button-primary', '', false, ['id' => 'filter-submit']); ?>
+                        <input type="submit" id="post-query-clear" value="<?php
+                            echo esc_attr(__('Reset', 'publishpress')); ?>"
+                                class="button-secondary button"/>
+                    </div>
                 </form>
 
                 <form method="GET" id="pp-content-filters-hidden">
@@ -1161,6 +1163,28 @@ class PP_Content_Overview extends PP_Module
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
+                    <?php 
+                    $date_format = 'Y-m-d';
+                    $reset_start_date = date($date_format, strtotime('-30 days'));
+                    $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +30 day'));
+
+                    $filtered_start_date = $reset_start_date;
+                    $filtered_start_date_timestamp = strtotime($filtered_start_date);
+            
+                    $filtered_end_date = $reset_end_date;
+                    $filtered_end_date_timestamp = strtotime($filtered_end_date);
+
+                    $start_date_value = '<input type="hidden" name="pp-content-overview-start-date" value="' . esc_attr(date_i18n($date_format, $filtered_start_date_timestamp)) . '" />';
+                    $start_date_value .= '<input type="hidden" name="pp-content-overview-start-date_hidden" value="' . $filtered_start_date . '" />';
+            
+                    $end_date_value = '<input type="hidden" name="pp-content-overview-end-date" value="' . esc_attr(date_i18n($date_format, $filtered_end_date_timestamp)) . '" />';
+                    $end_date_value .= '<input type="hidden" name="pp-content-overview-end-date_hidden" value="' . $filtered_end_date . '" />';
+
+                    $nonce = wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
+
+                    echo $start_date_value . $end_date_value . $nonce;
+                    ?>
+                    <input type="hidden" name="pp-content-overview-range-use-today" value="1"/>
                 </form>
             </div><!-- /alignleft actions -->
 
@@ -1235,7 +1259,7 @@ class PP_Content_Overview extends PP_Module
                         echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
                                 $post_status->slug,
                                 $filters['post_status']
-                            ) . ">" . esc_html($post_status->name) . "</option>";
+                            ) . ">" . esc_html($post_status->label) . "</option>";
                     }
                     ?>
                 </select>

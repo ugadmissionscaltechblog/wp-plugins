@@ -1,9 +1,8 @@
 <?php
 defined( 'ABSPATH' ) or exit;
-if ( ! function_exists( 'authorship_set_defaults' ) ) {
-function authorship_set_defaults()
+function authorship_set_defaults( $fw_options )
 {
-    return array
+    return array_merge( $fw_options, array
     (
         'author_box'               => true,
         'box_post_types_auto'      => "post", // Data stored as a string with comma-separated items. No array!
@@ -191,8 +190,6 @@ function authorship_set_defaults()
         'byline_name_link' => true,
         'byline_prefix'    => '',
         'byline_suffix'    => '',
-        'keep_config' => true,
-        'keep_data'   => true,
         'add_html_meta'      => true,
         'add_opengraph_meta' => true,
         'add_facebook_meta'  => true,
@@ -209,6 +206,6 @@ function authorship_set_defaults()
         'assets_cdn'   => true,
         'enable_theme_compat'  => true,
         'enable_plugin_compat' => true,
-    );
+    ));
 }
-add_filter( 'authorship/default_options', 'authorship_set_defaults' );}
+add_filter( 'authorship/default_options', 'authorship_set_defaults' );

@@ -7,8 +7,10 @@ if ( $plugin_compat )
     if ( !function_exists( 'is_plugin_active' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
     if ( is_plugin_active( 'pmpro-member-directory/pmpro-member-directory.php' ) ) require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/compat/plugins/pmpro-member-directory.php';
+    if ( is_plugin_active( 'polylang/polylang.php' ) ) require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/compat/plugins/polylang.php';
     if ( is_plugin_active( 'relevanssi/relevanssi.php' ) ) require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/compat/plugins/relevanssi.php';
     if ( is_plugin_active( 'td-cloud-library/td-cloud-library.php' ) ) require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/compat/plugins/tagdiv-cloud-library.php';
+    if ( is_plugin_active( 'wp-graphql/wp-graphql.php' ) ) require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/compat/plugins/wp-graphql.php';
     if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) or is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/compat/plugins/yoast.php';
 }
 if ( $theme_compat )

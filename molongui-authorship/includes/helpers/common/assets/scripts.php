@@ -10,10 +10,17 @@ function authorship_register_script( $file, $scope, $deps = array( 'jquery' ), $
         $handle   = !empty( $handle )  ? $handle  : MOLONGUI_AUTHORSHIP_NAME . '-' . str_replace( '_', '-', $scope );
         $version  = !empty( $version ) ? $version : MOLONGUI_AUTHORSHIP_VERSION;
         $function = 'authorship_'.$scope.'_script_params';
-        if ( function_exists( $function ) ) $params = call_user_func( $function );
 
         wp_register_script( $handle, plugins_url( '/' ).$file, $deps, $version, true );
-        if ( !empty( $params ) ) wp_localize_script( $handle, str_replace( '-', '_', $handle ).'_params', $params );
+        if ( function_exists( $function ) )
+        {
+            $params = call_user_func( $function );
+
+            if ( !empty( $params ) )
+            {
+                wp_localize_script( $handle, str_replace( '-', '_', $handle ).'_params', $params );
+            }
+        }
         do_action( "authorship/{$scope}/script_registered", $scope );
     }
 }
@@ -30,6 +37,7 @@ function authorship_enqueue_script( $file, $scope, $admin = false, $handle = nul
 
         $handle  = !empty( $handle  ) ? $handle  : MOLONGUI_AUTHORSHIP_NAME . '-' . str_replace( '_', '-', $scope );
         $version = !empty( $version ) ? $version : MOLONGUI_AUTHORSHIP_VERSION;
+        $jsextra = str_replace( '-', '_', $handle ).'_params';
         $inline = apply_filters( "authorship/{$scope}/inline_script", $filesize < 4096 );
         do_action( "authorship/{$scope}/pre_enqueue_script", $scope, $inline );
         if ( $inline )
@@ -39,7 +47,7 @@ function authorship_enqueue_script( $file, $scope, $admin = false, $handle = nul
             {
                 $hook = $admin ? 'admin_print_footer_scripts' : 'wp_print_footer_scripts';
 
-                add_action( $hook, function() use ( $scope, $filepath, $handle, $version )
+                add_action( $hook, function() use ( $scope, $filepath, $handle, $version, $jsextra )
                 {
                     do_action( "authorship/{$scope}/pre_inline_script", $scope, $filepath, $handle );
 
@@ -47,7 +55,7 @@ function authorship_enqueue_script( $file, $scope, $admin = false, $handle = nul
                     $function = 'authorship_'.$scope.'_script_params';
                     if ( function_exists( $function ) ) $params = call_user_func( $function );
 
-                    if ( !empty( $params ) ) echo '<script id="'.$handle.'-inline-js-extra">' . 'var '.str_replace( '-', '_', $handle ).'_params'.' = '.json_encode( $params ).';' . '</script>';
+                    if ( !empty( $params ) ) echo '<script id="'.$handle.'-inline-js-extra">' . 'var '.$jsextra.' = '.json_encode( $params ).';' . '</script>';
                     echo '<script id="'.$handle.'-inline-js" type="text/javascript" data-file="'.basename( $filepath ).'" data-version="'.$version.'">' . $contents . '</script>';
                 });
 

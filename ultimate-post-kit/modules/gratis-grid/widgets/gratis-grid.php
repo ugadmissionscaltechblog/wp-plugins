@@ -63,10 +63,9 @@ class Gratis_Grid extends Group_Control_Query
 		}
 	}
 
-	// public function get_custom_help_url()
-	// {
-	// 	return 'https://youtu.be/ebSyK__cMhw';
-	// }
+	public function get_custom_help_url() {
+		return 'https://youtu.be/jLBLAqxEOwQ';
+	}
 
 	public function get_query()
 	{
@@ -1281,7 +1280,7 @@ class Gratis_Grid extends Group_Control_Query
 								<?php $this->render_date(); ?>
 								<?php if ('yes' === $settings['show_reading_time']) : ?>
 									<div class="upk-reading-time" data-separator="<?php echo esc_html($settings['meta_separator']); ?>">
-										<?php ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
+										<?php echo ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
 									</div>
 								<?php endif; ?>
 							</div>

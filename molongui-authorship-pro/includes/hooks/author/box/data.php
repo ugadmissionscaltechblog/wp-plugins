@@ -59,12 +59,21 @@ if ( !function_exists( 'authorship_pro_encode_phone' ) )
     }
     add_filter( 'authorship/box/meta/phone', 'authorship_pro_encode_phone', 10, 4 );
 }
-if ( !function_exists( 'authorship_pro_enable_bio_shortcodes' ) )
+function authorship_pro_enable_short_bio( $bio, $author )
 {
-    function authorship_pro_enable_bio_shortcodes( $bio )
+    $short_bio = '';
+    $options   = authorship_get_options();
+
+    if ( 'short' === $options['author_box_bio_source'] or apply_filters( 'authorship_pro/force_short_bio', false ) )
     {
-        $bio = $GLOBALS['wp_embed']->autoembed($bio);
-        return do_shortcode( $bio );
+        $short_bio = authorship_pro_get_author_short_bio( $author['id'], $author['type'], $author );
     }
-    add_filter( 'authorship/box/bio', 'authorship_pro_enable_bio_shortcodes', 99, 1 );
+    return !empty( $short_bio ) ? $short_bio : $bio;
 }
+add_filter( 'authorship/box/bio', 'authorship_pro_enable_short_bio', 11, 2 );
+function authorship_pro_enable_bio_shortcodes( $bio )
+{
+    $bio = $GLOBALS['wp_embed']->autoembed( $bio );
+    return do_shortcode( $bio );
+}
+add_filter( 'authorship/box/bio', 'authorship_pro_enable_bio_shortcodes', 99, 1 );

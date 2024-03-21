@@ -38,6 +38,7 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
         if ( isset( $atts['select_class'] ) ) $atts['list_class'] = $atts['select_class'];
         if ( isset( $atts['select_atts']  ) ) $atts['list_atts']  = $atts['select_atts'];
         if ( isset( $atts['with_posts'] ) and 'yes' === $atts['with_posts'] ) $atts['min_post_count'] = 1;
+        if ( isset( $atts['post_types'] ) ) $atts['post_type'] = $atts['post_types'];
         $atts = shortcode_atts( array
         (
             'output'                  => 'list',
@@ -52,12 +53,14 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
             'exclude_guests'          => array(),
             'exclude_archived'        => 'no',
             'min_post_count'          => 0,
-            'post_types'              => array( 'post' ),
+            'post_type'               => array( 'post' ),
             'show_post_count'         => array(),
             'show_post_count_total'   => false,
             'count'                   => false,
             'paginate'                => false,
             'name_format'             => 'display_name',
+            'name_link'               => true,
+            'avatar_link'             => true,
             'show_bio'                => false,
             'bio_format'              => 'full',
             'list_icon'               => 'feather',
@@ -87,13 +90,15 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
         $atts['exclude_users']   = is_array( $atts['exclude_users']   ) ? $atts['exclude_users']   : molongui_parse_array_attribute( $atts['exclude_users']   );
         $atts['include_guests']  = is_array( $atts['include_guests']  ) ? $atts['include_guests']  : molongui_parse_array_attribute( $atts['include_guests']  );
         $atts['exclude_guests']  = is_array( $atts['exclude_guests']  ) ? $atts['exclude_guests']  : molongui_parse_array_attribute( $atts['exclude_guests']  );
-        $atts['post_types']      = is_array( $atts['post_types']      ) ? $atts['post_types']      : molongui_parse_array_attribute( $atts['post_types']      );
+        $atts['post_type']       = is_array( $atts['post_type']       ) ? $atts['post_type']       : molongui_parse_array_attribute( $atts['post_type']       );
         $atts['show_post_count'] = ( 'all' === $atts['show_post_count'] ? $atts['show_post_count'] : ( is_array( $atts['show_post_count'] ) ? $atts['show_post_count'] : molongui_parse_array_attribute( $atts['show_post_count'] ) ) );
         $atts['exclude_archived']      = in_array( strtolower( $atts['exclude_archived'] ), array( 'yes', 'true', 'on' ) ) ? true : false;
         $atts['show_post_count_total'] = in_array( strtolower( $atts['show_post_count_total'] ), array( 'yes', 'true', 'on' ) ) ? true : false;
         $atts['dev_mode']              = ( $atts['dev_mode'] === true or in_array( strtolower( $atts['dev_mode'] ), array( 'yes', 'true', 'on' ) ) ) ? true : false;
+        $atts['name_link']             = ( $atts['name_link'] === true or in_array( strtolower( $atts['name_link'] ), array( 'yes', 'true', 'on' ) ) ) ? true : false;
+        $atts['avatar_link']           = ( $atts['avatar_link'] === true or in_array( strtolower( $atts['avatar_link'] ), array( 'yes', 'true', 'on' ) ) ) ? true : false;
         $atts['paginate']   = is_numeric( $atts['paginate'] ) ? $atts['paginate'] : false;
-        $atts['orderby']    = ( $atts['orderby']  and $atts['orderby'] == 'include' and empty( $atts['include_users'] ) and empty( $atts['include_guests'] ) ) ? 'name' : $atts['orderby'];
+        $atts['orderby']    = ( $atts['orderby'] and $atts['orderby'] == 'include' and empty( $atts['include_users'] ) and empty( $atts['include_guests'] ) ) ? 'name' : $atts['orderby'];
         $atts['bio_format'] = in_array( strtolower( $atts['bio_format'] ), array( 'full', 'short' ) ) ? $atts['bio_format'] : 'full';
         $atts['type']       = in_array( strtolower( $atts['type'] ), array( 'user', 'guest', 'author' ) ) ? $atts['type'].'s' : $atts['type'];
         if ( $atts['exclude_archived'] )
@@ -103,11 +108,16 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
             $atts['exclude_users']  = array_unique( array_merge( $atts['exclude_users'], $archived_users ) );
             $atts['exclude_guests'] = array_unique( array_merge( $atts['exclude_guests'], $archived_guests ) );
         }
+        authorship_debug( $old_atts, "[molongui_author_list] provided attributes:" );
+        authorship_debug( $atts, "[molongui_author_list] sanitized attributes:" );
         add_filter( 'authorship_pro/author_list/atts', function() use ( $atts ){ return $atts; } );
         add_filter( 'authorship/author/name/format', 'authorship_pro_author_list_name_format' );
         add_filter( 'authorship/user/roles', function() use ( $atts ){ return $atts['user_role']; } );
-        if ( 'short' === $atts['bio_format'] ) add_filter( 'authorship/author/bio', 'authorship_pro_author_list_bio_format', 11, 4 );
-        $authors = molongui_get_authors( $atts['type'], $atts['include_users'], $atts['exclude_users'], $atts['include_guests'], $atts['exclude_guests'], $atts['order'], $atts['orderby'], false, $atts['min_post_count'], $atts['post_types'] );
+        if ( 'short' === $atts['bio_format'] )
+        {
+            add_filter( 'authorship/author/bio', 'authorship_pro_author_list_bio_format', 11, 4 );
+        }
+        $authors = molongui_get_authors( $atts['type'], $atts['include_users'], $atts['exclude_users'], $atts['include_guests'], $atts['exclude_guests'], $atts['order'], $atts['orderby'], false, $atts['min_post_count'], $atts['post_type'] );
         if ( $atts['count'] and is_numeric( $atts['count'] ) ) $authors = array_slice( $authors, 0, $atts['count'] );
         if ( false === $atts['paginate'] and count( $authors ) > 30 )
         {
@@ -153,8 +163,11 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
                 $authors = molongui_get_authors( $author_type, $include_users, array(), $include_guests, array(), $atts['order'], $atts['orderby'], true );
             }
             remove_filter( 'authorship/author/name/format', 'authorship_pro_author_list_name_format' );
-            if ( 'short' === $atts['bio_format'] ) remove_filter( 'authorship/author/bio', 'authorship_pro_author_list_bio_format', 11 );
-            $styles = apply_filters( 'authorship_pro/list/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/author-list-rtl.5091.min.css' : '/assets/css/author-list.c705.min.css' ) );
+            if ( 'short' === $atts['bio_format'] )
+            {
+                remove_filter( 'authorship/author/bio', 'authorship_pro_author_list_bio_format', 11 );
+            }
+            $styles = apply_filters( 'authorship_pro/list/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/author-list-rtl.ce6c.min.css' : '/assets/css/author-list.65d6.min.css' ) );
             if ( 'select' !== $atts['output'] )
             {
                 authorship_pro_register_style( $styles, 'list' );

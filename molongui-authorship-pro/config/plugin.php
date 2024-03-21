@@ -6,7 +6,7 @@ $config = array
     'name'  => 'Authorship Pro',
     'title' => 'Authorship Pro',
     'id'    => 'authorship_pro',
-    'db' => 5,
+    'db' => 6,
 );
 $plugin_id = strtolower( str_replace( ' ', '-', $config['brand'] . ' ' . $config['name'] ) );
 $plugin_px = str_replace( '-', '_', $plugin_id );

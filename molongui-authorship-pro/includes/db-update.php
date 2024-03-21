@@ -4,6 +4,17 @@ namespace Molongui\Authorship\Pro\Includes;
 \defined( 'ABSPATH' ) or exit;
 class DB_Update
 {
+	public function db_update_6()
+	{
+        $license = \get_option( 'molongui_authorship_pro_license' );
+
+        $license['status']       = 'Activated' == $license['status'] ? 'wc-active' : '';
+        $license['purchase']     = '';
+        $license['product_type'] = \in_array( \get_option( 'molongui_authorship_pro_product_id' ), array( 9141, 9142, 9143 ) ) ? 'subscription' : 'one-time';
+        unset ( $license['expiry'] );
+
+        \update_option( 'molongui_authorship_pro_license', $license );
+    }
 	public function db_update_5()
 	{
         $now = \get_option( 'molongui_authorship_pro_install' );

@@ -7,6 +7,7 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Background;
 use Elementor\Plugin;
@@ -499,6 +500,15 @@ class Skide_Slider extends Group_Control_Query {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name'      => 'title_text_stroke',
+				'label'     => __('Text Stroke', 'ultimate-post-kit') . BDTUPK_NC,
+				'selector'  => '{{WRAPPER}} .upk-skide-slider .upk-title a',
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -895,7 +905,7 @@ class Skide_Slider extends Group_Control_Query {
 			return;
 		}
 
-		printf('<%1$s class="upk-title"><a href="%2$s" title="%3$s">%3$s</a></%1$s>', Utils::get_valid_html_tag($settings['title_tags']), get_permalink(), get_the_title());
+		printf('<%1$s class="upk-title"><a href="%2$s" title="%3$s">%3$s</a></%1$s>', esc_attr(Utils::get_valid_html_tag($settings['title_tags'])), get_permalink(), get_the_title());
 	}
 
 	public function render_excerpt($excerpt_length) {
@@ -1088,7 +1098,7 @@ class Skide_Slider extends Group_Control_Query {
 								<?php if (_is_upk_pro_activated()) :
 									if ('yes' === $settings['show_reading_time']) : ?>
 										<div class="upk-reading-time" data-separator="<?php echo esc_html($settings['meta_separator']); ?>">
-											<?php ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
+											<?php echo ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
 										</div>
 									<?php endif; ?>
 								<?php endif; ?>

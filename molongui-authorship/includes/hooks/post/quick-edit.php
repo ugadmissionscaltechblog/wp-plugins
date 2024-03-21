@@ -133,6 +133,6 @@ function authorship_post_quick_edit_save_fields( $post_id, $post )
     if ( !in_array( $post->post_type, molongui_supported_post_types( MOLONGUI_AUTHORSHIP_PREFIX, 'all' ) ) ) return;
     if ( !current_user_can( 'edit_post', $post_id ) ) return;
     authorship_post_save_authors( $_POST, $post_id, __CLASS__, __FUNCTION__ );
-    if ( isset( $_POST['_molongui_author_box_display'] ) ) update_post_meta( $post_id, '_molongui_author_box_display', $_POST['_molongui_author_box_display'] );
+    if ( isset( $_POST['_molongui_author_box_display'] ) ) update_post_meta( $post_id, '_molongui_author_box_display', sanitize_text_field( $_POST['_molongui_author_box_display'] ) );
 }
 add_action( 'save_post', 'authorship_post_quick_edit_save_fields', 10, 2 );

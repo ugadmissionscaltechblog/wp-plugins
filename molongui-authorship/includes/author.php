@@ -189,7 +189,7 @@ class Author
 		$name = $url = $link = '';
         $name = $this->get_name();
         $url = $this->get_url();
-		if ( !empty( $name ) and !empty( $url ) ) $link = '<a href="'.$url.'">'.$name.'</a>';
+		if ( !empty( $name ) and !empty( $url ) ) $link = '<a href="'.esc_url( $url ).'">'.esc_html( $name).'</a>';
 		return \apply_filters( 'authorship/author/link', $link, $name, $url, $this->id, $this->type, $this->author );
 	}
 	public function get_bio()

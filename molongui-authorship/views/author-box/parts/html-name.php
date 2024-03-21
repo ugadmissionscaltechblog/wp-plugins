@@ -24,7 +24,7 @@ $name_tag = ( !empty( $options['author_box_name_tag'] ) ? $options['author_box_n
             ){
 	            ?>
                 <span>
-			        <?php echo $author['name']; ?>
+			        <?php echo esc_html( $author['name'] ); ?>
                 </span>
 	            <?php
             }
@@ -38,7 +38,7 @@ $name_tag = ( !empty( $options['author_box_name_tag'] ) ? $options['author_box_n
                 }
                 ?>
                 <a class="m-a-box-name-url <?php echo ( $options['author_box_name_underline'] == 'remove' ? 'molongui-remove-underline' : '' ); ?>" href="<?php echo esc_url( $url ); ?>" <?php echo ( $add_microdata ? 'itemprop="url"' : '' ); ?>>
-		            <?php echo $author['name']; ?>
+		            <?php echo esc_html( $author['name'] ); ?>
                 </a>
 	            <?php
             }

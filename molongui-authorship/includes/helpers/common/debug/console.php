@@ -12,6 +12,10 @@ function authorship_console_log( $value = null, $message = '' )
         {
             $value = json_encode( $value );
         }
+        elseif ( is_string( $value ) )
+        {
+            $value = '"' . $value . '"';
+        }
 
         if ( defined( 'MOLONGUI_AUTHORSHIP_TITLE' ) )
         {
@@ -30,7 +34,7 @@ function authorship_console_log( $value = null, $message = '' )
         <?php
     });
 }
-function authorship_debug( $value, $message )
+function authorship_debug( $value = null, $message = '' )
 {
     if ( authorship_is_debug_mode_enabled() )
     {

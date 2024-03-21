@@ -36,6 +36,7 @@ if ( apply_filters( 'authorship/theme_compatibility', authorship_is_feature_enab
     elseif ( 'BuddyBoss Theme' == $theme->name or 'BuddyBoss Theme' == $theme->parent_theme )       require_once $path . 'buddyboss.php';
     elseif ( 'BuddyX' == $theme->name or 'BuddyX' == $theme->parent_theme )                         require_once $path . 'buddyx.php';
     elseif ( 'SmartMag' == $theme->name or 'SmartMag' == $theme->parent_theme )                     require_once $path . 'smart-mag.php';
+    elseif ( 'Impreza' == $theme->name or 'Impreza' == $theme->parent_theme )                       require_once $path . 'impreza.php';
     elseif ( 'Mission News' == $theme->name or 'Mission News' == $theme->parent_theme )             require_once $path . 'mission-news.php';
     elseif ( 'Creativo Theme' == $theme->name or 'Creativo Theme' == $theme->parent_theme )         require_once $path . 'creativo.php';
     elseif ( 'AdoreChurch' == $theme->name or 'AdoreChurch' == $theme->parent_theme )               require_once $path . 'adorechurch.php';

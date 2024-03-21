@@ -3,12 +3,22 @@
 use Molongui\Authorship\Includes\Author;
 defined( 'ABSPATH' ) or exit;
 if ( !function_exists( 'is_plugin_active' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-
 if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) or is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) )
 {
     $options = authorship_get_options();
-    if ( $options['guest_pages'] )
+    if ( $options['guest_authors'] and $options['guest_pages'] )
     {
+        /*!
+         * FILTER HOOK
+         *
+         * Allows preventing the guest_author sitemap to be added to the Yoast SEO main sitemap index.
+         *
+         * @since 1.6.3
+         */
+        if ( !apply_filters( 'authorship_pro/add_guest_author_sitemap_to_yoast', true ) )
+        {
+            return;
+        }
 
         add_filter( 'wpseo_sitemap_index', 'molongui_add_guests_sitemap_to_index', 99 );
         add_action( 'init', 'molongui_add_guests_sitemap_to_wpseo' );
@@ -24,7 +34,7 @@ if ( is_plugin_active( 'wordpress-seo/wp-seo.php' ) or is_plugin_active( 'wordpr
 
         if ( !isset( $wpseo_sitemaps ) or empty( $wpseo_sitemaps ) ) return $smp;
         add_filter( 'wpseo_accessible_post_types', 'molongui_make_guest_cpt_wpseo_accessible' );
-        $date = $wpseo_sitemaps->get_last_modified('guest_author');
+        $date = $wpseo_sitemaps->get_last_modified( 'guest_author' );
         remove_filter( 'wpseo_accessible_post_types', 'molongui_make_guest_cpt_wpseo_accessible' );
 
         $smp .= '<sitemap>' . PHP_EOL;

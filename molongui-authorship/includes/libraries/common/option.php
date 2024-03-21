@@ -586,6 +586,8 @@ $this->_options_prefix	= $prefix;
             $output .= \ob_get_clean();
             $output .= $this->append();
 
+            $output = apply_filters( 'authorship/option/textarea', $output, $this );
+
             return $output;
         }
         private function button()
@@ -613,7 +615,7 @@ $this->_options_prefix	= $prefix;
                                 <button type="submit" <?php echo empty( $this->_data['button']['id'] ) ? '' : 'id="'.$this->_data['button']['id'].'"'; ?> <?php echo empty( $this->_data['button']['disabled'] ) ? '' : 'disabled=""'; ?> class="m-button is-compact <?php echo $this->_data['button']['class']; ?>" title="<?php echo $this->_data['button']['title']; ?>"><?php echo $this->_data['button']['label']; ?></button>
                             <?php break; ?>
                             <?php case 'link': ?>
-                                <button type="submit" <?php echo empty( $this->_data['button']['id'] ) ? '' : 'id="'.$this->_data['button']['id'].'"'; ?> <?php echo empty( $this->_data['button']['disabled'] ) ? '' : 'disabled=""'; ?> class="m-button is-compact <?php echo $this->_data['button']['class']; ?>" title="<?php echo $this->_data['button']['title']; ?>"><?php echo $this->_data['button']['label']; ?></button>
+                                <a href="<?php echo $this->_data['button']['href']; ?>" <?php echo empty( $this->_data['button']['id'] ) ? '' : 'id="'.$this->_data['button']['id'].'"'; ?> <?php echo empty( $this->_data['button']['disabled'] ) ? '' : 'disabled=""'; ?> class="m-button is-compact <?php echo $this->_data['button']['class']; ?>" title="<?php echo $this->_data['button']['title']; ?>"><?php echo $this->_data['button']['label']; ?></a>
                             <?php break; ?>
                             <?php case 'save':default: ?>
                                 <button type="submit" <?php echo empty( $this->_data['button']['id'] ) ? '' : 'id="'.$this->_data['button']['id'].'"'; ?> <?php echo empty( $this->_data['button']['disabled'] ) ? '' : 'disabled=""'; ?> class="m-button m-button-save is-compact <?php echo $this->_data['button']['class']; ?>" title="<?php echo $this->_data['button']['title']; ?>"><?php echo $this->_data['button']['label']; ?></button>
@@ -648,6 +650,7 @@ $this->_options_prefix	= $prefix;
                     <div class="m-card-button__actions">
                         <textarea readonly id="export_field" name="export_field"><?php echo \base64_encode( \json_encode( $options_data ) ); ?></textarea>
                         <label id="<?php echo empty( $this->_data['button']['id'] ) ? '' : $this->_data['button']['id']; ?>" for="<?php echo empty( $this->_data['button']['id'] ) ? '' : $this->_data['button']['id']; ?>" class="m-button is-compact <?php echo $this->_data['button']['class']; ?>"><?php echo $this->_data['button']['label']; ?></label>
+                        <?php echo wp_nonce_field( 'mfw_export_options_nonce', 'mfw_export_options_nonce', true, false ); ?>
                     </div>
                 <?php endif; ?>
             </div>

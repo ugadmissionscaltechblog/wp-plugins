@@ -12,7 +12,7 @@
                 <div class="m-a-posts-list-item-thumb">
                     <?php if ( has_post_thumbnail( $post->ID ) ) : ?>
                         <a href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>">
-                            <?php echo get_the_post_thumbnail( $post->ID, 'medium', $attr = ( $add_microdata ? array( 'itemprop' => 'thumbnailUrl' ) : array() ) ) ?>
+                            <?php echo get_the_post_thumbnail( $post->ID, 'authorship-post-thumbs', $attr = ( $add_microdata ? array( 'itemprop' => 'thumbnailUrl' ) : array() ) ) ?>
                         </a>
                     <?php else : ?>
                         <div class="m-img-placeholder"></div>

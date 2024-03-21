@@ -72,7 +72,7 @@ function authorship_guest_quick_edit_save_custom_fields( $post_id, $post )
     if ( defined( 'DOING_AUTOSAVE' ) and DOING_AUTOSAVE ) return;
     if ( wp_is_post_revision( $post_id ) ) return;
     if ( !current_user_can( 'edit_post', $post_id ) ) return;
-    if ( isset( $_POST['post_title'] ) ) update_post_meta( $post_id, '_molongui_guest_author_display_name', $_POST['post_title'] );
-    if ( isset( $_POST['_molongui_guest_author_box_display'] ) ) update_post_meta( $post_id, '_molongui_guest_author_box_display', $_POST['_molongui_guest_author_box_display'] );
+    if ( isset( $_POST['post_title'] ) ) update_post_meta( $post_id, '_molongui_guest_author_display_name', sanitize_text_field( $_POST['post_title'] ) );
+    if ( isset( $_POST['_molongui_guest_author_box_display'] ) ) update_post_meta( $post_id, '_molongui_guest_author_box_display', sanitize_text_field( $_POST['_molongui_guest_author_box_display'] ) );
 }
 add_action( 'save_post_'.MOLONGUI_AUTHORSHIP_CPT, 'authorship_guest_quick_edit_save_custom_fields', 10, 2 );

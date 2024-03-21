@@ -53,7 +53,7 @@ if ( !empty( $options['author_box_social_show'] ) )
                 }
 				?>
 					<div class="m-a-box-social-icon m-a-list-social-icon">
-						<a class="m-icon-container m-ico-<?php echo $id; ?> m-ico-<?php echo $ico_style; ?>" <?php echo $nofollow; ?> href="<?php echo $url; ?>" target="<?php echo $target; ?>" <?php echo ( $add_microdata ? 'itemprop="sameAs"' : '' ); ?> aria-label="<?php printf( __( "View %s's %s profile", 'molongui-authorship' ), $author['name'], ucfirst( $id ) ); ?>">
+						<a class="m-icon-container m-ico-<?php echo $id; ?> m-ico-<?php echo $ico_style; ?>" <?php echo $nofollow; ?> href="<?php echo esc_url( $url ); ?>" target="<?php echo $target; ?>" <?php echo ( authorship_is_feature_enabled( 'microdata' ) ? 'itemprop="sameAs"' : '' ); ?> aria-label="<?php printf( __( "View %s's %s profile", 'molongui-authorship' ), esc_attr( $author['name'] ), ucfirst( $id ) ); ?>">
 							<i class="m-a-icon-<?php echo $id; ?>"></i>
 						</a>
 					</div>

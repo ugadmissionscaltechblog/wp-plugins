@@ -29,6 +29,7 @@
  */
 
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Legacy\Util;
 
 if (! class_exists('PP_Settings')) {
     #[\AllowDynamicProperties]
@@ -214,10 +215,8 @@ if (! class_exists('PP_Settings')) {
             }
             ?>
 
-			<div class="publishpress-admin pressshack-admin-wrapper wrap">
+			<div class="publishpress-admin pressshack-admin-wrapper wrap <?php echo esc_attr($current_module->slug); ?>">
 				<header>
-                    <img src="<?php echo PUBLISHPRESS_URL . 'common/img/publishpress-logo-icon.png';?>" alt="" class="logo-header" />
-
 					<h1 class="wp-heading-inline"><?php echo $current_module->title; ?></h1>
 
 					<?php echo !empty($display_text) ? $display_text : ''; ?>
@@ -446,18 +445,30 @@ if (! class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $default_module = PP_Modules_Settings::SETTINGS_SLUG . '-settings';
+            $default_module = '';
 
-            if ($publishpress->modules && is_object($publishpress->modules) && !empty($publishpress->modules)) {
-                foreach ($publishpress->modules as $mod_name => $mod_data) {
-                    if (!$mod_data->autoload && $mod_data->options->enabled !== 'off') {
-                        $default_module = 'pp-' . $mod_data->slug . '-settings';
-                        break;
-                    }
+
+            $all_modules = (array)$publishpress->modules;
+            foreach ($all_modules as $mod_name => $mod_data) {
+                // Set first module as default module
+                if (empty($default_module) && !empty($mod_data->options_page) && $mod_data->options->enabled === 'on') {
+                    $default_module = $mod_data->settings_slug;
+                }
+
+                //force notification tab if dependent tab is enabled
+                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
+                    $all_modules['notifications']->options->enabled = 'on';
+                    break;
                 }
             }
 
             $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
+
+            // Custom Statuses are no longer defined by a Planner module
+            if ('pp-custom-status-settings' == $module_settings_slug) {
+                $module_settings_slug = $default_module;
+            }
+
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
 
@@ -499,15 +510,6 @@ if (! class_exists('PP_Settings')) {
             $publishpress->$requested_module_name->$configure_callback();
             $module_output = ob_get_clean();
 
-            $all_modules = (array)$publishpress->modules;
-            //force notification tab if dependent tab is enabled
-            foreach ($all_modules as $mod_name => $mod_data) {
-                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
-                    $all_modules['notifications']->options->enabled = 'on';
-                    break;
-                }
-            }
-
             echo $this->view->render(
                 'settings',
                 [
@@ -518,6 +520,8 @@ if (! class_exists('PP_Settings')) {
                     'sidebar_output' => '',
                     'text'           => $display_text,
                     'show_sidebar'   => false,
+                    'pro_active'     => Util::isPlannersProActive(),
+                    'pro_sidebar'    => Util::pp_pro_sidebar(false),
                 ],
                 $this->viewsPath
             );

@@ -2,7 +2,7 @@
 defined( 'ABSPATH' ) or exit;
 if ( did_action( '_molongui/plugins/loaded' ) ) return;
 
-$file     = MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/plugins-rtl.88ed.min.css' : '/assets/css/common/plugins.2d57.min.css' );
+$file     = MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/plugins-rtl.cb71.min.css' : '/assets/css/common/plugins.3d97.min.css' );
 $filepath = trailingslashit( WP_PLUGIN_DIR ) . $file;
 if ( file_exists( $filepath ) )
 {

@@ -54,15 +54,15 @@ if ( !function_exists( 'authorship_pro_convert_guest_to_user' ) )
         (
             'user_pass'     => isset( $_GET['pwd'] ) ? $_GET['pwd'] : '',
             'user_login'    => $author->get_slug(),
-            'user_email'    => $guest_meta['_molongui_guest_author_mail'],
+            'user_email'    => isset( $guest_meta['_molongui_guest_author_mail'] ) ? $guest_meta['_molongui_guest_author_mail'] : '',
             'role'          => 'author',
             'user_nicename' => $author->get_slug(),//$guest->post_name,
-            'display_name'  => $guest_meta['_molongui_guest_author_display_name'],
-            'nickname'      => $guest_meta['_molongui_guest_author_display_name'],
-            'first_name'    => $guest_meta['_molongui_guest_author_first_name'],
-            'last_name'     => $guest_meta['_molongui_guest_author_last_name'],
+            'display_name'  => isset( $guest_meta['_molongui_guest_author_display_name'] ) ? $guest_meta['_molongui_guest_author_display_name'] : '',
+            'nickname'      => isset( $guest_meta['_molongui_guest_author_display_name'] ) ? $guest_meta['_molongui_guest_author_display_name'] : '',
+            'first_name'    => isset( $guest_meta['_molongui_guest_author_first_name'] ) ? $guest_meta['_molongui_guest_author_first_name'] : '',
+            'last_name'     => isset( $guest_meta['_molongui_guest_author_last_name'] ) ? $guest_meta['_molongui_guest_author_last_name'] : '',
             'description'   => $author->get_bio(),
-            'user_url'      => $guest_meta['_molongui_guest_author_web'],
+            'user_url'      => isset( $guest_meta['_molongui_guest_author_web'] ) ? $guest_meta['_molongui_guest_author_web'] : '',
         );
         $user_id = wp_insert_user( $userdata );
 
@@ -70,12 +70,12 @@ if ( !function_exists( 'authorship_pro_convert_guest_to_user' ) )
         {
             wp_die( $user_id->get_error_message() );
         }
-        $img_id = $guest_meta['_thumbnail_id'];
+        $img_id = isset( $guest_meta['_thumbnail_id'] ) ? $guest_meta['_thumbnail_id'] : '';
         if ( !empty( $img_id ) )
         {
             update_user_meta( $user_id, 'molongui_author_image_id'  , $img_id );
-            update_user_meta( $user_id, 'molongui_author_image_url' , wp_get_attachment_url( $guest_meta['_thumbnail_id'] ) );
-            update_user_meta( $user_id, 'molongui_author_image_edit', admin_url( 'post.php?post='.$guest_meta['_thumbnail_id'].'&action=edit&image-editor' ) );
+            update_user_meta( $user_id, 'molongui_author_image_url' , wp_get_attachment_url( $img_id ) );
+            update_user_meta( $user_id, 'molongui_author_image_edit', admin_url( 'post.php?post='.$img_id.'&action=edit&image-editor' ) );
         }
         unset( $guest_meta['_molongui_guest_author_mail'] );
         unset( $guest_meta['_molongui_guest_author_display_name'] );

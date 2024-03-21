@@ -37,7 +37,7 @@ function authorship_post_add_author_meta()
         {
             $author = new Author( $wp_query->get( 'author' ), 'user' );
         }
-        if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="'.$author->get_name().'">'."\n";
+        if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="' . esc_attr( $author->get_name() ) . '">'."\n";
         if ( !empty( $options['add_opengraph_meta'] ) ) $meta .= authorship_post_add_opengraph_archive_meta();
     }
     elseif ( is_singular() )
@@ -47,7 +47,7 @@ function authorship_post_add_author_meta()
             case 'main':
                 if ( !$main_author = get_main_author( $post->ID ) ) return;
                 $author = new Author( $main_author->id, $main_author->type );
-                if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="'.$author->get_name().'">'."\n";
+                if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="' . esc_attr( $author->get_name() ) . '">'."\n";
                 if ( !empty( $options['add_facebook_meta'] ) ) $meta .= authorship_post_add_facebook_author_meta( $author );
                 if ( !empty( $options['add_twitter_meta'] ) ) $meta .= authorship_post_add_twitter_author_meta( $author );
                 if ( !empty( $options['add_opengraph_meta'] ) and empty( $options['add_facebook_meta'] ) ) $meta .= authorship_post_add_opengraph_author_meta( $author );
@@ -55,7 +55,7 @@ function authorship_post_add_author_meta()
             break;
 
             case 'aio':
-                if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="'.get_byline( $post->ID ).'">'."\n";
+                if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="' . esc_attr( get_byline( $post->ID ) ) . '">'."\n";
 
                 foreach ( $authors as $auth )
                 {
@@ -73,7 +73,7 @@ function authorship_post_add_author_meta()
                 foreach ( $authors as $auth )
                 {
                     $author = new Author( $auth->id, $auth->type );
-                    if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="'.$author->get_name().'">'."\n";
+                    if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="' . esc_attr( $author->get_name() ) . '">'."\n";
                     if ( !empty( $options['add_facebook_meta'] ) ) $meta .= authorship_post_add_facebook_author_meta( $author );
                     if ( !empty( $options['add_twitter_meta'] ) ) $meta .= authorship_post_add_twitter_author_meta( $author );
                     if ( !empty( $options['add_opengraph_meta'] ) and empty( $options['add_facebook_meta'] ) ) $meta .= authorship_post_add_opengraph_author_meta( $author );
@@ -92,7 +92,8 @@ function authorship_post_add_facebook_author_meta( $author )
 {
     $meta = '';
     $fb = $author->get_meta( 'facebook' );
-    if ( !empty( $fb ) ) $meta .= '<meta property="article:author" content="' . ( ( \strpos( $fb, 'http' ) === false ) ? 'https://www.facebook.com/' : '' ) . $fb . '" />' . "\n";
+    $fb = ( ( \strpos( $fb, 'http' ) === false ) ? 'https://www.facebook.com/' : '' ) . $fb;
+    if ( !empty( $fb ) ) $meta .= '<meta property="article:author" content="' . esc_attr( $fb ) . '" />' . "\n";
 
     return $meta;
 }
@@ -112,7 +113,7 @@ function authorship_post_add_twitter_author_meta( $author )
 function authorship_post_add_opengraph_author_meta( $author )
 {
     $meta = '';
-    $meta .= '<meta property="article:author" content="' . $author->get_name() . '" />' . "\n";
+    $meta .= '<meta property="article:author" content="' . esc_attr( $author->get_name() ) . '" />' . "\n";
 
     return $meta;
 }
@@ -143,12 +144,12 @@ function authorship_post_add_opengraph_archive_meta()
 
     $og  = '';
     $og .= '<meta property="og:type" content="profile" />' . "\n";
-    $og .= ( $author_link   ? '<meta property="og:url" content="'.$author_link.'" />'."\n" : '' );
-    $og .= ( $author_avatar ? '<meta property="og:image" content="'.$author_avatar.'" />'."\n" : '' );
-    $og .= ( $author_bio    ? '<meta property="og:description" content="'.$author_bio.'" />'."\n" : '' );
-    $og .= ( $author_first  ? '<meta property="profile:first_name" content="'.$author_first.'" />'."\n" : '' );
-    $og .= ( $author_last   ? '<meta property="profile:last_name" content="'.$author_last.'" />'."\n" : '' );
-    $og .= ( $author_name   ? '<meta property="profile:username" content="'.$author_name.'" />'."\n" : '' );
+    $og .= ( $author_link   ? '<meta property="og:url" content="' . esc_attr( $author_link ) . '" />'."\n" : '' );
+    $og .= ( $author_avatar ? '<meta property="og:image" content="' . esc_attr( $author_avatar ) . '" />'."\n" : '' );
+    $og .= ( $author_bio    ? '<meta property="og:description" content="' . esc_attr( $author_bio ) . '" />'."\n" : '' );
+    $og .= ( $author_first  ? '<meta property="profile:first_name" content="' . esc_attr( $author_first ) . '" />'."\n" : '' );
+    $og .= ( $author_last   ? '<meta property="profile:last_name" content="' . esc_attr( $author_last ) . '" />'."\n" : '' );
+    $og .= ( $author_name   ? '<meta property="profile:username" content="' . esc_attr( $author_name ) . '" />'."\n" : '' );
 
     return $og;
 }

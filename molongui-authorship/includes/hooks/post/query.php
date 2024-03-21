@@ -34,11 +34,16 @@ function authorship_remove_author_from_where_clause( $where, $wp_query )
 {
     if ( apply_filters( '_authorship/posts_where', false ) )
     {
+        remove_filter( '_authorship/posts_where', '__return_true' );
+
+        $_where = $where;
+
         if ( !empty( $wp_query->query_vars['author'] ) )
         {
             global $wpdb;
             $where = str_replace( ' AND '.$wpdb->posts.'.post_author IN ('.$wp_query->query_vars['author'].')', '', $where );
             $where = str_replace( ' AND ('.$wpdb->posts.'.post_author = '.$wp_query->query_vars['author'].')' , '', $where );
+            $where = apply_filters( 'authorship/posts_where', $where, $_where, $wp_query );
         }
     }
     return $where;

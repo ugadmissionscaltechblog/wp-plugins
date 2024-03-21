@@ -4,29 +4,20 @@ if ( !function_exists( 'authorship_pro_get_sanitized_display_names' ) )
 {
     function authorship_pro_get_sanitized_display_names()
     {
+        $users = array();
         $i = 1;
-        $args  = array();
-        $hash  = md5( serialize( $args ) );
-        $key   = 'get_users' . '_' . $hash;
-        $users = wp_cache_get( $key, MOLONGUI_AUTHORSHIP_PRO_NAME );
-        if ( false === $users )
+
+        foreach ( authorship_get_users() as $user )
         {
-            $users = array();
-            foreach ( get_users() as $user )
+            $display_name = sanitize_title( $user->display_name );
+            if ( in_array( $display_name, $users ) )
             {
-                $display_name = sanitize_title( $user->display_name );
-                if ( in_array( $display_name, $users ) )
-                {
-                    $i++;
-                    $display_name .= "-$i";
-                }
-                $users[sanitize_title($user->user_nicename)] = $display_name;
+                $i++;
+                $display_name .= "-$i";
             }
-            wp_cache_set( $key, $users, MOLONGUI_AUTHORSHIP_PRO_NAME );
-            $db_key = MOLONGUI_AUTHORSHIP_PREFIX . 'cache_users';
-            $hashes = get_option( $db_key, array() );
-            $update = update_option( $db_key, !in_array( $hash, $hashes ) ? array_merge( $hashes, array( $hash ) ) : $hashes, true );
+            $users[sanitize_title($user->user_nicename)] = $display_name;
         }
+
         return $users;
     }
 }

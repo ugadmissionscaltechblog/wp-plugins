@@ -450,19 +450,3 @@ if ( !function_exists( 'molongui_get_admin_color' ) )
         return !empty( $css ) ? $css : '';
     }
 }
-function authorship_is_block_editor()
-{
-    if ( !function_exists( 'get_current_screen' ) )
-    {
-        return false;
-    }
-
-    $current_screen = get_current_screen();
-
-    if ( is_null( $current_screen ) )
-    {
-        return false;
-    }
-
-    return method_exists( $current_screen, 'is_block_editor' ) and $current_screen->is_block_editor();
-}

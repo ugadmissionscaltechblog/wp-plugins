@@ -6,6 +6,54 @@ Requires MA : 4.6.0
 
 == Changelog ==
 
+= 1.6.7 (2024-02-26) =
+
+* Fixed 'molongui_author_box' ignoring the 'bio_length' attribute
+* Fixed PHP notice regarding undefined array key
+
+= 1.6.6 (2024-02-26) =
+
+* Fixed plugin settings page menu not working
+
+= 1.6.5 (2024-02-26) =
+
+* Fixed PHP fatal error introduced in the previous update
+
+= 1.6.4 (2024-02-26) =
+
+* Added postAuthor as WPGraphQL object
+* Added exposure of guestAuthor in the WPGraphQL schema
+* Updated framework files to version 2.5.0
+
+= 1.6.3 (2024-01-25) =
+
+* Fixed issue with author page URL customization when user_nicename is present in the site's domain
+* Fixed guest author archives robots meta tag when using Yoast SEO
+* Fixed PHP warnings being displayed when converting a user to a guest author
+
+= 1.6.2 (2023-11-14) =
+
+* Fixed plugin updating automatically when there is a new release available
+* Fixed missing font-display descriptor
+* Added WordPress 6.4 compatibility
+
+= 1.6.1 (2023-10-26) =
+
+* Added the option to remove the link to the author page on the author name and avatar displayed by the [molongui_author_list] shortcode
+* Fixed extra spacing displayed at the bottom of the author bio in the author box
+
+= 1.6.0 (2023-09-15) =
+
+* Added filter to customize the message to display when the [molongui_author_posts] has nothing to list
+* Added option to randomize the order of the [molongui_author_list] output
+* Added Uhive social network
+* Improved compatibility with the Polylang plugin
+* Fixed [molongui_byline] displaying the post byline without separator between author names on multi-authored posts
+* Updated framework files to version 2.4.1
+* Updated database schema
+* Auto-updates compatible
+* Added WordPress 6.3 compatibility
+
 = 1.5.11 (2023-05-02) =
 
 * Guest to user conversion is available only to users with 'create_users' capability
@@ -76,6 +124,7 @@ Requires MA : 4.6.0
 * Fixed author profile template #8 not loading
 * Users sitemap removed when author pages disabled
 * Guest authors sitemap removed when guest author pages disabled
+* Updated database schema
 * Raised minimum core version to 4.6.0
 * Added WordPress 6.0 compatibility
 
@@ -381,7 +430,6 @@ Requires MA : 4.6.0
     * Added pagination to [molongui_author_list]
 * Other:
     * Fixed "Activate Authorship Now" button not working when base plugin not active
-
 
 = 1.0.0 (2020-05-04) =
 

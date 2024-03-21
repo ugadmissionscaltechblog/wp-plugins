@@ -110,3 +110,41 @@ add_filter( 'molongui_authorship_bypass_original_user_id_if', function( $value )
 
     return $value;
 }, 11, 1 );
+add_filter( '_authorship/get_avatar_data/filter/author', function( $author, $id_or_email, $dbt )
+{
+    global $tdb_state_author;
+    if ( $tdb_state_author )
+    {
+        $r = new ReflectionObject( $tdb_state_author );
+        $aq = $r->getProperty( 'wp_query' );
+        $aq->setAccessible( true ); // Set the property to public before it can be read
+
+        $wp_query = $aq->getValue( $tdb_state_author );
+        if ( isset( $wp_query->is_author ) )
+        {
+            if ( is_guest_author() and isset( $wp_query->guest_author_id ) )
+            {
+                $author_id   = $wp_query->guest_author_id;
+                $author_type = 'guest';
+            }
+            elseif ( !empty( $wp_query->query_vars['author'] ) )
+            {
+                $author_id   = $wp_query->query_vars['author'];
+                $author_type = 'user';
+            }
+            else
+            {
+                $user = get_users( array( 'nicename' => $wp_query->query_vars['author_name'] ) );
+                if ( !$user ) return $author;
+
+                $author_id   = $user[0]->ID;
+                $author_type = 'user';
+            }
+
+            $author->id   = $author_id;
+            $author->type = $author_type;
+        }
+    }
+
+    return $author;
+}, 10, 3 );

@@ -11,7 +11,15 @@ function authorship_get_options()
 }
 function authorship_get_defaults()
 {
-    return apply_filters( 'authorship/default_options', array() );
+    $fw_options = array
+    (
+        'custom_css'  => '',
+        'custom_php'  => '',
+        'keep_config' => true,
+        'keep_data'   => true,
+    );
+
+    return apply_filters( 'authorship/default_options', $fw_options );
 }
 function authorship_add_defaults()
 {
