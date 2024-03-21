@@ -1015,7 +1015,7 @@ if (! class_exists('PP_Calendar')) {
          *
          * @since 0.8
          */
-        public function handle_ics_subscription()
+        public function handle_ics_subscription() // GUUTZ HACKED
         {
             // phpcs:disable WordPress.Security.NonceVerification.Recommended
 
@@ -1038,35 +1038,14 @@ if (! class_exists('PP_Calendar')) {
             }
 
             // Set up the post data to be printed
-            $post_query_args = [];
-            $calendar_filters = $this->calendar_filters();
-            foreach ($calendar_filters as $filter) {
-                if (isset($_GET[$filter]) && false !== ($value = $this->sanitize_filter(
-                        $filter,
-                        sanitize_text_field(
-                            $_GET[$filter]
-                        )
-                    ))) {
-                    $post_query_args[$filter] = $value;
-                }
-            }
-
-            // Set the start date for the posts_where filter
-            $this->start_date = sanitize_text_field(
-                apply_filters(
-                    'pp_calendar_ics_subscription_start_date',
-                    $this->get_beginning_of_week(date('Y-m-d', current_time('timestamp'))) // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-                )
-            );
-
-            $this->total_weeks = sanitize_text_field(
-                apply_filters(
-                    'pp_calendar_total_weeks',
-                    $this->total_weeks,
-                    $this->start_date,
-                    'ics_subscription'
-                )
-            );
+            $post_query_args = [
+                'post_type' => 'post', // Adjust post type if needed
+                'post_status' => array('future', 'propose-post', 'draft', 'draft-completed', 'edit-completed', 'pending', 'publish'), // Include both statuses
+                'posts_per_page' => -1, // Retrieve all scheduled and in-preparation posts
+                'date_query' => array(
+                    'after' => '2023-08-01',
+                ),
+            ];
 
             $vCalendar = new Sabre\VObject\Component\VCalendar(
                 [
@@ -1085,63 +1064,58 @@ if (! class_exists('PP_Calendar')) {
 
             $timeZone = new DateTimeZone($timezoneString);
 
-            for ($current_week = 1; $current_week <= $this->total_weeks; $current_week++) {
-                // We need to set the object variable for our posts_where filter
-                $this->current_week = $current_week;
-                $week_posts = $this->get_calendar_posts_for_week($post_query_args, 'ics_subscription');
-                foreach ($week_posts as $date => $day_posts) {
-                    foreach ($day_posts as $num => $post) {
-                        if (empty($post->post_date_gmt) || $post->post_date_gmt == '0000-00-00 00:00:00') {
-                            $calendar_date = get_gmt_from_date($post->post_date);
-                        } else {
-                            $calendar_date = $post->post_date_gmt;
-                        }
+            $query = new WP_Query($post_query_args);
+                
+            if ($query->have_posts()) {
+                    while ($query->have_posts()) {
+                            $query->the_post();
 
-                        $start_date = new DateTime($calendar_date);
-                        $start_date->setTimezone($timeZone);
-
-                        $end_date = new DateTime(date('Y-m-d H:i:s', strtotime($calendar_date) + (5 * 60))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-                        $end_date->setTimezone($timeZone);
-
-                        if (empty($post->post_modified_gmt) || $post->post_modified_gmt == '0000-00-00 00:00:00') {
-                            $calendar_modified_date = get_gmt_from_date($post->post_modified);
-                        } else {
-                            $calendar_modified_date = $post->post_modified_gmt;
-                        }
-
-                        $last_modified = new DateTime($calendar_modified_date);
-                        $last_modified->setTimezone($timeZone);
+                        $start_date = new DateTime(get_post_time('Ymd'));
+                        $start_date = $start_date->format('Ymd');
+                    $end_date = new DateTime(get_post_time('Ymd') . '+1 day');
+					$end_date = $end_date->format('Ymd');
 
                         // Remove the convert chars and wptexturize filters from the title
                         remove_filter('the_title', 'convert_chars');
                         remove_filter('the_title', 'wptexturize');
 
                         // Description should include everything visible in the calendar popup
-                        $information_fields = $this->get_post_information_fields($post);
+                        $information_fields = $this->get_post_information_fields(get_post());
                         $eventDescription = '';
-                        if (! empty($information_fields)) {
+                        $categories = '';
+                    $author = get_the_author_meta('display_name', get_the_author_meta('ID'));
+                    $author_initials = preg_replace('/[^A-Z]+/', '', $author);
+                    if (!empty($information_fields)) {
                             foreach ($information_fields as $key => $values) {
                                 $eventDescription .= $values['label'] . ': ' . $values['value'] . "\n";
+if ($values['label'] == 'Categories') {
+                                $categories = $values['value'];
                             }
-                            $eventDescription = rtrim($eventDescription);
+                            }
+                        $eventDescription = get_edit_post_link() . PHP_EOL . rtrim($eventDescription);
                         }
 
                         $vCalendar->add(
                             'VEVENT',
                             [
-                                'UID' => $post->guid,
-                                'SUMMARY' => $this->do_ics_escaping(apply_filters('the_title', $post->post_title))
-                                    . ' - ' . $this->get_post_status_friendly_name(get_post_status($post->ID)),
-                                'DTSTART' => $start_date,
-                                'DTEND' => $end_date,
-                                'LAST-MODIFIED' => $last_modified,
-                                'URL' => get_post_permalink($post->ID),
+                                'UID' => get_the_guid(),
+                                'SUMMARY' => $author_initials . ' | ' . $categories . ' | '
+                                . $this->get_post_status_friendly_name(get_post_status()) . ' | '
+                                . $this->do_ics_escaping(apply_filters('the_title', get_the_title())),
+                                'DTSTART;VALUE=DATE' => $start_date,
+                                'DTEND;VALUE=DATE' => $end_date,
+                                'URL' => get_edit_post_link(),
                                 'DESCRIPTION' => $eventDescription,
+'X-MICROSOFT-CDO-ALLDAYEVENT' => 'TRUE',
+                            'X-MICROSOFT-CDO-BUSYSTATUS' => 'FREE',
+                            'X-MICROSOFT-CDO-INTENDEDSTATUS' => 'FREE',
+                            'TRANSP' => 'TRANSPARENT',
                             ]
                         );
-                    }
-                }
+                                    }
             }
+
+            wp_reset_postdata();
 
             // Render the .ics template and set the content type
             header('Content-type: text/calendar; charset=utf-8');
@@ -3256,8 +3230,21 @@ if (! class_exists('PP_Calendar')) {
             $postTypeOptions = $this->get_post_status_options($post->post_status);
             $postTypeObject = $this->getPostTypeObject($post->post_type);
 
+            $information_fields = $this->get_post_information_fields($post);
+            $categories = '';
+            if (!empty($information_fields)) {
+                foreach ($information_fields as $key => $values) {
+                    if ($values['label'] == 'Categories') {
+                        $categories = $values['value'];
+                    }
+                }
+            }
+            $author = get_the_author_meta('display_name', $post->post_author);
+            $author_initials = preg_replace('/[^A-Z]+/', '', $author);
+            $display_title = $author_initials . ' | ' . $categories . ' | ' . $this->get_post_status_friendly_name($post->post_status) . ' | ' . $post->post_title;
+
             return [
-                'label' => esc_html($post->post_title),
+                'label' => esc_html($display_title),
                 'id' => (int)$post->ID,
                 'timestamp' => esc_attr($post->post_date),
                 'icon' => esc_attr($postTypeOptions['icon']),
