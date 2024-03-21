@@ -54,7 +54,7 @@ class Woo_Product_Gallery extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'essential-addons-elementor' ];
+		return [ 'essential-addons-elementor', 'woocommerce-elements' ];
 	}
 
 	public function get_keywords() {
@@ -354,6 +354,20 @@ class Woo_Product_Gallery extends Widget_Base {
 				],
 				'toggle'       => true,
 				'prefix_class' => 'eael-product-gallery-column%s-',
+			]
+		);
+
+		$this->add_control(
+			'eael_wc_loop_hooks',
+			[
+				'label'        => esc_html__( 'WooCommerce Loop Hooks', 'essential-addons-for-elementor-lite' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'ON', 'essential-addons-for-elementor-lite' ),
+				'label_off'    => esc_html__( 'OFF', 'essential-addons-for-elementor-lite' ),
+				'return_value' => 'yes',
+				'separator'    => 'before',
+				'default'      => '',
+				'description'  => __( 'This will enable WooCommerce loop Before and After hooks. It may break your layout.', 'essential-addons-for-elementor-lite' )
 			]
 		);
 
@@ -2473,31 +2487,33 @@ class Woo_Product_Gallery extends Widget_Base {
 
 				if ( file_exists( $template ) ) {
 					$settings['eael_page_id'] = $this->page_id ? $this->page_id : get_the_ID();
-					$query = new \WP_Query( $args );
-					if ( $query->have_posts() ) {
-						$found_posts      = $query->found_posts;
-						$max_page         = ceil( $found_posts / absint( $args['posts_per_page'] ) );
-						$args['max_page'] = $max_page;
-						
-						$show_secondary_image = isset( $settings['eael_product_gallery_show_secondary_image'] ) && 'yes' === $settings['eael_product_gallery_show_secondary_image'];
+					$query                    = new \WP_Query( $args );
+					$show_secondary_image     = isset( $settings['eael_product_gallery_show_secondary_image'] ) && 'yes' === $settings['eael_product_gallery_show_secondary_image'];
 
-						echo '<ul class="products eael-post-appender eael-post-appender-' . $this->get_id() . '" data-layout-mode="' . $settings[ "eael_product_gallery_items_layout" ] . '" data-show-secondary-image="' . intval($show_secondary_image) . '" >';
+					echo '<ul class="products eael-post-appender eael-post-appender-' . $this->get_id() . '" data-layout-mode="' . esc_attr( $settings["eael_product_gallery_items_layout"] ) . '" data-show-secondary-image="' . intval( $show_secondary_image ) . '" >';
+					if ( $query->have_posts() ) {
+						$found_posts         = $query->found_posts;
+						$max_page            = ceil( $found_posts / absint( $args['posts_per_page'] ) );
+						$args['max_page']    = $max_page;
+						$args['found_posts'] = $query->found_posts;
+
 						while ( $query->have_posts() ) {
 							$query->the_post();
 							include( $template );
 						}
 						wp_reset_postdata();
-						echo '</ul>';
 					} else {
-						_e( '<p class="no-posts-found">No posts found!</p>', 'essential-addons-for-elementor-lite' );
+						echo '<h2 class="eael-product-not-found">' . __( 'No Product Found', 'essential-addons-for-elementor-lite' ) . '</h2>';
 					}
-				} else {
-					_e( '<p class="no-posts-found">No layout found!</p>', 'essential-addons-for-elementor-lite' );
-				}
+					echo '</ul>';
 
-				if ( $found_posts > $args['posts_per_page'] ) {
-					$this->print_load_more_button( $settings, $args, $dir_name );
+				} else {
+					echo '<h2 class="eael-product-not-found">' . __( 'No Layout Found', 'essential-addons-for-elementor-lite' ) . '</h2>';
 				}
+				
+				do_action( 'eael_woo_after_product_loop' );
+
+				$this->print_load_more_button( $settings, $args, $dir_name );
 				?>
             </div>
         </div>
@@ -2629,10 +2645,6 @@ class Woo_Product_Gallery extends Widget_Base {
 			}
 		}
 
-		if( isset( $args_tax_query_combined ) ){
-			$args[ 'tax_query' ][] = $args_tax_query_combined;
-		}
-
 		$args[ 'meta_query' ] = [ 'relation' => 'AND' ];
 		$show_stock_out_products = isset( $settings['eael_product_out_of_stock_show'] ) ? $settings['eael_product_out_of_stock_show'] : 'yes';
 
@@ -2658,22 +2670,6 @@ class Woo_Product_Gallery extends Widget_Base {
 					'operator' => 'NOT IN',
 				],
 			];
-
-			if ( $settings[ 'eael_product_gallery_categories' ] ) {
-				$args[ 'tax_query' ][] = [
-					'taxonomy' => 'product_cat',
-					'field'    => 'term_id',
-					'terms'    => $settings[ 'eael_product_gallery_categories' ],
-				];
-			}
-
-			if ( $settings[ 'eael_product_gallery_tags' ] ) {
-				$args[ 'tax_query' ][] = [
-					'taxonomy' => 'product_tag',
-					'field'    => 'term_id',
-					'terms'    => $settings[ 'eael_product_gallery_tags' ],
-				];
-			}
 		} else if ( $settings[ 'eael_product_gallery_product_filter' ] == 'best-selling-products' ) {
 			$args[ 'meta_key' ] = 'total_sales';
 			$args[ 'orderby' ]  = 'meta_value_num';
@@ -2684,6 +2680,29 @@ class Woo_Product_Gallery extends Widget_Base {
 			$args[ 'meta_key' ] = '_wc_average_rating';
 			$args[ 'orderby' ]  = 'meta_value_num';
 			$args[ 'order' ]    = 'DESC';
+		} else if ( $settings[ 'eael_product_gallery_product_filter' ] == 'related-products' ) {
+		    $current_product_id = get_the_ID();
+            $product_categories = wp_get_post_terms( $current_product_id, 'product_cat', array( 'fields' => 'ids' ) );
+            $product_tags       = wp_get_post_terms( $current_product_id, 'product_tag', array( 'fields' => 'names' ) );
+            $args['tax_query'] = array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'term_id',
+                    'terms'    => $product_categories,
+                    'operator' => 'IN',
+                ),
+                array(
+                    'taxonomy' => 'product_tag',
+                    'field'    => 'name',
+                    'terms'    => $product_tags,
+                    'operator' => 'IN',
+                ),
+            );
+	    }
+
+		if( isset( $args_tax_query_combined ) ){
+			$args[ 'tax_query' ][] = $args_tax_query_combined;
 		}
 
 		return $args;
@@ -2726,7 +2745,7 @@ class Woo_Product_Gallery extends Widget_Base {
 		$dir_name       = method_exists( $this, 'get_temp_dir_name' ) ? $this->get_temp_dir_name( $this->get_filename_only( $template ) ) : "pro";
 		$show_cat_thumb = isset( $settings[ 'eael_woo_product_gallery_terms_thumb' ] ) && 'yes' === $settings[ 'eael_woo_product_gallery_terms_thumb' ];
 
-		echo '<ul class="eael-cat-tab" data-layout="' . $settings[ "eael_product_gallery_items_layout" ] . '" data-template=' . json_encode( [ 'dir' => $dir_name, 'file_name' =>
+		echo '<ul class="eael-cat-tab" data-layout="' . esc_attr( $settings[ "eael_product_gallery_items_layout" ] ) . '" data-template=' . json_encode( [ 'dir' => $dir_name, 'file_name' =>
 				$this->get_filename_only( $template ), 'name'                                                                                        => $this->process_directory_name() ], 1 ) . '  data-nonce="' . wp_create_nonce( 'eael_product_gallery' ) . '" data-page-id="' . $this->page_id . '" data-widget-id="' . $this->get_id() . '" data-widget="' . $this->get_id() . '" data-class="' . get_class( $this ) . '" data-args="' . http_build_query( $args ) . '" data-page="1">';
 
 		if ( $settings[ 'eael_woo_product_gallery_terms_show_all' ] == 'yes' ) {
@@ -2740,7 +2759,7 @@ class Woo_Product_Gallery extends Widget_Base {
 			}
 
 			if ( $show_cat_thumb && !empty($settings['eael_all_tab_thumb']['url'])) {
-				$show_all_cat_thumb = '<img src="' . $settings['eael_all_tab_thumb']['url'] . '" />';
+				$show_all_cat_thumb = '<img src="' . esc_url( $settings['eael_all_tab_thumb']['url'] ) . '" />';
 			} else {
 				$show_all_cat_thumb = '';
 			}
@@ -2771,7 +2790,7 @@ class Woo_Product_Gallery extends Widget_Base {
 					$image_url    = wp_get_attachment_url( $thumbnail_id );
 
 					if ( $show_cat_thumb && $image_url ) {
-						$show_cat_thumb_tag = '<img src="' . $image_url . '" />';
+						$show_cat_thumb_tag = '<img src="' . esc_url( $image_url ) . '" />';
 					} else {
 						$show_cat_thumb_tag = '';
 					}
@@ -2799,7 +2818,7 @@ class Woo_Product_Gallery extends Widget_Base {
 					$image_url    = wp_get_attachment_url( $thumbnail_id );
 
 					if ( $show_cat_thumb && $image_url ) {
-						$show_cat_thumb_tag = '<img src="' . $image_url . '" />';
+						$show_cat_thumb_tag = '<img src="' . esc_url( $image_url ) . '" />';
 					} else {
 						$show_cat_thumb_tag = '';
 					}

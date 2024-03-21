@@ -128,19 +128,19 @@ class UltimatePostKit_Dynamic_Select_Input_Module {
 
 		$args = [];
 
+		$args['post_status'] = 'publish';
+
 		if ($this->getPostType()) {
 			$args['post_type'] = $this->getPostType();
 		} else {
 			$args['post_type'] = $this->getAllPublicPostTypes();
 		}
-
 		if (!empty($include)) {
 			$args['post__in']     = $include;
 			$args['posts_per_page'] = count($include);
 		} else {
-			$args['posts_per_page'] = 20;
+			$args['posts_per_page'] = -1;
 		}
-
 		if ($searchText) {
 			$args['s'] = $searchText;
 		}

@@ -84,12 +84,6 @@ class Alice_Grid extends Group_Control_Query {
 			]
 		);
 
-		// if (upk_fs()->is__premium_only()) {
-		// 	$column_size = 'grid-template-columns: repeat({{SIZE}}, 1fr);';
-		// } else {
-		// 	$column_size = '';
-		// }
-
 		$column_size = apply_filters('upk_column_size', '');
 
 		$this->add_responsive_control(
@@ -977,7 +971,7 @@ class Alice_Grid extends Group_Control_Query {
 						<?php if (_is_upk_pro_activated()) :
 							if ('yes' === $settings['show_reading_time']) : ?>
 								<div class="upk-reading-time" data-separator="<?php echo esc_html($settings['meta_separator']); ?>">
-									<?php ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
+									<?php echo ultimate_post_kit_reading_time(get_the_content(), $settings['avg_reading_speed']); ?>
 								</div>
 							<?php endif; ?>
 						<?php endif; ?>

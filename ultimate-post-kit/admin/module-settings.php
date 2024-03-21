@@ -98,7 +98,7 @@ class ModuleService {
                     'demo_url'     => 'https://postkit.pro/demo/amox-carousel/',
                     'video_url'    => 'https://youtu.be/3FoLaHsyB0g',
                 ],
-                
+
                 [
                     'name'         => 'atlas-slider',
                     'label'        => esc_html__('Atlas Slider', 'ultimate-post-kit'),
@@ -179,7 +179,17 @@ class ModuleService {
                     'widget_type'  => 'pro',
                     'content_type' => 'list',
                     'demo_url'     => 'https://postkit.pro/demo/candy-list/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/kolpoGg8uLA?si=OiXtr2eHb_b4pqCm',
+                ],
+                [
+                    'name'         => 'checkerboard',
+                    'label'        => esc_html__('Checkerboard', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "off",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'timeline',
+                    'demo_url'     => 'https://postkit.pro/demo/checkerboard/',
+                    'video_url'    => 'https://youtu.be/nqB_bGNPSts?si=KTWQOARPuL5lTdjM',
                 ],
                 [
                     'name'         => 'classic-list',
@@ -217,9 +227,9 @@ class ModuleService {
                     'type'         => 'checkbox',
                     'default'      => "on",
                     'widget_type'  => 'pro',
-                    'content_type' => 'carousel new',
+                    'content_type' => 'carousel',
                     'demo_url'     => 'https://postkit.pro/demo/eldora-carousel/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/oJXRzQpowJo',
                 ],
                 [
                     'name'         => 'elite-grid',
@@ -249,7 +259,7 @@ class ModuleService {
                     'widget_type'  => 'free',
                     'content_type' => 'list',
                     'demo_url'     => 'https://postkit.pro/demo/exotic-list/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/WROTolCKOmE',
                 ],
                 [
                     'name'         => 'fanel-list',
@@ -270,6 +280,16 @@ class ModuleService {
                     'content_type' => 'list',
                     'demo_url'     => 'https://postkit.pro/demo/featured-list/',
                     'video_url'    => 'https://youtu.be/Q-Pm-6Kkmr4',
+                ],
+                [
+                    'name'         => 'featured-gallery',
+                    'label'        => esc_html__('Featured Gallery', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "off",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'list new',
+                    'demo_url'     => 'https://postkit.pro/demo/featured-gallery/',
+                    'video_url'    => '',
                 ],
                 [
                     'name'         => 'forbes-tabs',
@@ -297,9 +317,9 @@ class ModuleService {
                     'type'         => 'checkbox',
                     'default'      => "off",
                     'widget_type'  => 'pro',
-                    'content_type' => 'carousel new',
+                    'content_type' => 'carousel',
                     'demo_url'     => 'https://postkit.pro/demo/gratis-carousel/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/D1OqHYn6w-o',
                 ],
                 [
                     'name'         => 'gratis-grid',
@@ -307,9 +327,9 @@ class ModuleService {
                     'type'         => 'checkbox',
                     'default'      => "off",
                     'widget_type'  => 'free',
-                    'content_type' => 'grid new',
+                    'content_type' => 'grid',
                     'demo_url'     => 'https://postkit.pro/demo/gratis-grid/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/jLBLAqxEOwQ',
                 ],
                 [
                     'name'         => 'grove-timeline',
@@ -389,7 +409,7 @@ class ModuleService {
                     'widget_type'  => 'pro',
                     'content_type' => 'slider',
                     'demo_url'     => 'https://postkit.pro/demo/iconic-slider/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/vsqsA_iwMU4?si=cnHyH-dOvGRgfvPX',
                 ],
                 [
                     'name'         => 'instagram-gallery',
@@ -489,7 +509,7 @@ class ModuleService {
                     'widget_type'  => 'free',
                     'content_type' => 'timeline',
                     'demo_url'     => 'https://postkit.pro/demo/timeline/',
-                    'video_url'    => 'https://youtu.be/kggB0k9WJ1U',
+                    'video_url'    => 'https://youtu.be/2iYuNgP4K0A',
                 ],
                 [
                     'name'         => 'paradox-slider',
@@ -560,6 +580,55 @@ class ModuleService {
                     'content_type' => 'others',
                     'demo_url'     => 'https://postkit.pro/demo/post-category/',
                     'video_url'    => 'https://youtu.be/3S5hRqxTDTo',
+                ],
+                [
+                    'name'         => 'post-comments',
+                    'label'        => esc_html__('Post Comments', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "on",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'template-builder',
+                    'demo_url'     => 'https://postkit.pro/demo/post-comments/',
+                ],
+                [
+                    'name'         => 'post-content',
+                    'label'        => esc_html__('Post Content', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "on",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'template-builder',
+                    'demo_url'     => 'https://postkit.pro/demo/post-content/',
+                    'video_url'    => 'https://youtu.be/rfU_LqHpbb8?si=O32oHaQ43RTdRucM',
+                ],
+                [
+                    'name'         => 'post-featured-image',
+                    'label'        => esc_html__('Post Featured Image', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "on",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'template-builder',
+                    'demo_url'     => 'https://postkit.pro/demo/post-featured-image/',
+                    'video_url'    => 'https://youtu.be/rfU_LqHpbb8?si=O32oHaQ43RTdRucM',
+                ],
+                [
+                    'name'         => 'post-info',
+                    'label'        => esc_html__('Post Info', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "on",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'template-builder',
+                    'demo_url'     => 'https://postkit.pro/demo/post-info/',
+                    'video_url'    => 'https://youtu.be/rfU_LqHpbb8?si=O32oHaQ43RTdRucM',
+                ],
+                [
+                    'name'         => 'post-title',
+                    'label'        => esc_html__('Post Title', 'ultimate-post-kit'),
+                    'type'         => 'checkbox',
+                    'default'      => "on",
+                    'widget_type'  => 'pro',
+                    'content_type' => 'template-builder',
+                    'demo_url'     => 'https://postkit.pro/demo/post-title/',
+                    'video_url'    => 'https://youtu.be/rfU_LqHpbb8?si=O32oHaQ43RTdRucM',
                 ],
                 [
                     'name'         => 'category-carousel',
@@ -679,7 +748,7 @@ class ModuleService {
                     'widget_type'  => 'free',
                     'content_type' => 'slider',
                     'demo_url'     => 'https://postkit.pro/demo/snog-slider/',
-                    'video_url'    => '',
+                    'video_url'    => 'https://youtu.be/UKZIEgYg0gs?si=exkIDYa-j2c7E34t',
                 ],
                 [
                     'name'         => 'snap-timeline',
@@ -933,7 +1002,26 @@ class ModuleService {
                     'name' => 'live_copy_group_end',
                     'type' => 'end_group',
                 ],
+                [
+                    'name'  => 'enable_audio_link_group_start',
+                    'label' => esc_html__('Audio Link Meta', 'ultimate-post-kit'),
+                    'desc'  => __('If you need to display Audio features in your website so please enable this option.', 'ultimate-post-kit'),
+                    'type'  => 'start_group',
+                    'content_type' => 'new',
+                ],
 
+                [
+                    'name'    => 'audio_link',
+                    'label'   => esc_html__('Audio Link', 'ultimate-post-kit'),
+                    'type'    => 'checkbox',
+                    'default' => "off",
+                    'widget_type' => 'free',
+                ],
+
+                [
+                    'name' => 'audio_link_group_end',
+                    'type' => 'end_group',
+                ],
                 [
                     'name'  => 'enable_video_link_group_start',
                     'label' => esc_html__('Video Link Meta', 'ultimate-post-kit'),
@@ -953,7 +1041,7 @@ class ModuleService {
                 [
                     'name' => 'video_link_group_end',
                     'type' => 'end_group',
-                ]
+                ],
             ]
         ];
 
