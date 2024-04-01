@@ -167,4 +167,5 @@ body.ppch-show-publishing-warning-icon .pp-checklists-toolbar-icon:hover:after {
     color: #ffffff;
     border: 1px solid #a6b2be;
     border-radius: 2px;
+    display: none;
 }
