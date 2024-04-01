@@ -120,6 +120,7 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 		// User authentication function while redirect guest.
 		add_filter( 'authenticate', array( $this, 'cf_guest_auto_login' ), 10, 3 );
 		add_filter( 'plugin_action_links_' . COMMENTING_BLOCK_BASE, array( $this, 'cf_custom_plugin_action_links' ), 10, 4 );
+		add_filter( 'block_type_metadata', array( $this, 'filter_block_type_metadata' ), 10, 1  );
 	}
 
 	/**
@@ -225,15 +226,13 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 	 * @return void
 	 */
 	public function realtime_collaborators_activity_update_ajax_function() {
-
-
 		$current_post_id = filter_input( INPUT_POST, 'postID', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		$activeUsers = filter_input( INPUT_POST, 'currentUser', FILTER_UNSAFE_RAW ); //phpcs:ignore
 		$active_users =  json_decode( stripslashes( $activeUsers ), true );
-
+		
 		$realtime_collobrator = get_post_meta( $current_post_id, '_realtime_collaborators_activity', true );
 		$realtime_collobrator =  (array) json_decode( $realtime_collobrator, true );
-
+		
 		if( isset( $realtime_collobrator ) && !empty( $realtime_collobrator ) ) {
 			$userIdExists = false;
 			$joined_count = 0;
@@ -253,11 +252,20 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 			// If userId is unique, OR IF user joined back after being removed merge it into realtime_collobrator array
 				if (!$userIdExists || ($joined_count === $removed_count)) {
 					$realtime_collobrator[] = $active_users[0];
+					$meta_key_sufix = $active_users[0]['userId'].'_'.$active_users[0]['timestamp'];
+					if( 'Joined' === $active_users[0]['type'] ){
+						update_post_meta( $current_post_id, 'th_rc_joined_'.$meta_key_sufix, $active_users[0]['timestamp'] );
+					}
+					
 				}
 		} else {
 			$realtime_collobrator = $active_users;
+			$meta_key_sufix = $active_users[0]['userId'].'_'.$active_users[0]['timestamp'];
+			if( 'Joined' === $active_users[0]['type'] ){
+				update_post_meta( $current_post_id, 'th_rc_joined_'.$meta_key_sufix, $active_users[0]['timestamp'] );
+			}
 		}
-
+		
 		update_post_meta( $current_post_id, '_realtime_collaborators_activity', wp_json_encode( $realtime_collobrator ) );
 		echo wp_json_encode( $realtime_collobrator );
 		wp_die();
@@ -285,7 +293,7 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 		$classes .= ' multicollab_plan_' . strtolower( $plan_name );
 
 		// Added parent class to body for adding css.
-		$classes .= ' multicollab_body_class';
+		$classes .= ' multicollab_body_class ';
 
 		return $classes;
 
@@ -376,6 +384,19 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 			wp_schedule_event( time(), 'daily', 'cf_daily_license_checker' );
 		}
 
+		$args = array(
+			'title' => 'Getting Started with Multicollab',
+			'post_type'         => 'post',
+			'post_status'       => 'draft',
+		);
+		$posts_array = get_posts( $args );
+		if( empty( $posts_array ) ){
+			$wizard_redirect_link = home_url() . '/wp-admin/admin.php?page=editorial-comments&view=web-activity';
+		} else {
+			$wizard_redirect_link = $url = get_edit_post_link( $posts_array[0]->ID );;
+		}
+
+		echo esc_html( $wizard_redirect_link );
 		wp_die();
 	}
 
@@ -742,16 +763,6 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 	}
 
 	/**
-	 * Get permissions code.
-	 */
-	public function cf_get_pp_roles() {
-		require_once COMMENTING_BLOCK_DIR . 'admin/classes/class-commenting-block-permissions.php'; // Removed phpcs:ignore by Rishi Shah.
-		$this->cf_pp_roles_object = new Commenting_Block_Permissions();
-		$this->default_permission = $this->cf_pp_roles_object->cf_default_permissions();
-		$this->cf_pp_roles        = $this->cf_pp_roles_object->cf_get_pp_roles();
-	}
-
-	/**
 	 * Allowed Administrator, editor, author and contributor user to enter unfiltered html.
 	 *
 	 * @param array  $caps All caps.
@@ -1037,7 +1048,7 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 		$screen = get_current_screen();
 		if ( 'site-editor' !== $screen->base ) {
 
-			wp_enqueue_style( $this->plugin_name, trailingslashit( COMMENTING_BLOCK_URL ) . 'admin/assets/css/commenting-block-admin.css', array(), wp_rand(), 'all' );
+			wp_enqueue_style( $this->plugin_name, trailingslashit( COMMENTING_BLOCK_URL ) . 'admin/assets/js/dist/styles/editorStyle.build.min.css', array(), wp_rand(), 'all' );
 		}
 		wp_enqueue_style( 'cf-select2', trailingslashit( COMMENTING_BLOCK_URL ) . 'admin/assets/css/select2.min.css', array(), wp_rand(), 'all' );
 	}
@@ -1200,6 +1211,11 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 					);
 					wp_localize_script( $this->plugin_name, 'multicollab_floating_icons', $cf_hide_floating_icons );
 
+					$cf_show_multicollab_sidebar = array(
+						'cf_show_multicollab_sidebar' => get_option( 'cf_show_multicollab_sidebar' ),
+					);
+					wp_localize_script( $this->plugin_name, 'multicollab_sidebar', $cf_show_multicollab_sidebar );
+
 					global $wp_version;
 					$cf_wp_version = array(
 						'wp_version' => $wp_version,
@@ -1218,10 +1234,6 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 						'cf_multiedit_websocket' => $cf_multiedit_websocket_url,
 					);
 
-					// echo "<pre>";
-					// print_r( get_option( 'cf_multiedit_websocket' ) );
-					// exit();
-
 					// load multiedit scripts and styles
 					wp_enqueue_script( 'multiedit-script', trailingslashit( COMMENTING_BLOCK_URL ) . 'admin/assets/js/dist/realTimeScripts.build.min.js', array(), wp_rand(), true );
 					wp_enqueue_style( 'multiedit-style', trailingslashit( COMMENTING_BLOCK_URL ) . 'admin/assets/js/dist/styles/realTimeEditor.build.min.css', array(), wp_rand(), false );
@@ -1235,7 +1247,7 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 						'activityLocalizer',
 						array(
 							'nonce'                  => wp_create_nonce( 'wp_rest' ),
-							'apiUrl'                 => home_url( '/wp-json' ),
+							'apiUrl'                 => rtrim( get_rest_url(), '/\\'), // No nedded to pass wp-json inside this function as it is already giving same path.
 							'ajaxUrl'                => admin_url( 'admin-ajax.php' ),
 							'currentUserID'          => get_current_user_id(),
 							'cf_multiedit_websocket' => $cf_multiedit_websocket,
@@ -1280,7 +1292,6 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 	 */
 	public function cf_add_comment() {
         $commentList      = filter_input(INPUT_POST, "commentList", FILTER_DEFAULT); // phpcs:ignore
-		$commentList      = html_entity_decode( $commentList );
 		$commentList      = json_decode( $commentList, true );
 		$list_of_comments = $commentList;
 		// Get the assigned User ID.
@@ -1585,6 +1596,12 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 			delete_option( 'cf_hide_floating_icons' );
 		}
 
+		if ( isset( $form_data['cf_show_multicollab_sidebar'] ) ) {
+			update_option( 'cf_show_multicollab_sidebar', $form_data['cf_show_multicollab_sidebar'] );
+		} else {
+			update_option( 'cf_show_multicollab_sidebar', 0 );
+		}
+
 		echo 'saved';
 		wp_die();
 	}
@@ -1828,7 +1845,7 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 	 */
 	public function cf_update_meta() {
 		$current_post_id = filter_input( INPUT_POST, 'currentPostID', FILTER_SANITIZE_NUMBER_INT );
-        $autoDraft_ids          = isset($_POST['data']) ? $_POST['data'] : ''; //phpcs:ignore
+		$autoDraft_ids          = filter_input(INPUT_POST, 'data', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 		update_post_meta( $current_post_id, '_autodraft_ids', $autoDraft_ids );
 		wp_die();
 	}
@@ -2375,6 +2392,33 @@ class Commenting_block_Admin extends Commenting_block_Functions {
 		} else {
 			return $user;
 		}
+	}
+
+	/**
+	 * Add custom attribute to core block.
+	 *
+	 * @param array $metadata Array of meta data.
+	 * @return array
+	 */
+	public function filter_block_type_metadata( $metadata ) {
+		$allowedBlocks_widget = array('core/rss','core/tag-cloud','core/latest-comments','core/archives','core/calendar','woocommerce/product-best-sellers','woocommerce/product-new','woocommerce/product-categories','woocommerce/product-top-rated',
+		'woocommerce/product-category','woocommerce/handpicked-products','woocommerce/product-tag','woocommerce/products-by-attribute','woocommerce/filled-cart-block');
+
+		if ( ( str_starts_with( $metadata['name'], 'core/' ) || str_starts_with( $metadata['name'], 'woocommerce/' ) )
+            && 
+			( 
+				in_array($metadata['name'], $allowedBlocks_widget,true) 
+				|| str_contains($metadata['name'], 'woocommerce/cart-') 
+				|| str_contains($metadata['name'], 'woocommerce/checkout-') 
+			)
+		) {
+                $metadata['attributes']['datatext'] = [
+                    'type'    => 'string',
+                    'default' => true,
+                ];
+        }
+
+        return $metadata;
 	}
 
 }

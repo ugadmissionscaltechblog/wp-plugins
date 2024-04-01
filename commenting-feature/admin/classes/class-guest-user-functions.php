@@ -163,7 +163,14 @@ class Guest_user_functions {
 		$post_owner    = get_user_by( 'id', $author_id );
 		$user_logins   = array();
 		$user_logins[] = $post_owner->user_login ?? array();
-
+		$collaborators_emails = [];
+		if($post_id){
+			$collaborators = get_post_meta($post_id, '_realtime_collaborators', true);
+			$collaborators = ( !empty($collaborators) ) ? json_decode($collaborators, true) : [];
+			if ( !empty($collaborators) ) {
+				$collaborators_emails = array_column($collaborators, 'email') ?? [];
+			}
+		}
 		$users       = new WP_User_Query(
 			array(
 				'number' => 9999,
@@ -176,6 +183,9 @@ class Guest_user_functions {
 				$user_logins[] = $user->user_login ?? '';
 			}
 			if ( ! empty( $selectedUsers ) && in_array( $user->user_email, $selectedUsers, true ) ) {
+				$user_logins[] = $user->user_login ?? '';
+			}
+			if( !empty($collaborators_emails) && in_array( $user->user_email, $collaborators_emails, true ) ) {
 				$user_logins[] = $user->user_login ?? '';
 			}
 		}
@@ -331,6 +341,11 @@ class Guest_user_functions {
 
 					$fname   = $existing_user->first_name ?? '';
 					$user_id = $existing_user->ID ?? '';
+
+					// add multisite condition to resolve github issue #1130
+					if ( is_multisite() ) { 
+						add_user_to_blog( get_current_blog_id(), $user_id, 'guest' );
+					}
 
 					$post_access = (array) get_user_meta( $user_id, 'guest_user_post_ids', true ) ?? array();
 
@@ -656,6 +671,14 @@ class Guest_user_functions {
 									}
 								}
 
+								// remove user data from the realtime collobrator in the post @author Nirav Soni/@since - 4.3.
+								$realtime_collobrator_users = get_post_meta( $post_id, '_realtime_collaborators', true );
+								$realtime_collobrator_users =  (array) json_decode( $realtime_collobrator_users, true );
+								if( isset( $realtime_collobrator_users ) && !empty( $realtime_collobrator_users ) ) {
+									unset($realtime_collobrator_users[$user_id]);
+									update_post_meta( $post_id, '_realtime_collaborators', wp_json_encode( $realtime_collobrator_users ) );
+								}
+
 								// Temporary fix for users that are currently accessing the post, by logging out active users
 								// get all sessions for user with ID $user_id
 								$sessions = WP_Session_Tokens::get_instance($user_id);
@@ -674,6 +697,17 @@ class Guest_user_functions {
 									'user_email' => $user_email,
 								);
 							}
+						} else {
+							$guest_role[ $post_id ] = $capabilities;
+							update_user_meta( $user_id, 'guest_user_post_ids_roles', $guest_role );
+							$post_access = (array) get_user_meta( $user_id, 'guest_user_post_ids', true ) ?? array();
+							array_push( $post_access, $post_id );
+							update_user_meta( $user_id, 'guest_user_post_ids', $post_access );
+							
+							$response[] = array(
+								'status'     => 'Updated Successfully',
+								'user_email' => $user_email,
+							);
 						}
 					}
 				}
