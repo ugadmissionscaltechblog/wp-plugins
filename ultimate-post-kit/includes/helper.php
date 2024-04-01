@@ -204,7 +204,7 @@ function upk_get_category( $post_type ) {
 			$_categories[ $category->slug ] = $link;
 		}
 	}
-	return implode( ' ', $_categories );
+	return implode( ' <a>/</a> ', $_categories );
 }
 
 
