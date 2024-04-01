@@ -214,6 +214,8 @@ use PriyoMukul\WPNotice\Utils\NoticeRemover;
                  ]
             );
 
+            return;
+
             /**
              * Review Notice
              *
