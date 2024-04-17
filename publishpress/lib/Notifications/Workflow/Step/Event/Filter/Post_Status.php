@@ -144,14 +144,14 @@ class Post_Status extends Base implements Filter_Interface
     public function get_run_workflow_query_args($query_args, $event_args)
     {
         // From
-        $query_args['meta_query'][] = [
-            [
-                'key'     => static::META_KEY_POST_STATUS_FROM,
-                'value'   => $event_args['params']['old_status'],
-                'type'    => 'CHAR',
-                'compare' => '=',
-            ],
-        ];
+        // $query_args['meta_query'][] = [
+            //     [
+        //         'key'     => static::META_KEY_POST_STATUS_FROM,
+                //         'value'   => $event_args['params']['old_status'],
+                //         'type'    => 'CHAR',
+                //         'compare' => '=',
+            //     ],
+        // ]; COMMENTED OUT BY GUUTZ
 
         // To
         $query_args['meta_query'][] = [
