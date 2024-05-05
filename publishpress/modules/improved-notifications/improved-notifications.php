@@ -586,6 +586,12 @@ if (! class_exists('PP_Improved_Notifications')) {
                 return;
             }
 
+            // GUUTZ: only do this update if the date of the post has changed.
+            // This is to avoid triggering the workflow when the post is updated
+            if (isset($postBefore->post_date) && isset($post->post_date) && $postBefore->post_date === $post->post_date) {
+                return;
+            }
+
             $oldStatus = 'new';
             if (is_object($postBefore)) {
                 $oldStatus = $postBefore->post_status;
