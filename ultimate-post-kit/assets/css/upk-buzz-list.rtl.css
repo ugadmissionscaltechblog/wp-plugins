@@ -89,7 +89,8 @@
     text-transform: uppercase;
     transition: color 0.3s cubic-bezier(0.34, 0.01, 0.58, 1); }
     .upk-buzz-list .upk-meta .upk-author-wrap {
-      display: flex; }
+      display: flex; 
+      flex-wrap: wrap;}
       .upk-buzz-list .upk-meta .upk-author-wrap .upk-by {
         font-weight: 700;
         padding-left: 6px; }

@@ -2201,12 +2201,13 @@ class Paradox_Slider extends Group_Control_Query {
 					</a>
 				</div>
 
-				<div class="upk-author-role">
+				<!-- GUUTZ: COMMENTED OUT
+					<div class="upk-author-role">
 					<?php
 					$aid = get_the_author_meta('ID');
 					echo get_user_role($aid);
-					?>
-				</div>
+					?> 
+				</div> -->
 			</div>
 		</div>
 

@@ -174,7 +174,7 @@ function ultimate_post_kit_get_taxonomies() {
 	return $output;
 }
 
-function upk_get_category( $post_type ) {
+function upk_get_category( $post_type , $separator = ' ') {
 	switch ( $post_type ) {
 		case 'campaign':
 			$taxonomy = 'campaign_category';
@@ -204,7 +204,7 @@ function upk_get_category( $post_type ) {
 			$_categories[ $category->slug ] = $link;
 		}
 	}
-	return implode( ' <a>/</a> ', $_categories );
+	return implode( $separator, $_categories );
 }
 
 
