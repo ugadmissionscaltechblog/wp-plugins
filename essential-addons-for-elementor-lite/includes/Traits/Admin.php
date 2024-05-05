@@ -626,6 +626,7 @@ trait Admin {
 	}
 
 	public function eael_black_friday_optin() {
+        return;
 		$time     = time();
 		$ajax_url = admin_url( 'admin-ajax.php' );
 		$nonce    = wp_create_nonce( 'essential-addons-elementor' );
