@@ -71,22 +71,35 @@ if ( !function_exists( 'get_spotlight_posts' ) )
                 p.post_title AS name,
                 p.post_date,
                 t.slug,
-                ROW_NUMBER() OVER (PARTITION BY tt.term_taxonomy_id ORDER BY p.post_date DESC) AS rank
-            FROM {$wpdb->terms} AS t
-            LEFT JOIN {$wpdb->term_taxonomy} AS tt ON t.term_id = tt.term_id
-            LEFT JOIN {$wpdb->term_relationships} AS tr ON tt.term_taxonomy_id = tr.term_taxonomy_id
-            LEFT JOIN {$wpdb->posts} AS p ON tr.object_id = p.ID
-            WHERE tt.taxonomy IN ('category', 'post_tag')
-            AND t.slug IN ('research', 'academics', 'student-life', 'local', 'global', 'before-college', 'after-caltech', 'how-to-caltech', 'announcements', 'spotlight')
-            AND p.post_type = 'post'
+                ROW_NUMBER() OVER (PARTITION BY COALESCE(tt.term_taxonomy_id, p.ID) ORDER BY p.post_date DESC) AS rank
+            FROM {$wpdb->posts} AS p
+            LEFT JOIN {$wpdb->term_relationships} AS tr ON p.ID = tr.object_id
+            LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            LEFT JOIN {$wpdb->terms} AS t ON tt.term_id = t.term_id
+            WHERE p.post_type = 'post'
             AND p.post_status = 'publish'
-            )
-            SELECT (SELECT DISTINCT ID
+            AND (tt.taxonomy IN ('category', 'post_tag') OR tt.term_taxonomy_id IS NULL)
+            AND (t.slug IN ('research', 'academics', 'student-life', 'local', 'global', 'before-college', 'after-caltech', 'how-to-caltech', 'announcements', 'spotlight') OR t.slug IS NULL)
+        ),
+        FilteredPosts AS (
+            SELECT ID, name, post_date, slug
             FROM RankedPosts
-            WHERE rank = 1 AND slug = 'spotlight') UNION
-            (SELECT DISTINCT ID
-            FROM RankedPosts
-            WHERE rank = 1 AND slug != 'spotlight');";
+            WHERE rank = 1
+        ),
+        SpotlightPost AS (
+            SELECT ID, name, post_date, slug
+            FROM FilteredPosts
+            WHERE slug = 'spotlight'
+            ORDER BY post_date DESC
+            LIMIT 1
+        )
+        SELECT *
+        FROM FilteredPosts
+        WHERE ID NOT IN (SELECT ID FROM SpotlightPost)
+        UNION ALL
+        SELECT *
+        FROM SpotlightPost;
+        ";
     
         $post_ids = $wpdb->get_col( $final_query );
         return $post_ids;
