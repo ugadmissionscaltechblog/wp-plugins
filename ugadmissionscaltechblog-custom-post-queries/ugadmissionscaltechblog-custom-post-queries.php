@@ -115,7 +115,7 @@ add_action('ultimate_post_kit_pro/query/homepagecarouselquery', function($query)
 		$query->init();
         $query->set( 'post__in', $post_ids );
         $query->set( 'orderby', 'date' );
-        $query->set( 'posts_per_page', count( $post_ids ) );
+        // $query->set( 'posts_per_page', count( $post_ids ) );
     } else {
         $query->set( 'post__in', array(0) );
     }
@@ -129,7 +129,7 @@ add_action('ultimate_post_kit_pro/query/newpostsquery', function($query) {
     if ( ! empty( $post_ids ) ) {
         $query->set( 'post__not_in', $post_ids );
         $query->set( 'orderby', 'date' );
-        $query->set( 'posts_per_page', count( $post_ids ) );
+        // $query->set( 'posts_per_page', count( $post_ids ) );
     }
 });
 
