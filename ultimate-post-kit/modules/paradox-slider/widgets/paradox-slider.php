@@ -2195,7 +2195,7 @@ class Paradox_Slider extends Group_Control_Query {
 				<?php echo get_avatar(get_the_author_meta('ID'), 48); ?>
 			</div>
 			<div class="upk-author-info">
-				<div class="upk-author-name">
+				<div class="upk-author-name" style="display: flex; flex-wrap: wrap; color: white;">
 					<a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>">
 						<?php echo get_the_author() ?>
 					</a>
