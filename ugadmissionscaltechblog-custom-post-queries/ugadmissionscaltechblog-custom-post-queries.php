@@ -127,9 +127,10 @@ add_action('ultimate_post_kit_pro/query/newpostsquery', function($query) {
     $post_ids = get_spotlight_posts();
     
     if ( ! empty( $post_ids ) ) {
+        $query->init();
         $query->set( 'post__not_in', $post_ids );
         $query->set( 'orderby', 'date' );
-        // $query->set( 'posts_per_page', count( $post_ids ) );
+        $query->set( 'posts_per_page', 6 );
     }
 });
 
@@ -138,10 +139,11 @@ add_action('ultimate_post_kit_pro/query/nextpostsquery', function($query) {
     $post_ids = get_spotlight_posts();
     
     if ( ! empty( $post_ids ) ) {
+        $query->init();
         $query->set( 'post__not_in', $post_ids );
         $query->set( 'orderby', 'date' );
         $query->set( 'offset', 6 );
-        // $query->set( 'posts_per_page', count( $post_ids ) );
+        $query->set( 'posts_per_page', 12 );
     }
 });
 
