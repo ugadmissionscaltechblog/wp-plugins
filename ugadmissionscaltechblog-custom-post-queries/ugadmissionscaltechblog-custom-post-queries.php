@@ -133,6 +133,18 @@ add_action('ultimate_post_kit_pro/query/newpostsquery', function($query) {
     }
 });
 
+add_action('ultimate_post_kit_pro/query/nextpostsquery', function($query) {
+
+    $post_ids = get_spotlight_posts();
+    
+    if ( ! empty( $post_ids ) ) {
+        $query->set( 'post__not_in', $post_ids );
+        $query->set( 'orderby', 'date' );
+        $query->set( 'offset', 6 );
+        // $query->set( 'posts_per_page', count( $post_ids ) );
+    }
+});
+
 if ( !function_exists( 'get_molongui_post_avatar' ) )
 {
     function get_molongui_post_avatar( $post_id )
