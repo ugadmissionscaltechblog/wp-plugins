@@ -114,7 +114,7 @@ add_action('ultimate_post_kit_pro/query/homepagecarouselquery', function($query)
     if ( ! empty( $post_ids ) ) {
 		$query->init();
         $query->set( 'post__in', $post_ids );
-        $query->set( 'orderby', 'date' );
+        $query->set( 'orderby', 'random' );
         // $query->set( 'posts_per_page', count( $post_ids ) );
     } else {
         $query->set( 'post__in', array(0) );
