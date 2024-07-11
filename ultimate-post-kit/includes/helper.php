@@ -174,7 +174,7 @@ function ultimate_post_kit_get_taxonomies() {
 	return $output;
 }
 
-function upk_get_category( $post_type , $separator = ' ') {
+function upk_get_category( $post_type , $separator = ' ') { // GUUTZ HACK
 	switch ( $post_type ) {
 		case 'campaign':
 			$taxonomy = 'campaign_category';
@@ -849,9 +849,8 @@ if ( ! function_exists( 'upk_license_validation' ) ) {
 
 		if ( isset( $license_key ) && ! empty( $license_key ) ) {
 			return true;
-		} else {
-			return false;
 		}
+		
 		return false;
 	}
 }

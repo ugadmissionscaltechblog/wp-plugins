@@ -8,10 +8,10 @@ use \Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use \Elementor\Group_Control_Image_Size;
 use \Elementor\Group_Control_Typography;
 use \Elementor\Utils;
-use \ElementorPro\Base\Base_Widget;
+use \Elementor\Widget_Base;
 use \Elementor\Controls_Manager;
 
-class AuthorGallery extends Base_Widget {
+class AuthorGallery extends Widget_Base {
 
 
 	protected $_has_template_content = false;

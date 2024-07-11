@@ -395,7 +395,7 @@ class Paradox_Slider extends Group_Control_Query {
 				'type'    => Controls_Manager::SELECT,
 				'default' => '0',
 				'options' => [
-					'0' => esc_html__( 'Default', 'bdthemes-element-pack' ),
+					'0' => esc_html__( 'Default', 'ultimate-post-kit' ),
 					'1' => esc_html__('Style 1', 'ultimate-post-kit'),
 					'2' => esc_html__('Style 2', 'ultimate-post-kit'),
 					'3' => esc_html__('Style 3', 'ultimate-post-kit'),
@@ -2181,7 +2181,7 @@ class Paradox_Slider extends Group_Control_Query {
 		<?php
 	}
 
-	public function render_author() {
+	public function render_author() { // GUUTZ HACKED
 
 		if (!$this->get_settings('show_author')) {
 			return;
@@ -2190,24 +2190,24 @@ class Paradox_Slider extends Group_Control_Query {
 		?>
 
 		<div class="upk-author-wrapper upk-flex upk-flex-middle">
-
+			
 			<div class="upk-author-image">
 				<?php echo get_avatar(get_the_author_meta('ID'), 48); ?>
 			</div>
 			<div class="upk-author-info">
-				<div class="upk-author-name" style="display: flex; flex-wrap: wrap; color: white;">
-					<a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>">
+				<div class="upk-author-name">
+					<a>
 						<?php echo get_the_author() ?>
 					</a>
 				</div>
 
-				<!-- GUUTZ: COMMENTED OUT
-					<div class="upk-author-role">
+				<div class="upk-author-role">
 					<?php
 					$aid = get_the_author_meta('ID');
 					echo get_user_role($aid);
-					?> 
-				</div> -->
+					// echo prefix_console_log_message(get_the_author());
+					?>
+				</div>
 			</div>
 		</div>
 

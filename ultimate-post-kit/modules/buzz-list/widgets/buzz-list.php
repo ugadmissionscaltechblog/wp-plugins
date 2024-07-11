@@ -810,17 +810,6 @@ class Buzz_List extends Group_Control_Query {
 	<?php
 	}
 
-	function render_category() {
-		if (!$this->get_settings('show_category')) {
-			return;
-		}
-	?>
-		<div class="upk-category">
-			<?php echo upk_get_category($this->get_settings('posts_source'), ' <a>/</a> '); ?>
-		</div>
-	<?php
-	}
-
 	public function render_comments($id = 0) {
 
 		if (!$this->get_settings('show_comments')) {
@@ -833,6 +822,17 @@ class Buzz_List extends Group_Control_Query {
 			<?php echo esc_html_x('Comments', 'Frontend', 'ultimate-post-kit') ?>
 		</div>
 
+	<?php
+	}
+
+	public function render_category() { // GUUTZ HACK
+		if (!$this->get_settings('show_category')) {
+			return;
+		}
+	?>
+		<div class="upk-category">
+			<?php echo upk_get_category($this->get_settings('posts_source'), ' <a>/</a> '); ?>
+		</div>
 	<?php
 	}
 

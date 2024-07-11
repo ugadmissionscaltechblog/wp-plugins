@@ -123,12 +123,9 @@ add_action('ultimate_post_kit_pro/query/homepagecarouselquery', function($query)
 
 
 add_action('ultimate_post_kit_pro/query/newpostsquery', function($query) {
-
-    $post_ids = get_spotlight_posts();
     
     if ( ! empty( $post_ids ) ) {
         $query->init();
-        $query->set( 'post__not_in', $post_ids );
         $query->set( 'orderby', 'date' );
         $query->set( 'posts_per_page', 6 );
     }
@@ -157,3 +154,26 @@ if ( !function_exists( 'get_molongui_post_avatar' ) )
 		return $author->get_avatar(array(48,48));
 	}
 }
+
+function prefix_console_log_message( $message ) {
+
+    $message = htmlspecialchars( stripslashes( $message ) );
+    //Replacing Quotes, so that it does not mess up the script
+    $message = str_replace( '"', "-", $message );
+    $message = str_replace( "'", "-", $message );
+
+    return "<script>console.log('{$message}')</script>";
+}
+
+function display_author_info() {
+    global $post;
+    $author_id = $post->post_author;
+    $author_name = get_the_author_meta('display_name', $author_id);
+    $author_bio = get_the_author_meta('description', $author_id);
+    
+    return '<div class="author-info">
+                <h3>' . esc_html($author_name) . '</h3>
+                <p>' . esc_html($author_bio) . '</p>
+            </div>';
+}
+add_shortcode('author_info', 'display_author_info');
