@@ -13,7 +13,7 @@ add_filter( 'authorship/options/styles', function( $file )
 }, 10, 1 );
 add_filter( 'authorship/options/script', function( $file )
 {
-    $script = 'assets/js/options.6fb4.min.js';
+    $script = 'assets/js/options.3a19.min.js';
     if ( file_exists( MOLONGUI_AUTHORSHIP_DIR . $script ) )
     {
         $file = MOLONGUI_AUTHORSHIP_FOLDER . '/' . $script;
@@ -53,7 +53,7 @@ add_filter( 'authorship/options/script_params', function( $fw_params )
         306 => __( "You have the WP_Cron disabled, so counters update failed. Please enable the WP_Cron in your wp-config.php file.", 'molongui-authorship' ),
         307 => __( "Something went wrong and counters update failed. Please refresh this page and try again.", 'molongui-authorship' ),
         308 => __( "Running...", 'molongui-authorship' ),
-        309 => __( "Post count update is running in the background. A notice will let you know the update status. You can close this window now.", 'molongui-authorship' ),
+        309 => __( "The post count update is running in the background. You will receive a notice about the update status. You can close this window now.", 'molongui-authorship' ),
         310 => __( "Something went wrong and couldn't connect to the server. Please, try again.", 'molongui-authorship' ),
         400 => __( "Doing it wrong!", 'molongui-authorship' ),
         401 => __( "You cannot disable both 'Authors' and 'Molongui' menus. One of them must be displayed so you have access to the plugin settings page.", 'molongui-authorship' ),

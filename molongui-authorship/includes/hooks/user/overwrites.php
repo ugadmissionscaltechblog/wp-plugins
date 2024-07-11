@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 if ( !authorship_byline_takeover() ) return;
 function authorship_get_user_by( $user, $field, $value )
@@ -97,7 +97,7 @@ function authorship_get_user_by( $user, $field, $value )
                 $post_main_author = get_main_author( $post_id );
                 $main_author      = new Author( $post_main_author->id, $post_main_author->type );
 
-                $display_name  = get_byline( $post_id );
+                $display_name  = authorship_get_byline( $post_id );
                 $user_nicename = $main_author->get_slug();
             }
             else
@@ -154,7 +154,7 @@ function authorship_get_user_by( $user, $field, $value )
         $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 12 );
         if ( is_multiauthor_post( $post_id ) )
         {
-            $user->display_name     = get_byline( $post_id );
+            $user->display_name     = authorship_get_byline( $post_id );
             $user->user_url         = $author_class->get_meta( 'web' ); //authorship_author_link( $user->user_url, $post_id );
             $user->description      = '';
             $user->user_description = $user->description;
@@ -227,7 +227,7 @@ function authorship_get_guest_by( $field, $value )
             $post_main_author = get_main_author( $post_id );
             $main_author      = new Author( $post_main_author->id, $post_main_author->type );
 
-            $display_name  = get_byline( $post_id );
+            $display_name  = authorship_get_byline( $post_id );
             $user_nicename = $main_author->get_slug();
         }
         else

@@ -1,6 +1,6 @@
 <?php
 
-namespace Molongui\Authorship\Includes;
+namespace Molongui\Authorship;
 defined( 'ABSPATH' ) or exit;
 class Highlights
 {

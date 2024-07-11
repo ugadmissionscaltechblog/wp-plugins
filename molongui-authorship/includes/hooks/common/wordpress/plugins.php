@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Plugin;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_add_go_pro_link( $links )
 {
     $more_links = array
@@ -15,4 +18,4 @@ function authorship_add_go_pro_link( $links )
 
     return array_merge( $more_links, $links );
 }
-add_filter( 'plugin_action_links_'.MOLONGUI_AUTHORSHIP_BASENAME, 'authorship_add_go_pro_link' );
+add_filter( 'plugin_action_links_'.MOLONGUI_AUTHORSHIP_BASENAME, array( Plugin::class, 'add_go_pro_link' ) );

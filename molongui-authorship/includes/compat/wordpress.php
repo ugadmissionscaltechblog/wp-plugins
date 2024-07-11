@@ -170,7 +170,7 @@ add_filter( 'authorship/get_avatar_data/skip', function( $default, $args, $dbt )
     }
     return $default;
 }, 10, 3 );
-add_filter( 'authorship/render_box', function( $default, $post )
+add_filter( 'authorship/render_box', function( $default )
 {
     $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 10 );
     if ( empty( $dbt ) ) return $default;
@@ -180,7 +180,7 @@ add_filter( 'authorship/render_box', function( $default, $post )
     );
     if ( array_intersect( $wp_fns, array_column( $dbt, 'function' ) ) ) return false;
     return $default;
-}, 10, 2 );
+}, 10, 1 );
 if ( version_compare( get_bloginfo( 'version' ),'5.3.0', '<' ) )
 {
     if ( !function_exists( 'wp_get_registered_image_subsizes()' ) )

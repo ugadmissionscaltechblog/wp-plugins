@@ -23,7 +23,11 @@ $paths = array
 (
     MOLONGUI_AUTHORSHIP_DIR . 'includes/helpers/',
     MOLONGUI_AUTHORSHIP_DIR . 'includes/hooks/',
+    MOLONGUI_AUTHORSHIP_DIR . 'includes/post.php',
+    MOLONGUI_AUTHORSHIP_DIR . 'includes/user.php',
     MOLONGUI_AUTHORSHIP_DIR . 'includes/deprecated/',
     MOLONGUI_AUTHORSHIP_DIR . 'includes/compat.php',
+
+    MOLONGUI_AUTHORSHIP_DIR . 'drop-in/',
 );
 foreach ( $paths as $path ) authorship_include_files( $path );

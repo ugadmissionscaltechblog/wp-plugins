@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+
 if ( !empty( $options['author_box_social_show'] ) )
 {
 	$networks = authorship_get_social_networks( 'active' );
@@ -15,11 +17,17 @@ if ( !empty( $options['author_box_social_show'] ) )
 			break; // There is at least one social network to show, no need to keep looking.
 		}
 	}
-	if ( !$continue ) return;
+	if ( !$continue )
+    {
+        return;
+    }
 	if ( isset( $options['author_box_social_style'] ) )
 	{
 		$ico_style = $options['author_box_social_style'];
-		if ( $ico_style == 'default' ) $ico_style = '';
+		if ( $ico_style == 'default' )
+        {
+            $ico_style = '';
+        }
 	}
 	$nofollow = $options['add_nofollow'] ? 'rel="nofollow"' : '' ;
     $target = !empty( $options['author_box_social_target'] ) ? '_blank' : '_self' ;
@@ -30,30 +38,52 @@ if ( !empty( $options['author_box_social_show'] ) )
 
             if ( !empty( $url ) )
             {
-	            if ( 'mail' == $id )
+	            if ( 'mail' === $id )
 	            {
                     $mail = sanitize_email( $url );
-		            if ( !empty( $options['encode_email'] ) ) $url = molongui_ascii_encode( 'mailto:'.$mail );
-		            else $url = 'mailto:'.$mail;
+		            if ( !empty( $options['encode_email'] ) )
+                    {
+                        $url = esc_attr( molongui_ascii_encode( 'mailto:'.$mail ) );
+                    }
+		            else
+                    {
+                        $url = esc_url( 'mailto:'.$mail );
+                    }
 	            }
-	            elseif ( 'phone' == $id )
+	            elseif ( 'phone' === $id )
 	            {
 		            $phone = $url;
-		            if ( !empty( $options['encode_phone'] ) ) $url = molongui_ascii_encode( 'tel:'.$phone );
-		            else $url = 'tel:'.$phone;
+		            if ( !empty( $options['encode_phone'] ) )
+                    {
+                        $url = esc_attr( molongui_ascii_encode( 'tel:'.$phone ) );
+                    }
+		            else
+                    {
+                        $url = esc_url( 'tel:'.$phone );
+                    }
 	            }
 	            else
                 {
-                    $url = set_url_scheme( esc_url( $url ) );
+                    if ( 'wechat' === $id )
+                    {
+                        $url = esc_attr( $url );
+                    }
+                    else
+                    {
+                        $url = esc_url( set_url_scheme( $url ) );
+                    }
 
-                    if ( 'twitter' == $id )
-                   {
+                    if ( 'twitter' === $id )
+                    {
                        $id = apply_filters( 'authorship/twitter_icon', $id );
                     }
                 }
 				?>
 					<div class="m-a-box-social-icon m-a-list-social-icon">
-						<a class="m-icon-container m-ico-<?php echo $id; ?> m-ico-<?php echo $ico_style; ?>" <?php echo $nofollow; ?> href="<?php echo esc_url( $url ); ?>" target="<?php echo $target; ?>" <?php echo ( authorship_is_feature_enabled( 'microdata' ) ? 'itemprop="sameAs"' : '' ); ?> aria-label="<?php printf( __( "View %s's %s profile", 'molongui-authorship' ), esc_attr( $author['name'] ), ucfirst( $id ) ); ?>">
+						<a class="m-icon-container m-ico-<?php echo $id; ?> m-ico-<?php echo $ico_style; ?>" <?php echo $nofollow; ?>
+                           href="<?php echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"
+                           target="<?php echo $target; ?>" <?php echo ( authorship_is_feature_enabled( 'microdata' ) ? 'itemprop="sameAs"' : '' ); ?>
+                           aria-label="<?php printf( __( "View %s's %s profile", 'molongui-authorship' ), esc_attr( $author['name'] ), ucfirst( $id ) ); ?>">
 							<i class="m-a-icon-<?php echo $id; ?>"></i>
 						</a>
 					</div>

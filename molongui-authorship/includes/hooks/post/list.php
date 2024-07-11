@@ -13,7 +13,6 @@ function authorship_fix_mine_count()
     </script>
     <?php
 }
-add_action( 'admin_print_footer_scripts-edit.php', 'authorship_fix_mine_count' );
 function authorship_post_edit_list_columns( $columns )
 {
     $new_columns = array();
@@ -41,20 +40,18 @@ function authorship_post_edit_list_columns( $columns )
     }
     return $new_columns;
 }
-add_filter( 'manage_posts_columns', 'authorship_post_edit_list_columns' );
-add_filter( 'manage_pages_columns', 'authorship_post_edit_list_columns' );
 function authorship_post_fill_list_columns( $column, $ID )
 {
     if ( $column == 'molongui-author' )
     {
-        $authors = get_post_authors( $ID );
+        $authors = authorship_get_post_authors( $ID );
         $options = authorship_get_options();
         if ( !$authors ) return;
         foreach ( $authors as $author )
         {
             $post_type = get_post_type( $ID );
 
-            $author_class = new Molongui\Authorship\Includes\Author( $author->id, $author->type );
+            $author_class = new Molongui\Authorship\Author( $author->id, $author->type );
             $display_name = $author_class->get_name();
 
             if ( $author->type == 'guest' )
@@ -146,5 +143,4 @@ function authorship_post_fill_list_columns( $column, $ID )
         return;
     }
 }
-add_action( 'manage_posts_custom_column', 'authorship_post_fill_list_columns', 10, 2 );
-add_action( 'manage_pages_custom_column', 'authorship_post_fill_list_columns', 10, 2 );
+//add_action( 'manage_pages_custom_column', 'authorship_post_fill_list_columns', 10, 2 );

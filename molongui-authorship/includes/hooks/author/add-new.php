@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_add_author()
 {
     check_admin_referer( 'create-author', 'authorship-create-author-nonce' );
@@ -23,8 +24,8 @@ function authorship_add_author()
         $guest_id = wp_insert_post( $postarr, true );
         if ( is_wp_error( $guest_id ) )
         {
-            update_option( 'molongui_authorship_add_author_error_'.get_current_user_id(), $guest_id, 'yes' );
-            update_option( 'molongui_authorship_add_author_input_'.get_current_user_id(), $_REQUEST, 'yes' );
+            update_option( 'molongui_authorship_add_author_error_'.get_current_user_id(), $guest_id, true );
+            update_option( 'molongui_authorship_add_author_input_'.get_current_user_id(), $_REQUEST, true );
             wp_safe_redirect( wp_get_referer() );
             die();
         }
@@ -58,8 +59,8 @@ function authorship_add_author()
         $user_id = wp_insert_user( $userdata );
         if ( is_wp_error( $user_id ) )
         {
-            update_option( 'molongui_authorship_add_author_error_'.get_current_user_id(), $user_id, 'yes' );
-            update_option( 'molongui_authorship_add_author_input_'.get_current_user_id(), $_REQUEST, 'yes' );
+            update_option( 'molongui_authorship_add_author_error_'.get_current_user_id(), $user_id, true );
+            update_option( 'molongui_authorship_add_author_input_'.get_current_user_id(), $_REQUEST, true );
             wp_safe_redirect( wp_get_referer() );
             die();
         }

@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Update_Post_Counters;
+use Molongui\Authorship\Update_Post_Counters;
 defined( 'ABSPATH' ) or exit;
 function authorship_update_post_counters( $post_types = 'enabled', $authors = null )
 {

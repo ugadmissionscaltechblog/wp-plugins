@@ -1,18 +1,21 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Assets;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_register_support_styles()
 {
     $file = apply_filters( 'authorship/support/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/support-rtl.f5c9.min.css' : '/assets/css/common/support.f7d2.min.css' ) );
     $deps = array();
 
-    authorship_register_style( $file, 'support', $deps );
+    Assets::register_style( $file, 'support', $deps );
 }
 add_action( 'admin_enqueue_scripts', 'authorship_register_support_styles' );
 function authorship_enqueue_support_styles()
 {
     $file = apply_filters( 'authorship/support/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/support-rtl.f5c9.min.css' : '/assets/css/common/support.f7d2.min.css' ) );
 
-    authorship_enqueue_style( $file, 'support', true );
+    Assets::enqueue_style( $file, 'support', true );
 }
 function authorship_support_extra_styles()
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 function authorship_author_link( $link, $post_id = null )
 {
@@ -17,7 +17,7 @@ function authorship_author_link( $link, $post_id = null )
 
         if ( !$post_id ) return $link;
     }
-    $authors = get_post_authors( $post_id );
+    $authors = authorship_get_post_authors( $post_id );
     if ( !$authors ) return $link;
     $modifiers_tag = ( ( !empty( $options['byline_prefix'] ) or !empty( $options['byline_suffix'] ) ) and authorship_has_pro() ) ? '?m_bm=true' : '';
     if ( is_multiauthor_post( $post_id ) and !empty( $options['byline_multiauthor_link'] ) and $options['byline_multiauthor_display'] != 'main' )

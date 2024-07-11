@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_enqueue_tidio()
 {
     if ( apply_filters( 'molongui/support/load_tidio', true ) )

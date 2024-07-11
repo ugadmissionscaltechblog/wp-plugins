@@ -15,7 +15,7 @@ add_filter( 'vc_gitem_template_attribute_post_author', function( $value, $data )
 
     if ( !empty( $post->ID ) )
     {
-        return get_byline( $post->ID, '', '', false );
+        return authorship_get_byline( $post->ID, '', '', false );
     }
     return $value;
 
@@ -30,7 +30,7 @@ add_filter( 'vc_gitem_template_attribute_post_author_href', function( $value, $d
 
     if ( isset( $post->ID ) and $post->ID )
     {
-        $author = new Molongui\Authorship\Includes\Author();
+        $author = new Molongui\Authorship\Author();
         $main = get_main_author( $post->ID );
         return $author->get_url( $main->id, $main->type, false, false );
     }

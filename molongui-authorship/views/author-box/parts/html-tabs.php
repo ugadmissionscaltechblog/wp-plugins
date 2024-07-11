@@ -1,4 +1,6 @@
 <?php
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $box_tabs = array
 (
     'name' => 'mab-tabs-'.$random_id,

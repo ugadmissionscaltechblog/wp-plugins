@@ -1404,127 +1404,153 @@ class Blogger_Box extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$author = [];
-		$link_tag = 'div';
-		$link_url = '';
-		$link_target = '';
-
+		$authors = [];
 		$custom_src = ( 'custom' === $settings['source'] );
-
+	
 		if ( 'current' === $settings['source'] ) {
-
 			$avatar_args['size'] = $settings['avatar_size'];
-
-			$user_id = get_the_author_meta( 'ID' );
-			$author['avatar'] = get_avatar_url( $user_id, $avatar_args );
-			$author['display_name'] = get_the_author_meta( 'display_name' );
-			$author['website'] = get_the_author_meta( 'user_url' );
-			$author['bio'] = get_the_author_meta( 'description' );
-			$author['posts_url'] = get_author_posts_url( $user_id );
-
-		} elseif ( $custom_src ) {
-
-			if ( ! empty( $settings['author_avatar']['url'] ) ) {
-				$avatar_src = $settings['author_avatar']['url'];
-
-				if ( $settings['author_avatar']['id'] ) {
-					$attachment_image_src = wp_get_attachment_image_src( $settings['author_avatar']['id'], 'medium' );
-
-					if ( ! empty( $attachment_image_src[0] ) ) {
-						$avatar_src = $attachment_image_src[0];
+			$authors_list = get_post_authors(get_the_ID());
+	
+			if ($authors_list) {
+				foreach ($authors_list as $author_obj) {
+					// Log the author_obj to inspect its structure
+					error_log('Author Object: ' . print_r($author_obj, true));
+	
+					$user = null;
+					if ($author_obj->type === 'user') {
+						$user = molongui_get_author_by('ID', $author_obj->id, 'user');
+					} else {
+						// Prepend 'guest-' to the guest author ID
+						$user_post_obj = molongui_get_author_by('id', $author_obj->id, 'guest', false);
+						$user = new Author($user_post_obj->ref);
+					}
+	
+					// Log user object to inspect what is returned
+					error_log('User Object: ' . print_r($user, true));
+	
+					if ($user) {
+						if ($author_obj->type === 'user') {
+							// Handle WP_User object
+							$authors[] = [
+								'avatar' => get_avatar_url($user->ID, $avatar_args),
+								'display_name' => $user->display_name,
+								'website' => $user->user_url,
+								'bio' => $user->description,
+								'posts_url' => get_author_posts_url($user->ID)
+							];
+						} else {
+							// Handle Molongui\Author object
+							$authors[] = [
+								'avatar' => $user->get_avatar('thumbnail', 'url'),
+								'display_name' => $user->get_name(),
+								'website' => $user->get_url(),
+								'bio' => $user->get_bio(),
+								'posts_url' => $user->get_url()
+							];
+						}
+					} else {
+						// Log error or handle the case where user is not found
+						error_log('User not found for author ID: ' . $author_obj->id . ' and type: ' . $author_obj->type);
 					}
 				}
-
-				$author['avatar'] = $avatar_src;
 			}
-
-			$author['display_name'] = $settings['author_name'];
-			$author['website'] = $settings['author_website']['url'];
-			$author['bio'] = wpautop( $settings['author_bio'] );
-			$author['posts_url'] = $settings['posts_url']['url'];
-		}
-		elseif ( 'choose' === $settings['source'] ) {
+		} elseif ( $custom_src ) {
+			$authors[] = [
+				'avatar' => ! empty( $settings['author_avatar']['url'] ) ? $settings['author_avatar']['url'] : '',
+				'display_name' => $settings['author_name'],
+				'website' => $settings['author_website']['url'],
+				'bio' => wpautop( $settings['author_bio'] ),
+				'posts_url' => $settings['posts_url']['url']
+			];
+		} elseif ( 'choose' === $settings['source'] ) {
 			foreach ( $settings['author'] as $id ) {
-				if ( !$id ) {
-					continue;
-				}
-				$data = new Author( $id );
-				$author['avatar'] = $data->get_avatar($context = 'url');
-				$author['display_name'] = $data->get_name();
-				$author['bio'] = $data->get_bio();
-				$author['posts_url'] = $data->get_url();
+				if ( !$id ) continue;
+	
+				$data = new Author($id);
+				$authors[] = [
+					'avatar' => $data->get_avatar($context = 'url'),
+					'display_name' => $data->get_name(),
+					'bio' => $data->get_bio(),
+					'posts_url' => $data->get_url()
+				];
 			}
 		}
-
-		$print_avatar = ( ( ! $custom_src && 'yes' === $settings['show_avatar'] ) || ( $custom_src && ! empty( $author['avatar'] ) ) );
-		$print_name = ( ( ! $custom_src && 'yes' === $settings['show_name'] ) || ( $custom_src && ! empty( $author['display_name'] ) ) );
-		$print_bio = ( ( ! $custom_src && 'yes' === $settings['show_biography'] ) || ( $custom_src && ! empty( $author['bio'] ) ) );
-		$print_link = ( ( ! $custom_src && 'yes' === $settings['show_link'] ) && ! empty( $settings['link_text'] ) || ( $custom_src && ! empty( $author['posts_url'] ) && ! empty( $settings['link_text'] ) ) );
-
-		if ( ! empty( $settings['link_to'] ) || $custom_src ) {
-			if ( ( $custom_src || 'website' === $settings['link_to'] ) && ! empty( $author['website'] ) ) {
-				$link_tag = 'a';
-				$link_url = $author['website'];
-
-				if ( $custom_src ) {
-					$link_target = $settings['author_website']['is_external'] ? '_blank' : '';
-				} else {
-					$link_target = '_blank';
+	
+		ob_start();
+		foreach ($authors as $author) {
+			$print_avatar = ( ( ! $custom_src && 'yes' === $settings['show_avatar'] ) || ( $custom_src && ! empty( $author['avatar'] ) ) );
+			$print_name = ( ( ! $custom_src && 'yes' === $settings['show_name'] ) || ( $custom_src && ! empty( $author['display_name'] ) ) );
+			$print_bio = ( ( ! $custom_src && 'yes' === $settings['show_biography'] ) || ( $custom_src && ! empty( $author['bio'] ) ) );
+			$print_link = ( ( ! $custom_src && 'yes' === $settings['show_link'] ) && ! empty( $settings['link_text'] ) || ( $custom_src && ! empty( $author['posts_url'] ) && ! empty( $settings['link_text'] ) ) );
+	
+			if ( ! empty( $settings['link_to'] ) || $custom_src ) {
+				$link_tag = 'div';
+				$link_url = '';
+				$link_target = '';
+	
+				if ( ( $custom_src || 'website' === $settings['link_to'] ) && ! empty( $author['website'] ) ) {
+					$link_tag = 'a';
+					$link_url = $author['website'];
+	
+					if ( $custom_src ) {
+						$link_target = $settings['author_website']['is_external'] ? '_blank' : '';
+					} else {
+						$link_target = '_blank';
+					}
+				} elseif ( 'posts_archive' === $settings['link_to'] && ! empty( $author['posts_url'] ) ) {
+					$link_tag = 'a';
+					$link_url = $author['posts_url'];
 				}
-			} elseif ( 'posts_archive' === $settings['link_to'] && ! empty( $author['posts_url'] ) ) {
-				$link_tag = 'a';
-				$link_url = $author['posts_url'];
-			}
-
-			if ( ! empty( $link_url ) ) {
-				$this->add_render_attribute( 'author_link', 'href', esc_url( $link_url ) );
-
-				if ( ! empty( $link_target ) ) {
-					$this->add_render_attribute( 'author_link', 'target', $link_target );
+	
+				if ( ! empty( $link_url ) ) {
+					$this->add_render_attribute( 'author_link', 'href', esc_url( $link_url ) );
+	
+					if ( ! empty( $link_target ) ) {
+						$this->add_render_attribute( 'author_link', 'target', $link_target );
+					}
 				}
 			}
-		}
-
-		$this->add_render_attribute(
-			'button',
-			'class', [
-				'elementor-author-box__button',
-				'elementor-button',
-				'elementor-size-xs',
-			]
-		);
-
-		if ( $print_link ) {
-			$this->add_render_attribute( 'button', 'href', esc_url( $author['posts_url'] ) );
-		}
-
-		if ( $print_link && ! empty( $settings['button_hover_animation'] ) ) {
+	
 			$this->add_render_attribute(
 				'button',
-				'class',
-				'elementor-animation-' . $settings['button_hover_animation']
-			);
-		}
-
-		if ( $print_avatar ) {
-			$this->add_render_attribute(
-				'avatar',
-				[
-					'src' => esc_url( $author['avatar'] ),
-					'alt' => ( ! empty( $author['display_name'] ) )
-						? sprintf(
-							/* translators: %s: Author display name. */
-							esc_attr__( 'Picture of %s', 'elementor-pro' ),
-							$author['display_name']
-						)
-						: esc_html__( 'Author picture', 'elementor-pro' ),
-					'loading' => 'lazy',
+				'class', [
+					'elementor-author-box__button',
+					'elementor-button',
+					'elementor-size-xs',
 				]
 			);
+	
+			if ( $print_link ) {
+				$this->add_render_attribute( 'button', 'href', esc_url( $author['posts_url'] ) );
+			}
+	
+			if ( $print_link && ! empty( $settings['button_hover_animation'] ) ) {
+				$this->add_render_attribute(
+					'button',
+					'class',
+					'elementor-animation-' . $settings['button_hover_animation']
+				);
+			}
+	
+			if ( $print_avatar ) {
+				$this->add_render_attribute(
+					'avatar',
+					[
+						'src' => esc_url( $author['avatar'] ),
+						'alt' => ( ! empty( $author['display_name'] ) )
+							? sprintf(
+								/* translators: %s: Author display name. */
+								esc_attr__( 'Picture of %s', 'elementor-pro' ),
+								$author['display_name']
+							)
+							: esc_html__( 'Author picture', 'elementor-pro' ),
+						'loading' => 'lazy',
+					]
+				);
+			}
+	
+			include 'blogger-box-layout.php';
 		}
-
-		ob_start();
-		include 'blogger-box-layout.php';
 		$output = ob_get_clean();
 		echo $output;
 	}

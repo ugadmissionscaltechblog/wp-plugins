@@ -21,7 +21,9 @@ function authorship_box_preview_action()
     $saved   = authorship_get_options();
     $options = array_merge( $saved, $options );
     add_filter( '_authorship/get_options', function() use ( $options ) { return $options; } );
+    add_filter( 'authorship/box/is_preview', '__return_true' );
     $markup = authorship_box_markup( null, array( $author ), $options, false );
+    remove_filter( 'authorship/box/is_preview', '__return_true' );
     echo $markup;
     wp_die();
 }

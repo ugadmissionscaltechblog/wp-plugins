@@ -1,8 +1,9 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_get_client_data()
 {
-    $browser = new \Molongui\Authorship\Includes\Libraries\Common\Browser();
+    $browser = new \Molongui\Authorship\Common\Libraries\Browser();
 
     return array
     (

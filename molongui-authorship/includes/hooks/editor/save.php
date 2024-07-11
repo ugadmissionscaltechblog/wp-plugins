@@ -12,7 +12,7 @@ function authorship_save_editor_options()
         $current = (array) get_option( MOLONGUI_AUTHORSHIP_PREFIX.'_options', array() );
         $options = array_merge( $current, $options );
         $options = apply_filters( 'authorship/validate_editor_options', $options, $current );
-        update_option( MOLONGUI_AUTHORSHIP_PREFIX.'_options', $options );
+        update_option( MOLONGUI_AUTHORSHIP_PREFIX.'_options', $options, true);
 
         $old = $current;
         do_action( 'authorship/editor_options', $options, $old );

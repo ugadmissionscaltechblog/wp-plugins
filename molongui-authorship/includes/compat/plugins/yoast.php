@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 if ( molongui_is_request( 'admin' ) ) return;
 $options = authorship_get_options();
@@ -35,7 +35,7 @@ function molongui_authorship_wpseo_schema_author( $graph_piece, $context = null 
     {
         $pid = $context->indexable->object_id;
     }
-    $post_authors = get_post_authors( $pid );
+    $post_authors = authorship_get_post_authors( $pid );
     if ( !$post_authors or !is_array( $post_authors ) ) return $graph_piece;
     if ( is_array( $post_authors ) and count( $post_authors ) <= 1 ) return $graph_piece;
     $authors = array();
@@ -67,7 +67,7 @@ function molongui_authorship_wpseo_replacements( $replacements, $args = null )
     if ( is_guest_author() ) return $replacements;
     if ( isset( $replacements['%%name%%'] ) )
     {
-        $author = new Molongui\Authorship\Includes\Author( get_query_var( 'author', 0 ), 'user' );
+        $author = new Molongui\Authorship\Author( get_query_var( 'author', 0 ), 'user' );
         $replacements['%%name%%'] = $author->get_name();
     }
     return $replacements;
@@ -126,7 +126,7 @@ function molongui_authorship_get_actual_author_data( $key, $default )
             $guest = molongui_get_author_by( 'name', $author, 'guest', false );
             if ( $guest )
             {
-                $author = new Molongui\Authorship\Includes\Author( $guest->ID, 'guest', $guest );
+                $author = new Molongui\Authorship\Author( $guest->ID, 'guest', $guest );
 
                 switch ( $key )
                 {
@@ -149,7 +149,7 @@ function molongui_authorship_get_actual_author_data( $key, $default )
     {
         if ( is_multiauthor_link( ( $default ) ) )
         {
-            $author = new Molongui\Authorship\Includes\Author( get_query_var( 'author', 0 ), 'user' );
+            $author = new Molongui\Authorship\Author( get_query_var( 'author', 0 ), 'user' );
             return $author->get_url();
         }
     }
@@ -174,7 +174,7 @@ add_filter( 'wpseo_breadcrumb_links', function( $crumbs )
         }
         else
         {
-            $author = new Molongui\Authorship\Includes\Author( get_query_var( 'author', 0 ), 'user' );
+            $author = new Molongui\Authorship\Author( get_query_var( 'author', 0 ), 'user' );
             $crumbs[$last]['text'] = $prefix . esc_html( $author->get_name() );
         }
     }

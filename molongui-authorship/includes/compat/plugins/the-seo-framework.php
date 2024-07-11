@@ -38,7 +38,7 @@ add_filter( 'the_seo_framework_title_from_generation', function ( $generated, $a
     {
         if ( 'Untitled' === $generated )
         {
-            $author = new Molongui\Authorship\Includes\Author( $wp_query->guest_author_id, 'guest' );
+            $author = new Molongui\Authorship\Author( $wp_query->guest_author_id, 'guest' );
             $display_name = $author->get_name();
 
             $prefix = __( 'Author:' );

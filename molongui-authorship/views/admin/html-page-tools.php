@@ -22,7 +22,7 @@ $tools = array_merge_recursive( isset( $tools ) ? $tools : array(), isset( $fw_t
 
         <?php foreach ( $tools as $tool )
         {
-            echo new \Molongui\Authorship\Includes\Libraries\Common\Option( $tool, '', '', MOLONGUI_AUTHORSHIP_PREFIX.'_' );
+            echo new \Molongui\Authorship\Common\Modules\Settings\Control( $tool, '', '', MOLONGUI_AUTHORSHIP_PREFIX.'_' );
         } ?>
 
         <?php echo wp_nonce_field( 'mfw_tools_nonce', 'mfw_tools_nonce', true, false ); ?>

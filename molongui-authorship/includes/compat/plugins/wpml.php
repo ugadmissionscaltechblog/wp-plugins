@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_filter( 'wpml_translatable_user_meta_fields', 'authorship_add_user_meta_fields_to_wpml' );
 add_filter( 'authorship/pre_author_link', 'authorship_dont_filter_author_link_for_wpml', 10, 4 );
@@ -46,7 +47,7 @@ function authorship_wpml_translated_author_urls_fix( $w_active_languages )
                     if ( !empty( $w_active_languages[$lang] ) )
                     {
                         $id = apply_filters( 'wpml_object_id', $wp_query->guest_author_id, 'guest_author', false, $lang );
-                        $author   = new Molongui\Authorship\Includes\Author( $id, 'guest' );
+                        $author   = new Molongui\Authorship\Author( $id, 'guest' );
                         $wpml_url = apply_filters( 'wpml_permalink', $author->get_url(), $lang );
                         $w_active_languages[$lang]['url'] = $wpml_url;
                     }
@@ -55,7 +56,7 @@ function authorship_wpml_translated_author_urls_fix( $w_active_languages )
                         $id = apply_filters( 'wpml_object_id', $wp_query->guest_author_id, 'guest_author', false, $lang );
                         global $sitepress;
                         $temp_lang_switch = new WPML_Temporary_Switch_Language( $sitepress, $lang );
-                        $author = new Molongui\Authorship\Includes\Author( $id, 'guest' );
+                        $author = new Molongui\Authorship\Author( $id, 'guest' );
 
                         $args = array
                         (
@@ -110,7 +111,7 @@ function authorship_wpml_translated_author_urls_fix( $w_active_languages )
                 {
                     if ( !empty( $w_active_languages[$lang] ) )
                     {
-                        $author = new Molongui\Authorship\Includes\Author( get_queried_object_id(), 'user' );
+                        $author = new Molongui\Authorship\Author( get_queried_object_id(), 'user' );
                         $wpml_url = apply_filters( 'wpml_permalink', $author->get_url(), $lang );
                         $w_active_languages[$lang]['url'] = $wpml_url;
                     }
@@ -118,7 +119,7 @@ function authorship_wpml_translated_author_urls_fix( $w_active_languages )
                     {
                         global $sitepress;
                         $temp_lang_switch = new WPML_Temporary_Switch_Language( $sitepress, $lang );
-                        $author = new Molongui\Authorship\Includes\Author( get_queried_object_id(), 'user' );
+                        $author = new Molongui\Authorship\Author( get_queried_object_id(), 'user' );
 
                         $args = array
                         (

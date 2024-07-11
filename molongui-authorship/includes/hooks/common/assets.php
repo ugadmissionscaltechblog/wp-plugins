@@ -1,5 +1,11 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Assets;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+
+add_action( 'admin_enqueue_scripts', array( Assets::class, 'register_media_uploader' ) );
+add_action( 'admin_enqueue_scripts', array( Assets::class, 'register_sweetalert' ) );
 if ( !function_exists( 'molongui_register_media_uploader' ) )
 {
     function molongui_register_media_uploader()
@@ -12,7 +18,6 @@ if ( !function_exists( 'molongui_register_media_uploader' ) )
             wp_register_style( MOLONGUI_AUTHORSHIP_NAME . '-media-uploader', plugins_url( '/' ) . $file, array(), MOLONGUI_AUTHORSHIP_VERSION, 'all' );
         }
     }
-    add_action( 'admin_enqueue_scripts', 'molongui_register_media_uploader' );
 }
 if ( !function_exists( 'molongui_register_sweetalert' ) )
 {
@@ -30,7 +35,6 @@ if ( !function_exists( 'molongui_register_sweetalert' ) )
         }
         wp_register_script( 'molongui-sweetalert', $sweetalert_js_url, array( 'jquery' ), $version, true );
     }
-    add_action( 'admin_enqueue_scripts', 'molongui_register_sweetalert' );
 }
 if ( !function_exists( 'molongui_register_selectr' ) )
 {

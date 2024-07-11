@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $molongui_logo = MOLONGUI_AUTHORSHIP_URL . 'assets/img/common/masthead_logo.png';
 $logo = !empty( $args['logo'] ) ? $args['logo'] : $molongui_logo;
 $link = !empty( $args['link'] ) ? $args['link'] : MOLONGUI_AUTHORSHIP_WEB;

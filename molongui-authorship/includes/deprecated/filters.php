@@ -1,6 +1,7 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Utils\Post;
 defined( 'ABSPATH' ) or exit;
 function authorship_deprecated_filter_get_author( $author, $author_id, $author_type )
 {
@@ -184,12 +185,18 @@ function authorship_deprecated_filter_get_user_by( $user, $original_user, $field
 
     return $filter ? $user : $original_user;
 }
-function authorship_deprecated_filter_dont_render_box( $value, $post )
+function authorship_deprecated_filter_dont_render_box( $value )
 {
+    $post = Post::get();
     return !apply_filters_deprecated( 'molongui_authorship_dont_render_author_box', array( $value, $post ), '4.4.0', 'authorship/render_box' );
 }
-function authorship_deprecated_filter_box_hide( $value, $post )
+function authorship_deprecated_filter_box_hide( $value )
 {
+    $post = Post::get();
     return !apply_filters_deprecated( 'authorship/box/hide', array( $value, $post ), '4.5.4', 'authorship/render_box' );
 }
-//add_filter( 'authorship/render_box', 'authorship_deprecated_filter_box_hide', 0, 2 );
+function authorship_deprecated_filter_post_as_others( $value )
+{
+    return apply_filters_deprecated( 'authorship/post_as_other_author', array( $value ), '4.8.0', 'authorship/can_post_as_others' );
+}
+//add_filter( 'authorship/can_post_as_others', 'authorship_deprecated_filter_post_as_others', 0, 1 );

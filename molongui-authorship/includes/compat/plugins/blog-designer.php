@@ -33,9 +33,9 @@ defined( 'ABSPATH' ) or exit;
  * @see     blog-designer/public/class-blog-designer-lite-public.php
  *
  * @since   4.6.7
- * @version 4.6.7
+ * @version 4.8.0
  *//*
-add_filter( 'authorship/render_box', function( $default, $post )
+add_filter( 'authorship/render_box', function( $default )
 {
     $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 10 );
     $fn  = 'bd_views';
@@ -45,4 +45,4 @@ add_filter( 'authorship/render_box', function( $default, $post )
     }
 
     return $default;
-}, 10, 2 );*/
+}, 10, 1 );*/

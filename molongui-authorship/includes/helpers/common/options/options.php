@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_get_options()
 {
     $options = (array) get_option( MOLONGUI_AUTHORSHIP_PREFIX.'_options', array() );

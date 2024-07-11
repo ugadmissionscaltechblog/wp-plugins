@@ -1,4 +1,6 @@
 <?php
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $name_tag = ( !empty( $options['author_box_name_tag'] ) ? $options['author_box_name_tag'] : 'h5' );
 
 ?>

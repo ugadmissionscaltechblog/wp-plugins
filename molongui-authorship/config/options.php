@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $editor_url = authorship_editor_url();
 $is_pro     = authorship_has_pro();
 
@@ -1530,6 +1533,73 @@ if ( true )
         'label'       => sprintf( __( "Need to get rid of some elements you don't have the setting to? Provide a comma-separated list of CSS IDs and/or classes and Molongui Authorship will prevent them from being displayed on the front-end.", 'molongui-authorship' ), '<a href="https://www.molongui.com/docs/molongui-authorship/troubleshooting/the-author-box-shows-up-twice/" target="_blank">', '</a>' ),
     );
 }
+if ( apply_filters( 'molongui_authorship/show_contributors_tab', true ) )
+{
+    $is_contributors_active = is_plugin_active( 'molongui-post-contributors/molongui-post-contributors.php' );
+    $options[] = array
+    (
+        'display'  => !$is_contributors_active,
+        'advanced' => false,
+        'type'     => 'section',
+        'id'       => 'contributors',
+        'name'     => __( "Contributors", 'molongui-authorship' ),
+    );
+    $options[] = array
+    (
+        'display'  => !$is_contributors_active,
+        'advanced' => false,
+        'type'     => 'title',
+        'label'    => __( "Easily add reviewers, fact-checkers, illustrators, and any other attribution to your WordPress posts.", 'molongui-authorship' ),
+    );
+    $options[] = array
+    (
+        'display'  => !$is_contributors_active,
+        'advanced' => false,
+        'deps'     => '',
+        'search'   => '',
+        'type'     => 'header',
+        'class'    => '',
+        'id'       => 'contributors_header',
+        'label'    => __( "Molongui Post Contributors", 'molongui-authorship' ),
+        'buttons'  => array
+        (
+            'advanced' => array
+            (
+                'display'  => false,
+                'type'     => 'advanced',
+                'label'    => __( "Show Advanced", 'molongui-authorship' ),
+                'title'    => __( "Click to show advanced settings", 'molongui-authorship' ),
+                'class'    => 'm-advanced-options',
+                'disabled' => false,
+            ),
+            'save' => array
+            (
+                'display'  => false,
+                'type'     => 'save',
+                'label'    => __( "Save", 'molongui-authorship' ),
+                'title'    => __( "Save Settings", 'molongui-authorship' ),
+                'class'    => 'm-save-options',
+                'disabled' => true,
+            ),
+        ),
+    );
+    $options[] = array
+    (
+        'display'  => !$is_contributors_active,
+        'advanced' => false,
+        'deps'     => '',
+        'search'   => '',
+        'type'     => 'callback',
+        'class'    => '',
+        'default'  => '',
+        'id'       => 'contributors_ad',
+        'title'    => '',
+        'desc'     => '',
+        'help'     => '',
+        'link'     => '',
+        'callback' => array( Settings::class, 'display_contributors_ad' ),
+    );
+}
 if ( true )
 {
     $options[] = array
@@ -1742,6 +1812,54 @@ if ( true )
             'show' => __( "Show More Advanced Settings", 'molongui-authorship' ),
             'hide' => __( "Hide More Advanced Settings", 'molongui-authorship' ),
         )
+    );
+    $options[] = array
+    (
+        'display'  => is_plugin_active( 'polylang/polylang.php' ),
+        'advanced' => false,
+        'deps'     => '',
+        'search'   => '',
+        'type'     => 'header',
+        'class'    => 'hidden',
+        'id'       => 'pll_compatibility',
+        'label'    => __( "Polylang Compatibility", 'molongui-authorship' ),
+        'buttons'  => array
+        (
+            'advanced' => array
+            (
+                'display'  => false,
+                'type'     => 'advanced',
+                'label'    => __( "Show Advanced", 'molongui-authorship' ),
+                'title'    => __( "Click to show advanced settings", 'molongui-authorship' ),
+                'class'    => 'm-advanced-options',
+                'disabled' => false,
+            ),
+            'save' => array
+            (
+                'display'  => true,
+                'type'     => 'save',
+                'label'    => __( "Save", 'molongui-authorship' ),
+                'title'    => __( "Save Settings", 'molongui-authorship' ),
+                'class'    => 'm-save-options',
+                'disabled' => true,
+            ),
+        ),
+    );
+
+    $options[] = array
+    (
+        'display'  => is_plugin_active( 'polylang/polylang.php' ),
+        'advanced' => false,
+        'type'     => 'toggle',
+        'deps'     => '',
+        'search'   => '',
+        'id'       => 'pll_translate_guests',
+        'default'  => true,
+        'class'    => 'hidden',
+        'title'    => '',
+        'desc'     => '',
+        'help'     => sprintf( __( "%sBy default, you can translate Guest Author profiles just like you do with posts —creating a new version for a guest author in each language.%s. %sHowever, you may want to disable such feature and have a single version of each guest author profile for all your languages. In such scenario, you need to disable this option.%s", 'molongui-authorship' ), '<p>', '</p>', '<p>', '</p>' ),
+        'label'    => __( "Enable languages and translations for guest authors", 'molongui-authorship' ),
     );
     $options[] = array
     (
@@ -2349,6 +2467,21 @@ if ( true )
                 'disabled' => true,
             ),
         ),
+    );
+    $options[] = array
+    (
+        'display'  => true,
+        'advanced' => false,
+        'type'     => 'toggle',
+        'deps'     => '',
+        'search'   => '',
+        'id'       => 'post_as_others',
+        'default'  => false,
+        'class'    => '',
+        'title'    => '',
+        'desc'     => '',
+        'help'     => sprintf( __( "%sBy default, only administrators and editors can publish posts on behalf of another user.%s%sIf you want to allow other user roles (like contributors and authors) to manage content for others, enable this option.%s", 'molongui-authorship' ), '<p>', '</p>', '<p>', '</p>' ),
+        'label'    => sprintf( __( "Allow non-privileged users to post content under the names of other authors.", 'molongui-authorship' ), '<strong>', '</strong>' ),
     );
     $permissions   = array();
     $permissions[] = array

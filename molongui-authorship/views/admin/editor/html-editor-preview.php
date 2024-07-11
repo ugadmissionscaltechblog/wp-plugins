@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 
 $options = authorship_get_options();

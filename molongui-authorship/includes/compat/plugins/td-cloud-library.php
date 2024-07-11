@@ -55,8 +55,8 @@ add_filter( 'get_the_author_user_email', function( $value, $user_id = null, $ori
     {
         global $tdb_state_single;
         $tdcl_query = $tdb_state_single->get_wp_query();
-        $authors = get_post_authors( $tdcl_query->queried_object_id );
-        $author_class = new Molongui\Authorship\Includes\Author( $authors[0]->id, $authors[0]->type );
+        $authors = authorship_get_post_authors( $tdcl_query->queried_object_id );
+        $author_class = new Molongui\Authorship\Author( $authors[0]->id, $authors[0]->type );
         add_filter( '_authorship/get_avatar_data/filter/post_id', function() use ( $tdcl_query ){ return $tdcl_query->queried_object_id; } );
         return $author_class->get_mail();
     }

@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Helpers;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_dump( $data, $backtrace = false, $in_admin = true, $die = false )
 {
     if ( apply_filters( 'authorship/disable_dump', false ) ) return;
@@ -30,15 +33,18 @@ function authorship_dump( $data, $backtrace = false, $in_admin = true, $die = fa
     $debug = print_r( $debug, true );
     if ( is_admin() )
     {
+        if ( !current_user_can( 'administrator' ) )
+        {
+            return;
+        }
+
         $force_inline = apply_filters( '_authorship/force_inline_dump', false );
         if ( !did_action( 'admin_notices' ) and !$die and !$force_inline )
         {
             add_action( 'admin_notices', function() use ( $debug )
             {
-                if ( !current_user_can( 'administrator' ) ) return;
-
                 $html_message = '';
-                if ( authorship_is_block_editor() and !did_action( '_authorship/hide_block_editor' ) )
+                if ( Helpers::is_block_editor() and !did_action( '_authorship/hide_block_editor' ) )
                 {
                     do_action( '_authorship/hide_block_editor' );
 
@@ -52,8 +58,6 @@ function authorship_dump( $data, $backtrace = false, $in_admin = true, $die = fa
         }
         else
         {
-            if ( !current_user_can( 'administrator' ) ) return;
-
             if ( $die )
             {
                 echo '<pre style="margin: 20px; padding: 1em; border: 2px dashed green; background: #fbfbfb;">';

@@ -1,19 +1,24 @@
 <?php
+
+use Molongui\Authorship\Common\Utils\Assets;
 defined( 'ABSPATH' ) or exit;
 function authorship_register_box_styles()
 {
-    $file = apply_filters( 'authorship/box/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.daa9.min.css' : '/assets/css/author-box.69f2.min.css' ) );
+    $file = apply_filters( 'authorship/box/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.4372.min.css' : '/assets/css/author-box.ebfd.min.css' ) );
 
-    authorship_register_style( $file, 'box' );
+    Assets::register_style( $file, 'box' );
 }
 add_action( 'wp_enqueue_scripts'   , 'authorship_register_box_styles' );
 add_action( 'admin_enqueue_scripts', 'authorship_register_box_styles' );
 function authorship_enqueue_box_styles()
 {
-    if ( !authorship_is_feature_enabled( 'box' ) or !authorship_is_feature_enabled( 'box_styles' ) ) return;
-    $file = apply_filters( 'authorship/box/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.daa9.min.css' : '/assets/css/author-box.69f2.min.css' ) );
+    if ( !authorship_is_feature_enabled( 'box' ) or !authorship_is_feature_enabled( 'box_styles' ) )
+    {
+        return;
+    }
+    $file = apply_filters( 'authorship/box/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.4372.min.css' : '/assets/css/author-box.ebfd.min.css' ) );
 
-    authorship_enqueue_style( $file, 'box' );
+    Assets::enqueue_style( $file, 'box' );
 }
 function authorship_box_extra_styles()
 {

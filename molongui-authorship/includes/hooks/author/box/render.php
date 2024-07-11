@@ -1,14 +1,21 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+use Molongui\Authorship\Common\Utils\Debug;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_autoadd_box()
 {
-    $options = authorship_get_options();
+    $options = Settings::get();
     if ( empty( $options['author_box'] ) )
     {
-        authorship_debug( null, __( "The author box feature is disabled.", 'molongui-authorship' ) );
+        Debug::console_log( null, __( "The author box feature is disabled.", 'molongui-authorship' ) );
         return;
     }
-    if ( empty( $options['box_hook_priority'] ) ) $options['box_hook_priority'] = 11;
+    if ( empty( $options['box_hook_priority'] ) )
+    {
+        $options['box_hook_priority'] = 11;
+    }
     if ( $options['box_hook_priority'] <= 10 )
     {
         remove_filter( 'the_content', 'wpautop' );

@@ -1,12 +1,13 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_display_install_notice()
 {
     if ( !get_transient( MOLONGUI_AUTHORSHIP_NAME . '-activated' ) ) return;
 
     $n_content = array();
     $plugin_function = "highlights_plugin";
-    $class_name = '\Molongui\\'.MOLONGUI_AUTHORSHIP_NAMESPACE.'\Includes\Highlights';
+    $class_name = '\Molongui\Authorship\Highlights';
     if ( method_exists( $class_name, $plugin_function ) )
     {
         $plugin_class = new $class_name();
@@ -39,7 +40,7 @@ function authorship_display_whatsnew_notice()
     $n_content = array();
     $current_release = str_replace('.', '', MOLONGUI_AUTHORSHIP_VERSION );
     $plugin_function = "highlights_release_{$current_release}";
-    $class_name = '\Molongui\\'.MOLONGUI_AUTHORSHIP_NAMESPACE.'\Includes\Highlights';
+    $class_name = '\Molongui\Authorship\Highlights';
     if ( method_exists( $class_name, $plugin_function ) )
     {
         $plugin_class = new $class_name();
@@ -139,7 +140,6 @@ function authorship_recommended_pro_warning()
         }
     }
 }
-add_action( 'admin_notices', 'authorship_recommended_pro_warning' );
 function authorship_display_rate_notice()
 {
     $installation = get_option( MOLONGUI_AUTHORSHIP_INSTALLATION );

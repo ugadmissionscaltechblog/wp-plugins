@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( '__return_list_true' ) )
 {
     function __return_list_true() // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
@@ -14,11 +15,11 @@ if ( !function_exists( '__return_list_false' ) )
         return array( false, null );
     }
 }
-if ( !function_exists( '__return_original' ) )
+if ( !function_exists( '__bypass_filter' ) )
 {
-    function __return_original( $null, $original ) // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
+    function __bypass_filter( $null, $original_value ) // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
     {
-        return $original;
+        return $original_value;
     }
 }
 function authorship_space_to_nbsp( $string )

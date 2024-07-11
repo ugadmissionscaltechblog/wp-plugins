@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 function authorship_user_add_profile_fields( $user )
 {
@@ -40,8 +40,6 @@ function authorship_user_add_profile_fields( $user )
         include MOLONGUI_AUTHORSHIP_DIR . 'views/user/html-admin-profile-picture.php';
     }
 }
-add_action( 'edit_user_profile', 'authorship_user_add_profile_fields', 0 ); // Edit user screen
-add_action( 'show_user_profile', 'authorship_user_add_profile_fields', 0 ); // Profile screen
 function authorship_user_filter_profile_picture_description( $description, $profileuser )
 {
     $add          = ' ';
@@ -62,7 +60,6 @@ function authorship_user_filter_profile_picture_description( $description, $prof
 
     return $description . $add;
 }
-add_filter( 'user_profile_picture_description', 'authorship_user_filter_profile_picture_description', 10, 2 );
 function authorship_user_save_profile_fields( $user_id )
 {
     if ( !current_user_can( 'edit_user', $user_id ) )
@@ -116,7 +113,6 @@ function authorship_user_save_profile_fields( $user_id )
         }
     }
 }
-add_action( 'profile_update', 'authorship_user_save_profile_fields' ); // Fires immediately after an existing user is updated.
 function authorship_user_delete( $user_id, $reassign )
 {
     if ( $reassign === null ) return;
@@ -129,7 +125,6 @@ function authorship_user_delete( $user_id, $reassign )
         return $user_posts;
     } );
 }
-add_action( 'delete_user', 'authorship_user_delete', 10, 2 );
 function authorship_user_deleted( $user_id, $reassign )
 {
     if ( $reassign === null ) return;
@@ -148,4 +143,4 @@ function authorship_user_deleted( $user_id, $reassign )
     }
     authorship_update_post_counters( 'all', $new_usr );
 }
-add_action( 'deleted_user', 'authorship_user_deleted', 10, 2 );
+//add_action( 'deleted_user', 'authorship_user_deleted', 10, 2 );

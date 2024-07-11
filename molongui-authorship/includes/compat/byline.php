@@ -1,13 +1,25 @@
 <?php
-defined( 'ABSPATH' ) or exit;
-if ( !authorship_byline_takeover() ) return;
+
+use Molongui\Authorship\Common\Utils\Assets;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+if ( !authorship_byline_takeover() )
+{
+    return;
+}
 function authorship_filter_author_link( $link, $author_id, $author_nicename )
 {
     $original_link = $link;
     $link = null;
-    if ( molongui_is_request( 'admin' ) ) return $original_link;
+    if ( molongui_is_request( 'admin' ) )
+    {
+        return $original_link;
+    }
     $link = apply_filters( 'authorship/pre_author_link', $link, $original_link, $author_id, $author_nicename );
-    if ( null !== $link ) return $link;
+    if ( null !== $link )
+    {
+        return $link;
+    }
 
     $link = authorship_author_link( $original_link );
 
@@ -22,14 +34,14 @@ function authorship_register_byline_scripts()
 {
     $file = apply_filters( 'authorship/byline/script', MOLONGUI_AUTHORSHIP_FOLDER . '/assets/js/byline.334a.min.js' );
 
-    authorship_register_script( $file, 'byline' );
+    Assets::register_script( $file, 'byline' );
 }
 add_action( 'wp_enqueue_scripts', 'authorship_register_byline_scripts' );
 function authorship_enqueue_byline_scripts()
 {
     $file = apply_filters( 'authorship/byline/script', MOLONGUI_AUTHORSHIP_FOLDER . '/assets/js/byline.334a.min.js' );
 
-    authorship_enqueue_script( $file, 'byline' );
+    Assets::enqueue_script( $file, 'byline' );
 }
 add_action( 'wp_enqueue_scripts', 'authorship_enqueue_byline_scripts' );
 function authorship_byline_script_params()

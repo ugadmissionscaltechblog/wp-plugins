@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_reorder_submenu_items()
 {
     global $submenu;
@@ -89,7 +90,7 @@ function authorship_render_support_page()
         {
             $nav_items    = '';
             $div_contents = null;
-            $current_tab  = isset( $_GET['tab'] ) ? $_GET['tab'] : '';
+            $current_tab  = isset( $_GET['tab'] ) ? $_GET['tab'] : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             if ( $current_tab == '' )
             {
                 reset( $tabs );
@@ -114,7 +115,7 @@ function authorship_render_support_page()
                     {
                         if ( 'header' === $option['type'] ) $group = empty( $option['id'] ) ? '' : str_replace( '_header', '', $option['id'] );
 
-                        $html = new \Molongui\Authorship\Includes\Libraries\Common\Option( $option, $group, '', MOLONGUI_AUTHORSHIP_PREFIX.'_' );
+                        $html = new \Molongui\Authorship\Common\Modules\Settings\Control( $option, $group, '', MOLONGUI_AUTHORSHIP_PREFIX.'_' );
                         $div_contents .= $html;
                     }
                 }
@@ -133,7 +134,7 @@ function authorship_render_support_page()
 
             foreach ( ${'tab_0'} as $tab_content )
             {
-                $option = new \Molongui\Authorship\Includes\Libraries\Common\Option( $tab_content, '', '', MOLONGUI_AUTHORSHIP_PREFIX );
+                $option = new \Molongui\Authorship\Common\Modules\Settings\Control( $tab_content, '', '', MOLONGUI_AUTHORSHIP_PREFIX );
                 $div_contents .= $option;
             }
 

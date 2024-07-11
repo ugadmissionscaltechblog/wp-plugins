@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Assets;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_notice_display( $id, $type = 'info', $content = array(), $dismissible = false, $dismissal = 0, $class = '', $pages = array() )
 {
     if ( authorship_notice_is_dismissed( $id ) ) return;
@@ -10,7 +13,7 @@ function authorship_notice_display( $id, $type = 'info', $content = array(), $di
     }
     wp_enqueue_style( 'molongui-notice-styles' );
     wp_enqueue_script( 'molongui-notice-scripts' );
-    molongui_enqueue_sweetalert();
+    Assets::enqueue_sweetalert();
     ?>
     <div id="<?php echo $id; ?>" data-dismissible="<?php echo $dismissal; ?>" data-plugin="<?php echo MOLONGUI_AUTHORSHIP_NAME; ?>" class="notice notice-<?php echo $type; ?> <?php echo $class ?> <?php echo ( $dismissible ? 'is-dismissible' : '' ); ?>">
         <?php if ( !empty( $content['image'] ) ) : ?>

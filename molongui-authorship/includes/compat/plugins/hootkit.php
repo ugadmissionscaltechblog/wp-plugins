@@ -8,7 +8,7 @@ add_filter( 'the_author_posts_link', function( $link )
         $fn = 'hootkit_display_meta_info';
         if ( $key = array_search( $fn, array_column( $dbt, 'function' ) ) )
         {
-            if ( function_exists( 'get_byline' ) )
+            if ( function_exists('authorship_get_byline') )
             {
                 global $post;
 
@@ -16,7 +16,7 @@ add_filter( 'the_author_posts_link', function( $link )
                 $separator      = !empty( $options['byline_multiauthor_separator'] ) ? $options['byline_multiauthor_separator'] : ',';
                 $last_separator = !empty( $options['byline_multiauthor_last_separator'] ) ? $options['byline_multiauthor_last_separator'] : __( "and", 'molongui-authorship' );
 
-                return get_byline( $post->ID, $separator, $last_separator, true );
+                return authorship_get_byline( $post->ID, $separator, $last_separator, true );
             }
         }
     }

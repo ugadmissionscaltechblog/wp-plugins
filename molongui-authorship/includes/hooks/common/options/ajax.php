@@ -1,9 +1,16 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\WP;
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_save_options()
 {
-    if ( !isset( $_POST['nonce'] ) ) return;
-    if ( !wp_verify_nonce( $_POST['nonce'], 'mfw_save_options_nonce' ) ) return;
+    if ( !WP::verify_nonce( 'mfw_save_options_nonce', 'nonce' ) )
+    {
+        echo 'false';
+        wp_die();
+    }
     if ( !current_user_can( 'manage_options' ) ) return;
     $options = wp_unslash( $_POST['data'] );
     foreach ( $options as $key => $value )
@@ -27,14 +34,17 @@ function authorship_save_options()
 add_action( 'wp_ajax_'.MOLONGUI_AUTHORSHIP_PREFIX.'_save_options', 'authorship_save_options' );
 function authorship_export_options()
 {
-    if ( !isset( $_POST['nonce'] ) ) return;
-    if ( !wp_verify_nonce( $_POST['nonce'], 'mfw_export_options_nonce' ) ) return;
+    if ( !WP::verify_nonce( 'mfw_export_options_nonce', 'nonce' ) )
+    {
+        echo 'false';
+        wp_die();
+    }
     if ( !current_user_can( 'manage_options' ) ) return;
-    $options = authorship_get_config();
+    $options = Settings::get_config();
     $options['plugin_id']      = MOLONGUI_AUTHORSHIP_PREFIX;
     $options['plugin_version'] = MOLONGUI_AUTHORSHIP_VERSION;
     $options = apply_filters( 'authorship/export_options', $options );
-    echo json_encode( $options );
+    echo wp_json_encode( $options );
     wp_die();
 }
 add_action( 'wp_ajax_'.MOLONGUI_AUTHORSHIP_PREFIX.'_export_options', 'authorship_export_options' );

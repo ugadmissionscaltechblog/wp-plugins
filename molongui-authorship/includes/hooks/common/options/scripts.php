@@ -1,21 +1,24 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Assets;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_register_options_scripts()
 {
     do_action( 'authorship/options/enqueue_required_deps' );
     authorship_enqueue_semantic();
-    molongui_enqueue_sweetalert();
+    Assets::enqueue_sweetalert();
     $deps = apply_filters( 'authorship/options/script_deps', array() );
-    $file  = apply_filters( 'authorship/options/script', MOLONGUI_AUTHORSHIP_FOLDER . '/assets/js/common/options.xxxx.min.js' );
+    $file = apply_filters( 'authorship/options/script', MOLONGUI_AUTHORSHIP_FOLDER . '/assets/js/common/options.xxxx.min.js' );
 
-    authorship_register_script( $file, 'options', $deps );
+    Assets::register_script( $file, 'options', $deps );
 }
 add_action( 'admin_enqueue_scripts', 'authorship_register_options_scripts' );
 function authorship_enqueue_options_scripts()
 {
     $file = apply_filters( 'authorship/options/script', MOLONGUI_AUTHORSHIP_FOLDER . '/assets/js/common/options.xxxx.min.js' );
 
-    authorship_enqueue_script( $file, 'options', true );
+    Assets::enqueue_script( $file, 'options', true );
 }
 function authorship_options_script_params()
 {

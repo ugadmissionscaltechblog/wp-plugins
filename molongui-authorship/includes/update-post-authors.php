@@ -1,9 +1,10 @@
 <?php
 
-namespace Molongui\Authorship\Includes;
+namespace Molongui\Authorship;
 
-use Molongui\Authorship\Includes\Libraries\Common\WP_Background_Process;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Common\Libraries\WP_Background_Process;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 class Update_Post_Authors
 {
     protected $process_all;
@@ -14,15 +15,15 @@ class Update_Post_Authors
     }
     public function run( $post_types = array() )
     {
-        if ( \apply_filters( 'authorship/check_wp_cron', true ) and ( \defined( 'DISABLE_WP_CRON' ) and DISABLE_WP_CRON ) ) return false;
-        $post_ids = \get_posts( array
+        if ( apply_filters( 'authorship/check_wp_cron', true ) and ( defined( 'DISABLE_WP_CRON' ) and DISABLE_WP_CRON ) ) return false;
+        $post_ids = get_posts( array
         (
             'numberposts'      => -1,
             'meta_key'         => '_molongui_author',
             'meta_compare'     => 'NOT EXISTS',
             'post_type'        => $post_types,
             'suppress_filters' => true,
-            'post_status' => \authorship_post_status( $post_types ),
+            'post_status' => authorship_post_status( $post_types ),
             'fields' => 'ids',
         ));
         if ( !empty( $post_ids ) )
@@ -33,9 +34,9 @@ class Update_Post_Authors
             }
             $r = $this->process_all->save()->dispatch();
 
-            if ( !\is_wp_error( $r ) )
+            if ( !is_wp_error( $r ) )
             {
-                \add_option( 'm_update_post_authors_running', true );
+                add_option( 'm_update_post_authors_running', true, '', true );
             }
 
             return $r;
@@ -54,13 +55,13 @@ class Update_Post_Authors_Request extends WP_Background_Process
         $post_id     = (int) $post_id;
         $post_author = get_post_field( 'post_author', $post_id );
 
-        \update_post_meta( $post_id, '_molongui_main_author', 'user-'.$post_author );
-        \update_post_meta( $post_id, '_molongui_author', 'user-'.$post_author );
+        update_post_meta( $post_id, '_molongui_main_author', 'user-'.$post_author );
+        update_post_meta( $post_id, '_molongui_author', 'user-'.$post_author );
         return false;
     }
     protected function complete()
     {
         parent::complete();
-        \add_option( 'm_update_post_authors_complete', true );
+        add_option( 'm_update_post_authors_complete', true, '', true );
     }
 }

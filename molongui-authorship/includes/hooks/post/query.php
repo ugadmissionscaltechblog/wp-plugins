@@ -29,7 +29,6 @@ function authorship_filter_user_posts( $wp_query )
         add_filter( '_authorship/posts_where', '__return_true' );
     }
 }
-add_action( 'pre_get_posts', 'authorship_filter_user_posts', 999 );
 function authorship_remove_author_from_where_clause( $where, $wp_query )
 {
     if ( apply_filters( '_authorship/posts_where', false ) )
@@ -48,4 +47,4 @@ function authorship_remove_author_from_where_clause( $where, $wp_query )
     }
     return $where;
 }
-add_filter( 'posts_where', 'authorship_remove_author_from_where_clause', 10, 2 );
+//add_filter( 'posts_where', 'authorship_remove_author_from_where_clause', 10, 2 );

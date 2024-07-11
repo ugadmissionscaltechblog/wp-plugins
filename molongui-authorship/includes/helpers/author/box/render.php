@@ -1,23 +1,35 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Modules\Settings;
+use Molongui\Authorship\Common\Utils\Debug;
+use Molongui\Authorship\Common\Utils\Post;
 defined( 'ABSPATH' ) or exit;
 function authorship_render_box( $content )
 {
-    $post = authorship_get_post();
+    $post_id = Post::get_id();
 
-    $post_id = !empty( $post->ID ) ? $post->ID : null;
-    if ( empty( $post_id ) ) return $content;
-    if ( !apply_filters( 'authorship/render_box', true, $post ) ) return $content;
-    $post_authors = get_post_authors( $post_id );
-    if ( empty( $post_authors ) or $post_authors[0]->id == 0 )
+    if ( empty( $post_id ) )
     {
-        authorship_debug( null, sprintf( __( "The author box is not displayed because this post (%s) has no authors.", 'molongui-authorship' ), $post_id ) );
         return $content;
     }
-    $options = authorship_get_options();
+    if ( !apply_filters( 'authorship/render_box', true ) )
+    {
+        return $content;
+    }
+    $post_authors = authorship_get_post_authors( $post_id );
+    if ( empty( $post_authors ) or $post_authors[0]->id == 0 )
+    {
+        Debug::console_log( null, sprintf( __( "The author box is not displayed because this post (%s) has no authors.", 'molongui-authorship' ), $post_id ) );
+        return $content;
+    }
+    $options = Settings::get();
+    $post = Post::get();
     $html = authorship_box_markup( $post, $post_authors, $options );
-    if ( empty( $html ) ) return $content;
+    if ( empty( $html ) )
+    {
+        return $content;
+    }
     global $multipage, $page, $numpages;
     $box_position = get_post_meta( $post_id, '_molongui_author_box_position', true );
     if ( empty( $box_position ) or $box_position == 'default' )
@@ -58,22 +70,30 @@ function authorship_render_box( $content )
 
         break;
     }
+
+    Debug::console_log( array( 'post_id' => $post_id, 'post_authors' => $post_authors, 'box_position' => $box_position, 'multipage' => $multipage ), 'Author box config:' );
     return $content;
 }
 function authorship_box_markup( $post, $post_authors, $options = array(), $check = true )
 {
-    if ( empty( $post_authors ) ) return;
-    if ( empty( $options ) ) $options = authorship_get_options();
+    if ( empty( $post_authors ) )
+    {
+        return;
+    }
+    if ( empty( $options ) )
+    {
+        $options = Settings::get();
+    }
     $html           = '';
     $box_ids        = array();
     $is_multiauthor = empty( $post->ID ) ? false : is_multiauthor_post( $post->ID );
     $show_headline  = true;
     $add_microdata  = !empty( $options['box_schema'] );//authorship_is_feature_enabled( 'microdata' );
-    $is_preview     = apply_filters( 'authorship/box/is_preview', '__return_false' );
+    $is_preview     = apply_filters( 'authorship/box/is_preview', false );
 
     if ( !$is_preview )
     {
-        authorship_debug( $post_authors, sprintf( __( "Authors for post %s", 'molongui-authorship' ), $post->ID ) );
+        Debug::console_log( $post_authors, sprintf( __( "Authors for post %s", 'molongui-authorship' ), $post->ID ) );
     }
     foreach ( $post_authors as $post_author )
     {

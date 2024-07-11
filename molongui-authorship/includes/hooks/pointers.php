@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Libraries\Common\PointerPlus;
+use Molongui\Authorship\Common\Modules\PointerPlus;
 $pointerplus = new PointerPlus( array( 'prefix' => 'molongui-authorship' ) );
 function authorship_admin_pointers( $pointers, $prefix )
 {

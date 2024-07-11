@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 require_once MOLONGUI_AUTHORSHIP_DIR . 'includes/compat/wordpress.php';
 authorship_add_byline_support();
 if ( apply_filters( 'authorship/theme_compatibility', authorship_is_feature_enabled( 'theme_compat' ) ) )
@@ -36,6 +37,7 @@ if ( apply_filters( 'authorship/theme_compatibility', authorship_is_feature_enab
     elseif ( 'BuddyBoss Theme' == $theme->name or 'BuddyBoss Theme' == $theme->parent_theme )       require_once $path . 'buddyboss.php';
     elseif ( 'BuddyX' == $theme->name or 'BuddyX' == $theme->parent_theme )                         require_once $path . 'buddyx.php';
     elseif ( 'SmartMag' == $theme->name or 'SmartMag' == $theme->parent_theme )                     require_once $path . 'smart-mag.php';
+    elseif ( 'Jannah' == $theme->name or 'Jannah' == $theme->parent_theme )                         require_once $path . 'jannah.php';
     elseif ( 'Impreza' == $theme->name or 'Impreza' == $theme->parent_theme )                       require_once $path . 'impreza.php';
     elseif ( 'Mission News' == $theme->name or 'Mission News' == $theme->parent_theme )             require_once $path . 'mission-news.php';
     elseif ( 'Creativo Theme' == $theme->name or 'Creativo Theme' == $theme->parent_theme )         require_once $path . 'creativo.php';
@@ -64,6 +66,7 @@ if ( apply_filters( 'authorship/plugin_compatibility', authorship_is_feature_ena
     if ( is_plugin_active( 'elementor-pro/elementor-pro.php' ) ) require_once $path . 'elementor-pro.php';
     if ( is_plugin_active( 'essential-grid/essential-grid.php' ) ) require_once $path . 'essential-grid.php';
     if ( is_plugin_active( 'events-manager/events-manager.php' ) ) require_once $path . 'events-manager.php';
+    if ( is_plugin_active( 'fusion-builder/fusion-builder.php' ) ) require_once $path . 'fusion-builder.php';
     if ( is_plugin_active( 'google-sitemap-generator/sitemap.php' ) ) require_once $path . 'google-sitemap-generator.php';
     if ( is_plugin_active( 'hootkit/hootkit.php' ) ) require_once $path . 'hootkit.php';
     if ( is_plugin_active( 'jetpack/jetpack.php' ) ) require_once $path . 'jetpack.php';
@@ -72,6 +75,7 @@ if ( apply_filters( 'authorship/plugin_compatibility', authorship_is_feature_ena
     if ( is_plugin_active( 'learnpress-students-list/learnpress-students-list.php' ) ) require_once $path . 'learnpress-students-list.php';
     if ( is_plugin_active( 'mailster/mailster.php' ) ) require_once $path . 'mailster.php';
     if ( is_plugin_active( 'memberpress/memberpress.php' ) ) require_once $path . 'memberpress.php';
+    if ( is_plugin_active( 'molongui-post-contributors/molongui-post-contributors.php' ) ) require_once $path . 'molongui-post-contributors.php';
     if ( is_plugin_active( 'nimble-builder/nimble-builder.php' ) ) require_once $path . 'nimble-builder.php';
     if ( is_plugin_active( 'polylang/polylang.php' ) ) require_once $path . 'polylang.php';
     if ( is_plugin_active( 'post-grid/post-grid.php' ) ) require_once $path . 'post-grid.php';

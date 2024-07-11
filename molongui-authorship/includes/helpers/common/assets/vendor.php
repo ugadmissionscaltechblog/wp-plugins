@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_enqueue_media_uploader_styles()
 {
     $file     = MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/common/media-upload-rtl.min.css' : '/assets/css/common/media-upload.min.css' );
@@ -17,7 +18,7 @@ function authorship_enqueue_media_uploader_styles()
             if ( !did_action( '_authorship/media_uploader/styles_loaded' ) )
             {
                 $contents = file_get_contents( trailingslashit( WP_PLUGIN_DIR ) . $file );
-                echo '<style id="'.$handle.'-inline-css" type="text/css" data-file="' . basename( $file ) . '">' . $contents . '</style>';
+                echo '<style id="'.esc_attr( $handle ).'-inline-css" data-file="' . basename( $file ) . '">' . esc_html( $contents ) . '</style>';
 
                 /*!
                  * PRIVATE ACTION HOOK.
@@ -46,11 +47,14 @@ if ( !function_exists( 'molongui_enqueue_sweetalert' ) )
     function molongui_enqueue_sweetalert()
     {
         $handle = 'molongui-sweetalert';
-        if ( !wp_script_is( $handle, 'registered' ) ) molongui_register_sweetalert();
-        if ( wp_script_is( $handle, 'registered' ) and !wp_script_is( $handle, 'enqueued' ) )
+        if (!wp_script_is($handle, 'registered'))
         {
-            wp_enqueue_script( $handle );
-            wp_add_inline_script( $handle, 'var molongui_swal = swal;' );
+            molongui_register_sweetalert();
+        }
+        if (wp_script_is($handle, 'registered') and !wp_script_is($handle, 'enqueued'))
+        {
+            wp_enqueue_script($handle);
+            wp_add_inline_script($handle, 'var molongui_swal = swal;');
         }
     }
 }
@@ -59,24 +63,24 @@ if ( !function_exists( 'molongui_enqueue_selectr' ) )
     function molongui_enqueue_selectr()
     {
         $handle = 'molongui-selectr';
-        if ( !wp_script_is( $handle, 'registered' ) ) molongui_register_selectr();
-        if ( wp_script_is( $handle, 'registered' ) and !wp_script_is( $handle, 'enqueued' ) )
-        {
-            wp_enqueue_script( $handle );
-            wp_enqueue_style( $handle );
-            wp_add_inline_script( $handle, 'var MolonguiSelectr = Selectr; Selectr = undefined;' );
-        }
+    if ( !wp_script_is( $handle, 'registered' ) ) molongui_register_selectr();
+    if ( wp_script_is( $handle, 'registered' ) and !wp_script_is( $handle, 'enqueued' ) )
+    {
+        wp_enqueue_script( $handle );
+        wp_enqueue_style( $handle );
+        wp_add_inline_script( $handle, 'var MolonguiSelectr = Selectr; Selectr = undefined;' );
     }
+}
 }
 if ( !function_exists( 'molongui_enqueue_sortable' ) )
 {
     function molongui_enqueue_sortable()
     {
         $handle = 'molongui-sortable';
-        if ( !wp_script_is( $handle, 'registered' ) ) molongui_register_sortable();
-        if ( wp_script_is( $handle, 'registered' ) and !wp_script_is( $handle, 'enqueued' ) )
+        if (!wp_script_is($handle, 'registered')) molongui_register_sortable();
+        if (wp_script_is($handle, 'registered') and !wp_script_is($handle, 'enqueued'))
         {
-            wp_enqueue_script( $handle );
+            wp_enqueue_script($handle);
         }
     }
 }
@@ -85,16 +89,16 @@ if ( !function_exists( 'molongui_enqueue_element_queries' ) )
     function molongui_enqueue_element_queries()
     {
         $handle = 'molongui-resizesensor';
-        if ( !wp_script_is( $handle, 'registered' ) ) molongui_register_element_queries();
-        if ( wp_script_is( $handle, 'registered' ) and !wp_script_is( $handle, 'enqueued' ) )
+        if (!wp_script_is($handle, 'registered')) molongui_register_element_queries();
+        if (wp_script_is($handle, 'registered') and !wp_script_is($handle, 'enqueued'))
         {
-            wp_enqueue_script( $handle );
+            wp_enqueue_script($handle);
         }
         $handle = 'molongui-elementqueries';
-        if ( !wp_script_is( $handle, 'registered' ) ) molongui_register_element_queries();
-        if ( wp_script_is( $handle, 'registered' ) and !wp_script_is( $handle, 'enqueued' ) )
+        if (!wp_script_is($handle, 'registered')) molongui_register_element_queries();
+        if (wp_script_is($handle, 'registered') and !wp_script_is($handle, 'enqueued'))
         {
-            wp_enqueue_script( $handle );
+            wp_enqueue_script($handle);
         }
     }
 }
@@ -148,29 +152,29 @@ if ( !function_exists( 'molongui_enqueue_select2' ) )
 {
     function molongui_enqueue_select2()
     {
-        if ( !wp_script_is( 'molongui-select2', 'enqueued' ) )
+        if (!wp_script_is('molongui-select2', 'enqueued'))
         {
             $version = '4.0.5';
-            $select2_js_url  = 'https://cdnjs.cloudflare.com/ajax/libs/select2/'.$version.'/js/select2.min.js';
-            $select2_css_url = 'https://cdnjs.cloudflare.com/ajax/libs/select2/'.$version.'/css/select2.min.css';
-            wp_enqueue_script( 'molongui-select2', $select2_js_url, array(), $version, true );
-            wp_enqueue_style( 'molongui-select2', $select2_css_url, array(), $version, 'all' );
-            wp_add_inline_script( 'molongui-select2',
+            $select2_js_url  = 'https://cdnjs.cloudflare.com/ajax/libs/select2/' . $version . '/js/select2.min.js';
+            $select2_css_url = 'https://cdnjs.cloudflare.com/ajax/libs/select2/' . $version . '/css/select2.min.css';
+            wp_enqueue_script('molongui-select2', $select2_js_url, array(), $version, true);
+            wp_enqueue_style('molongui-select2', $select2_css_url, array(), $version, 'all');
+            wp_add_inline_script('molongui-select2',
                 'var molongui_select2 = jQuery.fn.select2; delete jQuery.fn.select2;' .
                 "
-                    jQuery(document).ready(function($)
+                jQuery(document).ready(function($)
+                {
+                    if ( typeof molongui_select2 !== 'undefined' )
                     {
-                        if ( typeof molongui_select2 !== 'undefined' )
-                        {
-                            molongui_select2.call( $('#molongui-settings select'), { dropdownAutoWidth: true, minimumResultsForSearch: Infinity } );
-                            molongui_select2.call( $('.molongui-metabox select'),  { dropdownAutoWidth: true, minimumResultsForSearch: Infinity } );
-                            molongui_select2.call( $('#molongui-settings select.searchable'), { dropdownAutoWidth: true } );
-                            molongui_select2.call( $('.molongui-metabox select.searchable'),  { dropdownAutoWidth: true } );
-                            molongui_select2.call( $('#molongui-settings select.multiple'), { dropdownAutoWidth: true, multiple: true, allowClear: true } );
-                            molongui_select2.call( $('.molongui-metabox select.multiple'),  { dropdownAutoWidth: true, multiple: true, allowClear: true } );
-                        }
-                    });
-                "
+                        molongui_select2.call( $('#molongui-settings select'), { dropdownAutoWidth: true, minimumResultsForSearch: Infinity } );
+                        molongui_select2.call( $('.molongui-metabox select'),  { dropdownAutoWidth: true, minimumResultsForSearch: Infinity } );
+                        molongui_select2.call( $('#molongui-settings select.searchable'), { dropdownAutoWidth: true } );
+                        molongui_select2.call( $('.molongui-metabox select.searchable'),  { dropdownAutoWidth: true } );
+                        molongui_select2.call( $('#molongui-settings select.multiple'), { dropdownAutoWidth: true, multiple: true, allowClear: true } );
+                        molongui_select2.call( $('.molongui-metabox select.multiple'),  { dropdownAutoWidth: true, multiple: true, allowClear: true } );
+                    }
+                });
+            "
             );
         }
     }

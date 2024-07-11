@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 ?>
 
@@ -78,7 +79,7 @@ defined( 'ABSPATH' ) or exit;
                         <textarea name="your-message" cols="40" rows="7" required placeholder="<?php _e( "Explain your issue providing a URL we can check", 'molongui-authorship' ); ?>"></textarea>
                     </p>
                     <p><input type="checkbox" id="molongui-accept-tos" name="molongui-accept-tos" value="1"><?php printf( __( "I have read and accept the %sprivacy policy%s.", 'molongui-authorship' ), '<a href="https://www.molongui.com/privacy/">', '</a>' ); ?></p>
-                    <p class="hidden"><input type="hidden" name="ticket-id" value="<?php echo 'HR'.date('y').'-'.date('mdHis'); ?>"></p>
+                    <p class="hidden"><input type="hidden" name="ticket-id" value="<?php echo 'HR'.gmdate('y').'-'.gmdate('mdHis'); ?>"></p>
                     <button type="submit" id="molongui-submit-ticket" class="m-button is-compact is-primary"><?php _e( "Open Support Ticket", 'molongui-authorship' ); ?></button>
                 </form>
             </div>

@@ -1,10 +1,10 @@
 <?php
 
-namespace Molongui\Authorship\Includes;
+namespace Molongui\Authorship;
 \defined( 'ABSPATH' ) or exit;
-if ( class_exists( \Molongui\Authorship\Includes\Libraries\Common\WP_List_Table::class ) )
+if ( class_exists( \Molongui\Authorship\Common\Libraries\WP_List_Table::class ) )
 {
-    class DynamicParent extends \Molongui\Authorship\Includes\Libraries\Common\WP_List_Table {};
+    class DynamicParent extends \Molongui\Authorship\Common\Libraries\WP_List_Table {};
 }
 else
 {

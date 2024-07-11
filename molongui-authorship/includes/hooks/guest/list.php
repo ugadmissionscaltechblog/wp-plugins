@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 function authorship_remove_mine_filter( $views )
 {
@@ -41,7 +41,7 @@ add_filter( 'manage_'.MOLONGUI_AUTHORSHIP_CPT.'_posts_columns', 'authorship_gues
 function authorship_guest_fill_list_columns( $column, $ID )
 {
     $value = '';
-    $author = new Author ( $ID, 'guest' );
+    $author = new Author( $ID, 'guest' );
     if ( $column == 'guestAuthorPic' )
     {
         echo get_the_post_thumbnail( $ID, array( 60, 60 ) );

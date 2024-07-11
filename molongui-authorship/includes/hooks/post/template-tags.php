@@ -10,7 +10,7 @@ function authorship_template_tags()
             $options = authorship_get_options();
             $output  = '';
             $output .= apply_filters( 'molongui_byline_prefix', ( !empty( $before ) ? $before : $options['byline_prefix'] ) );
-            $output .= get_byline( $pid, $separator, $last_separator, false );
+            $output .= authorship_get_byline( $pid, $separator, $last_separator, false );
             $output .= apply_filters( 'molongui_byline_suffix', ( !empty( $after ) ? $after : $options['byline_suffix'] ) );
             return $output;
         }
@@ -25,7 +25,7 @@ function authorship_template_tags()
             $output  = '';
             $output .= apply_filters( 'molongui_byline_prefix', ( !empty( $before ) ? $before : $options['byline_prefix'] ) );
             $linked  = apply_filters( 'molongui_author_byline_linked', true );
-            $output .= get_byline( $pid, $separator, $last_separator, $linked );
+            $output .= authorship_get_byline( $pid, $separator, $last_separator, $linked );
             $output .= apply_filters( 'molongui_byline_suffix', ( !empty( $after ) ? $after : $options['byline_suffix'] ) );
             return $output;
         }

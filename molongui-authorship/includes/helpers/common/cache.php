@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'molongui_cache_get' ) )
 {
     function molongui_cache_get( $key )

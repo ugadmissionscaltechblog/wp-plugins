@@ -12,7 +12,6 @@ function authorship_user_edit_columns( $column_headers )
 
     return $column_headers;
 }
-add_filter( 'manage_users_columns', 'authorship_user_edit_columns' );
 function authorship_user_fill_columns( $value, $column, $ID )
 {
     if ( $column == 'user-id' ) return $ID;
@@ -72,4 +71,4 @@ function authorship_user_fill_columns( $value, $column, $ID )
 
     return $value;
 }
-add_action( 'manage_users_custom_column', 'authorship_user_fill_columns', 10, 3 );
+//add_action( 'manage_users_custom_column', 'authorship_user_fill_columns', 10, 3 );

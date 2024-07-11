@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_get_mail_appendix()
 {
     $appendix = '';
@@ -40,7 +43,7 @@ function authorship_get_mail_appendix()
     {
         if ( false !== strpos( $plugin['Name'], ' Pro' ) ) continue;
 
-        $options = authorship_get_config();
+        $options = Settings::get_config();
         $appendix .= '<p style="'.$css_subtitle.'">' . esc_html( $plugin['Name'] ). ' Options' . '</p>';
         $appendix .= '<table style="'.$css_table_1.'">';
         foreach ( $options as $option_group => $values )
@@ -65,7 +68,7 @@ function authorship_get_mail_appendix()
                     $appendix .= '<table style="'.$css_table_2.'">';
                     foreach ( $values as $key => $item )
                     {
-                        $item = is_array( $item ) ? json_encode( $item ) : $item;
+                        $item = is_array( $item ) ? wp_json_encode( $item ) : $item;
 
                         $appendix .= '<tr style="'.$css_tr.'">';
                         $appendix .= '<td style="'.$css_td_title.'">'.$key.'</td>';

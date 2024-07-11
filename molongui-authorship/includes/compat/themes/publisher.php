@@ -1,11 +1,11 @@
 <?php
 defined( 'ABSPATH' ) or exit;
-add_filter( 'authorship/render_box', function( $default, $post )
+add_filter( 'authorship/render_box', function( $default )
 {
     $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 10 );
     if ( in_the_loop() and isset( $dbt[7]['function'] ) and $dbt[7]['function'] == "publisher_inject_location" ) return false;
     return $default;
-}, 10, 2 );
+}, 10, 1 );
 add_filter( 'authorship/pre_author_link', function( $link, $original_link, $author_id, $author_nicename )
 {
     $dbt   = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 10 );

@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 ?>
 
@@ -33,7 +34,7 @@ defined( 'ABSPATH' ) or exit;
             <div class="m-section-nav <?php echo ( empty( $tabs ) ? 'is-empty' : 'has-pinned-items' ); ?>">
 
                 <div class="m-section-nav__mobile-header" role="button" tabindex="0">
-                    <?php echo $tabs[$current_tab]['name']; ?>
+                    <?php echo esc_html( $tabs[$current_tab]['name'] ); ?>
                 </div>
 
                 <div class="m-section-nav__panel">
@@ -65,7 +66,7 @@ defined( 'ABSPATH' ) or exit;
         $support_url   = $help_url . 'support/';
         $docs_url      = $help_url . 'docs/';
         $changelog_url = $help_url . MOLONGUI_AUTHORSHIP_NAME . ( did_action( 'authorship_pro/loaded' ) ? '-pro' : '' ) . '-changelog/';
-        $demo_url      = 'https://demos.molongui.com/test-drive-'.MOLONGUI_AUTHORSHIP_NAME.'-pro/';
+        $demo_url      = MOLONGUI_AUTHORSHIP_DEMO;
 
         $args = array
         (
@@ -140,5 +141,5 @@ defined( 'ABSPATH' ) or exit;
 </div> <!-- #molongui-options -->
 
 <div id="m-options-saving"><div class="m-loader"><div></div><div></div><div></div><div></div></div></div>
-<div id="m-options-saved"><span class="dashicons dashicons-yes"></span><strong><?php echo __( 'Saved', 'molongui-authorship' ); ?></strong></div>
-<div id="m-options-error"><span class="dashicons dashicons-no"></span><strong><?php echo __( 'Error', 'molongui-authorship' ); ?></strong></div>
+<div id="m-options-saved"><span class="dashicons dashicons-yes"></span><strong><?php esc_html_e( 'Saved', 'molongui-authorship' ); ?></strong></div>
+<div id="m-options-error"><span class="dashicons dashicons-no"></span><strong><?php esc_html_e( 'Error', 'molongui-authorship' ); ?></strong></div>

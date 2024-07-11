@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_is_edit_mode()
 {
     return apply_filters( 'authorship/is_edit_mode', authorship_is_block_editor() or authorship_is_elementor_editor() );

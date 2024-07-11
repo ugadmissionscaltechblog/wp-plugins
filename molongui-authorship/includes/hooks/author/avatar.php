@@ -89,7 +89,7 @@ if ( empty( $dbt ) ) return $args;
                  */
                 $post_id = apply_filters( '_authorship/get_avatar_data/filter/post_id', null );
 
-                $authors = get_post_authors( $post_id, 'id' );
+                $authors = authorship_get_post_authors( $post_id, 'id' );
                 if ( $authors )
                 {
                     $author->id   = $authors[0];

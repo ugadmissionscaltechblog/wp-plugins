@@ -1,5 +1,10 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+use Molongui\Authorship\Common\Utils\Debug;
+use Molongui\Authorship\Common\Utils\Helpers;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_action( 'plugins_loaded', function()
 {
     if ( is_admin() and apply_filters( 'authorship/disable_custom_php_on_admin', '__return_true' ) )
@@ -7,17 +12,22 @@ add_action( 'plugins_loaded', function()
         return;
     }
 
-    $options = authorship_get_options();
+    $custom_php = Settings::get( 'custom_php' );
+    $custom_php = Helpers::clean_php( $custom_php );
 
-    if ( !empty( $options['custom_php'] ) )
+    if ( !empty( $custom_php ) )
     {
+        $custom_php = trim( $custom_php );
         $tag = '<?php';
-        if ( 0 === strpos( $options['custom_php'], $tag ) )
+        if ( 0 === strpos( $custom_php, $tag ) )
         {
-            $options['custom_php'] = substr( $options['custom_php'], strlen( $tag ) );
+            $custom_php = substr( $custom_php, strlen( $tag ) );
         }
 
-        eval( $options['custom_php'] );
-        authorship_debug( null, __( "Custom PHP snippets loaded." ) );
+        if ( !empty( $custom_php ) )
+        {
+            eval( $custom_php ); // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
+            Debug::console_log( null, __( "Custom PHP snippets loaded." ) );
+        }
     }
 }, PHP_INT_MAX );

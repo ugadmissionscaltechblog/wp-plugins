@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_register_style( $file, $scope, $deps = array(), $handle = null, $version = null )
 {
     if ( empty( $file ) or empty( $scope ) ) return;
@@ -59,7 +60,7 @@ function authorship_enqueue_style( $file, $scope, $admin = false, $handle = null
                     $function = 'authorship_'.$scope.'_extra_styles';
                     if ( function_exists( $function ) ) $extra = call_user_func( $function );
 
-                    echo '<style id="'.$handle.'-inline-css" type="text/css" data-file="'.basename( $filepath ).'" data-version="'.$version.'">' . $contents . $extra . '</style>';
+                    echo '<style id="'.esc_attr( $handle ).'-inline-css" data-file="'.basename( $filepath ).'" data-version="'.$version.'">' . $contents . $extra . '</style>';
                 });
 
                 /*!

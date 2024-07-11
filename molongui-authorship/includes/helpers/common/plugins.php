@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'get_molongui_plugins' ) )
 {
     function get_molongui_plugins( $field = 'all' )

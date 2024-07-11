@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Update_Post_Authors;
+use Molongui\Authorship\Update_Post_Authors;
 defined( 'ABSPATH' ) or exit;
 function authorship_update_post_authors( $post_types = 'enabled' )
 {

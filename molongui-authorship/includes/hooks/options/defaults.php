@@ -162,6 +162,8 @@ function authorship_set_defaults( $fw_options )
 
         'enable_guests_in_search' => false,
         'enable_guests_in_api'    => false,
+
+        'pll_translate_guests' => true,
         'guests_menu_level' => 'top',
 
         'enable_multi_authors' => true,
@@ -184,6 +186,8 @@ function authorship_set_defaults( $fw_options )
         'user_archive_tmpl'          => '',
         'user_archive_base'          => 'author',
         'user_archive_slug'          => false,
+
+        'post_as_others'             => false,
         'post_types' => "post", // Data stored as a string with comma-separated items. No array!
         'social_networks' => "facebook,twitter,youtube,pinterest,tiktok,instagram,soundcloud,spotify,skype,medium,whatsapp", // Data stored as a string with comma-separated items. No array!
         'add_nofollow'    => false,

@@ -1,6 +1,5 @@
 <?php
 defined( 'ABSPATH' ) or exit;
-
 return array
 (
     'facebook' => array
@@ -857,5 +856,12 @@ return array
         'url'      => 'https://uhive.com/z/userid/',
         'color'    => '#2081e2',
         'premium'  => true,
+    ),
+    'wechat' => array
+    (
+        'name'     => 'WeChat',
+        'url'      => 'weixin://dl/chat?{userid}',
+        'color'    => '#09B83E',
+        'premium'  => false,
     ),
 );

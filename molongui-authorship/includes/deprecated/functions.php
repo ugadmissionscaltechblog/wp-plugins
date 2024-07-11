@@ -250,7 +250,7 @@ if ( !function_exists( 'mount_byline' ) )
         {
             $space   = apply_filters( 'authorship/byline_separator_autospace', '__return_true' ) ? ' ' : '';
             $divider = ( $i == 0 ? '' : ( $i == ( $total - 1 ) ? $space.$last_separator.$space : $separator.$space ) );
-            $author_class = new Molongui\Authorship\Includes\Author( $author->id, $author->type );
+            $author_class = new Molongui\Authorship\Author( $author->id, $author->type );
             if ( $linked ) $item = $author_class->get_link();
             else $item = $author_class->get_name();
             $string .= $divider . $item;

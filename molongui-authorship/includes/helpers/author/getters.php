@@ -1,6 +1,9 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Utils\Cache;
+use Molongui\Authorship\Common\Utils\Helpers;
+use Molongui\Authorship\Post;
 defined( 'ABSPATH' ) or exit;
 if ( !function_exists( 'molongui_get_author_by' ) )
 {
@@ -37,7 +40,7 @@ if ( !function_exists( 'molongui_get_author_by' ) )
                         ),
                     ),
                     'site_id'    => get_current_blog_id(),
-                    'language'   => molongui_get_language(),
+                    'language'   => array( Helpers::class, 'get_language' ),
                 );
             }
             else
@@ -47,10 +50,10 @@ if ( !function_exists( 'molongui_get_author_by' ) )
                     $field      => $value,
                     'post_type' => MOLONGUI_AUTHORSHIP_CPT,
                     'site_id'   => get_current_blog_id(),
-                    'language'  => molongui_get_language(),
+                    'language'  => array( Helpers::class, 'get_language' ),
                 );
             }
-            $guest = molongui_query( $args, 'guests' );
+            $guest = Cache::query( $args, 'guests' );
             if ( $guest->have_posts() ) return ( empty( $guest->posts['0'] ) ? false : $guest->posts['0'] );
         }
         return false;
@@ -73,8 +76,8 @@ if ( !function_exists( 'molongui_get_author_type_by_nicename' ) )
 }
 function molongui_find_authors()
 {
-    $authors = array();
     global $wp_query;
+    $authors = array();
     if ( !empty( $wp_query->query_vars['guest-author-name'] ) )
     {
         if ( $guest = molongui_get_author_by( 'name', $wp_query->query_vars['guest-author-name'], 'guest', false ) )
@@ -109,16 +112,19 @@ function molongui_find_authors()
     }
     else
     {
-        $post_id = authorship_get_post_id();
+        $post_id = Post::get_id();
 
-        if ( !$post_id )
+        if ( empty( $post_id ) )
         {
             return false;
         }
 
-        $authors = get_post_authors( $post_id );
+        $authors = authorship_get_post_authors( $post_id );
     }
-    if ( empty( $authors ) or $authors[0]->id == 0 ) return false;
+    if ( empty( $authors ) or $authors[0]->id == 0 )
+    {
+        return false;
+    }
     return $authors;
 }
 if ( !function_exists('authorship_get_users') )
@@ -133,12 +139,12 @@ if ( !function_exists('authorship_get_users') )
             'order'    => apply_filters( 'authorship/user/order', 'ASC' ),
             'orderby'  => apply_filters( 'authorship/user/orderby', 'name' ),
             'site_id'  => get_current_blog_id(),
-            'language' => apply_filters( 'authorship/get_users/language', molongui_get_language() ),
+            'language' => apply_filters( 'authorship/get_users/language', array( Helpers::class, 'get_language' ) ),
         );
 
         $parsed_args = wp_parse_args( $args, $defaults );
         $parsed_args['order'] = strtolower( $parsed_args['order'] );
-        $users = molongui_query( $parsed_args, 'users' );
+        $users = Cache::query( $parsed_args, 'users' );
         if ( is_array( $parsed_args['role__in'] ) and in_array( 'molongui_no_role', $parsed_args['role__in'] ) )
         {
             $no_role_ids = wp_get_users_with_no_role(); // Array of user IDs as strings.
@@ -154,7 +160,7 @@ if ( !function_exists('authorship_get_users') )
                 }
                 else
                 {
-                    $no_role_users = molongui_query( array( 'include' => $no_role_ids ), 'users' );
+                    $no_role_users = Cache::query( array( 'include' => $no_role_ids ), 'users' );
 
                     $users = array_merge( $users, $no_role_users );
                     $field = $parsed_args['orderby'];
@@ -184,16 +190,16 @@ if ( !function_exists( 'molongui_get_guests' ) )
             'no_found_rows'  => true,
             'dropdown'       => false,
             'site_id'        => get_current_blog_id(),
-            'language'       => apply_filters( 'authorship/get_guests/language', molongui_get_language() ),
+            'language'       => apply_filters( 'authorship/get_guests/language', array( Helpers::class, 'get_language' ) ),
         );
 
         $parsed_args = wp_parse_args( $args, $defaults );
         $parsed_args['post_type'] = MOLONGUI_AUTHORSHIP_CPT;
-        $guests = molongui_query( $parsed_args, 'guests' );
+        $guests = Cache::query( $parsed_args, 'guests' );
         if ( $parsed_args['dropdown'] )
         {
             global $post;
-            $post_authors = get_post_authors( $post->ID, 'id' );
+            $post_authors = authorship_get_post_authors( $post->ID, 'id' );
             $output = '';
             if ( $guests->have_posts() )
             {

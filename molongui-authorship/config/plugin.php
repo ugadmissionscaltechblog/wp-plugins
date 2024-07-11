@@ -32,7 +32,7 @@ $constants = array
     'FOLDER'    => basename( dirname( MOLONGUI_AUTHORSHIP_FILE ) ),
     'URL'       => plugin_dir_url( MOLONGUI_AUTHORSHIP_FILE ),
     'BASENAME'  => plugin_basename( MOLONGUI_AUTHORSHIP_FILE ),
-    'NAMESPACE' => str_replace( ' ', '', ucwords( strtr( ucwords( strtolower( $config['name'] ) ), array( '-' => ' ', '_' => ' ' ) ) ) ),
+    'NAMESPACE' => '\Molongui\\' . str_replace( ' ', '', ucwords( strtr( ucwords( strtolower( $config['name'] ) ), array( '-' => ' ', '_' => ' ' ) ) ) ),
     'DB'           => $config['db'],
     'CPT'          => $config['cpt'],
     'DB_VERSION'   => $plugin_px.'_db_version',

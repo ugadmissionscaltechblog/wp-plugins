@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined('ABSPATH') or exit;
 authorship_add_byline_support();
 add_filter( 'authorship/pre_author_link', function( $link, $original_link, $author_id, $author_nicename )

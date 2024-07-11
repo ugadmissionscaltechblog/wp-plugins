@@ -1,5 +1,7 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+if ( !defined( 'MOLONGUI_BUMP_OFFER_FILE' ) ) return;
 function authorship_admin_menu()
 {
     global $submenu;

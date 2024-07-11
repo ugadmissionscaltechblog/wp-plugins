@@ -1,4 +1,8 @@
 <?php
+
+use Molongui\Authorship\Common\Utils\Helpers;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $show_related = ( $options['author_box_layout'] != 'slim' and !empty( $options['author_box_related_show'] ) and ( !empty( $author['posts'] ) or !empty( $options['author_box_related_show_empty'] ) ) );
 ?>
 
@@ -6,6 +10,8 @@ $show_related = ( $options['author_box_layout'] != 'slim' and !empty( $options['
 <!-- MOLONGUI AUTHORSHIP PLUGIN <?php echo MOLONGUI_AUTHORSHIP_VERSION; ?> -->
 <!-- <?php echo MOLONGUI_AUTHORSHIP_WEB; ?> -->
 <?php endif; ?>
+
+<?php ob_start(); ?>
 
 <div class="molongui-clearfix"></div>
 <div id="mab-<?php echo $random_id; ?>"
@@ -102,3 +108,5 @@ $show_related = ( $options['author_box_layout'] != 'slim' and !empty( $options['
 	<?php if ( $show_tabs ) echo '</div><!-- End of .m-a-box-tabs -->'; ?>
 
 </div><!-- End of .m-a-box -->
+
+<?php echo Helpers::minify_html( ob_get_clean() ); ?>

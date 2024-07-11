@@ -8,7 +8,7 @@ function authorship_the_author_posts_link( $link )
     $link = apply_filters( 'authorship/pre_the_author_posts_link', $link, $original_link );
     if ( null !== $link ) return $link;
 
-    $link = get_byline( null, null, null, true );
+    $link = authorship_get_byline( null, null, null, true );
 
     return empty( $link ) ? $original_link : $link;
 }

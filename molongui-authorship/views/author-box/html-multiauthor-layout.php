@@ -1,4 +1,6 @@
 <?php
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 ?>
 
 <?php if ( apply_filters( 'authorship/add_html_comments', true ) ) : ?>

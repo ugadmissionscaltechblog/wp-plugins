@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_get_upsells()
 {
     $upsells = include MOLONGUI_AUTHORSHIP_DIR . 'config/common/upsells.php';

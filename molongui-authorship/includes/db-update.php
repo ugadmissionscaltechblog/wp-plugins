@@ -1,12 +1,13 @@
 <?php
 
-namespace Molongui\Authorship\Includes;
-\defined( 'ABSPATH' ) or exit;
+namespace Molongui\Authorship;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 class DB_Update
 {
     public function db_update_23()
     {
-        $options = \get_option( 'molongui_authorship_options', array() );
+        $options = get_option( 'molongui_authorship_options', array() );
 
         if ( !isset( $options['author_box_meta_show_email'] ) )
         {
@@ -18,11 +19,11 @@ class DB_Update
             $options['author_box_meta_show_phone'] = '0';
         }
 
-        \update_option( 'molongui_authorship_options', $options );
+        update_option( 'molongui_authorship_options', $options, true );
     }
     public function db_update_22()
     {
-        $options = \get_option( 'molongui_authorship_options', array() );
+        $options = get_option( 'molongui_authorship_options', array() );
 
         if ( !empty( $options['author_box_avatar_link'] ) and 'custom' == $options['author_box_avatar_link'] )
         {
@@ -34,11 +35,11 @@ class DB_Update
             $options['author_box_name_link'] = 'website';
         }
 
-        \update_option( 'molongui_authorship_options', $options );
+        update_option( 'molongui_authorship_options', $options, true );
     }
     public function db_update_21()
     {
-        $options = \get_option( 'molongui_authorship_options', array() );
+        $options = get_option( 'molongui_authorship_options', array() );
 
         if ( !empty( $options['author_box_avatar_link'] ) and 1 == $options['author_box_avatar_link'] )
         {
@@ -50,11 +51,11 @@ class DB_Update
             $options['author_box_name_link'] = 'archive';
         }
 
-        \update_option( 'molongui_authorship_options', $options );
+        update_option( 'molongui_authorship_options', $options, true );
     }
     public function db_update_20()
     {
-        $now = \get_option( 'molongui_authorship_installation', array() );
+        $now = get_option( 'molongui_authorship_installation', array() );
 
         if ( !empty( $now ) )
         {
@@ -63,13 +64,13 @@ class DB_Update
                 'timestamp' => isset( $now['install_date'] ) ? $now['install_date'] : '',
                 'version'   => isset( $now['install_version'] ) ? $now['install_version'] : '',
             );
-            \update_option( 'molongui_authorship_install', $new );
-            \delete_option( 'molongui_authorship_installation' );
+            update_option( 'molongui_authorship_install', $new, false );
+            delete_option( 'molongui_authorship_installation' );
         }
-        $options = \get_option( 'molongui_authorship_options', array() );
-        \add_option( 'molongui_authorship_options_backup_19', $options );
+        $options = get_option( 'molongui_authorship_options', array() );
+        add_option( 'molongui_authorship_options_backup_19', $options, '', false );
         require_once MOLONGUI_AUTHORSHIP_DIR . 'includes/helpers/options/update.php';
-        $options = \authorship_options_update_20( $options );
+        $options = authorship_options_update_20( $options );
         if ( false )
         {
             unset( $options['headline'] );
@@ -132,17 +133,17 @@ class DB_Update
             unset( $options['related_posts'] );
             unset( $options['box_class'] );
         }
-        \update_option( 'molongui_authorship_options', $options );
+        update_option( 'molongui_authorship_options', $options, true );
     }
     public function db_update_19()
     {
-        $main     = \get_option( 'molongui_authorship_main', array() );
-        $box      = \get_option( 'molongui_authorship_box', array() );
-        $byline   = \get_option( 'molongui_authorship_byline', array() );
-        $archives = \get_option( 'molongui_authorship_archives', array() );
-        $seo      = \get_option( 'molongui_authorship_seo', array() );
-        $compat   = \get_option( 'molongui_authorship_compat', array() );
-        $options  = \array_merge( $main, $box, $byline, $archives, $seo, $compat );
+        $main     = get_option( 'molongui_authorship_main', array() );
+        $box      = get_option( 'molongui_authorship_box', array() );
+        $byline   = get_option( 'molongui_authorship_byline', array() );
+        $archives = get_option( 'molongui_authorship_archives', array() );
+        $seo      = get_option( 'molongui_authorship_seo', array() );
+        $compat   = get_option( 'molongui_authorship_compat', array() );
+        $options  = array_merge( $main, $box, $byline, $archives, $seo, $compat );
         $options['author_box'] = $options['enable_author_boxes'];
         $options['guest_authors'] = $options['enable_guest_authors'];
         $options['guest_pages'] = $options['guest_archive_enabled'];
@@ -187,51 +188,51 @@ class DB_Update
         unset( $options['multiauthor_box_layout'] );
         unset( $options['layout'] );
         unset( $options['enable_author_box_schema'] );
-        \update_option( 'molongui_authorship_options', $options );
-        \delete_option( 'molongui_authorship_main' );
-        \delete_option( 'molongui_authorship_box' );
-        \delete_option( 'molongui_authorship_byline' );
-        \delete_option( 'molongui_authorship_archives' );
-        \delete_option( 'molongui_authorship_seo' );
-        \delete_option( 'molongui_authorship_compat' );
+        update_option( 'molongui_authorship_options', $options, true );
+        delete_option( 'molongui_authorship_main' );
+        delete_option( 'molongui_authorship_box' );
+        delete_option( 'molongui_authorship_byline' );
+        delete_option( 'molongui_authorship_archives' );
+        delete_option( 'molongui_authorship_seo' );
+        delete_option( 'molongui_authorship_compat' );
         if ( $options['guest_authors'] or $options['enable_multi_authors'] )
         {
-            \add_option( 'molongui_authorship_update_post_authors', true );
+            add_option( 'molongui_authorship_update_post_authors', true, '', true );
         }
     }
     public function db_update_18()
     {
-        $strings = \get_option( 'molongui_authorship_strings', array() );
-        $box     = \get_option( 'molongui_authorship_box', array() );
+        $strings = get_option( 'molongui_authorship_strings', array() );
+        $box     = get_option( 'molongui_authorship_box', array() );
         foreach ( $strings as $key => $value )
         {
             $box[$key] = $value;
         }
-        \delete_option( 'molongui_authorship_strings' );
-        \update_option( 'molongui_authorship_box' , $box );
+        delete_option( 'molongui_authorship_strings' );
+        update_option( 'molongui_authorship_box' , $box, true );
     }
     public function db_update_17()
     {
-        $strings = \get_option( 'molongui_authorship_strings', array() );
-        $box     = \get_option( 'molongui_authorship_box', array() );
+        $strings = get_option( 'molongui_authorship_strings', array() );
+        $box     = get_option( 'molongui_authorship_box', array() );
         $box['no_related_posts'] = $strings['no_related_posts'];
         unset( $strings['no_related_posts'] );
-        \update_option( 'molongui_authorship_strings', $strings );
-        \update_option( 'molongui_authorship_box' , $box );
+        update_option( 'molongui_authorship_strings', $strings, true );
+        update_option( 'molongui_authorship_box' , $box, true );
     }
     public function db_update_16()
     {
-        $main = \get_option( 'molongui_authorship_main', array() );
-        $box  = \get_option( 'molongui_authorship_box', array() );
-        if ( !\function_exists( 'get_editable_roles' ) ) require_once ABSPATH . 'wp-admin/includes/user.php';
+        $main = get_option( 'molongui_authorship_main', array() );
+        $box  = get_option( 'molongui_authorship_box', array() );
+        if ( !function_exists( 'get_editable_roles' ) ) require_once ABSPATH . 'wp-admin/includes/user.php';
         $ur = array();
-        $user_roles = \get_editable_roles();
+        $user_roles = get_editable_roles();
         foreach ( $user_roles as $id => $user_role )
         {
             if ( !empty( $main['user_role_'.$id] ) ) $ur[] = $id;
             if ( isset( $main['user_role_'.$id] ) )  unset( $main['user_role_'.$id] );
         }
-        $main['user_roles'] = \implode ( ",", $ur );
+        $main['user_roles'] = implode ( ",", $ur );
         $sn = array();
         $social_networks = include MOLONGUI_AUTHORSHIP_DIR . '/config/social.php';
         foreach ( $social_networks as $id => $social_network )
@@ -239,38 +240,38 @@ class DB_Update
             if ( !empty( $box['show_'.$id] ) ) $sn[] = $id;
             if ( isset( $box['show_'.$id] ) )  unset( $box['show_'.$id] );
         }
-        $main['social_networks'] = \implode ( ",", $sn );
-        if ( !\function_exists( 'molongui_get_post_types' ) ) require_once MOLONGUI_AUTHORSHIP_DIR . 'includes/helpers/common/legacy/fw-helper-functions.php';
+        $main['social_networks'] = implode ( ",", $sn );
+        if ( !function_exists( 'molongui_get_post_types' ) ) require_once MOLONGUI_AUTHORSHIP_DIR . 'includes/helpers/common/legacy/fw-helper-functions.php';
         $pt = array();
-        $post_types = \molongui_get_post_types();
+        $post_types = molongui_get_post_types();
         foreach ( $post_types as $post_type )
         {
             if ( !empty( $main['extend_to_'.$post_type] ) ) $pt[] = $post_type;
             if ( isset(  $main['extend_to_'.$post_type] ) ) unset( $main['extend_to_'.$post_type] );
         }
-        $main['post_types'] = \implode ( ",", $pt );
+        $main['post_types'] = implode ( ",", $pt );
         $related = array();
         foreach ( $post_types as $post_type )
         {
             if ( !empty( $box['related_post_type_'.$post_type] ) ) $related[] = $post_type;
             if ( isset( $box['related_post_type_'.$post_type] ) )  unset( $box['related_post_type_'.$post_type] );
         }
-        $box['related_post_types'] = \implode ( ",", $related );
-        if ( !\function_exists( 'molongui_post_categories' ) ) require_once MOLONGUI_AUTHORSHIP_DIR . 'includes/helpers/common/legacy/fw-helper-functions.php';
+        $box['related_post_types'] = implode ( ",", $related );
+        if ( !function_exists( 'molongui_post_categories' ) ) require_once MOLONGUI_AUTHORSHIP_DIR . 'includes/helpers/common/legacy/fw-helper-functions.php';
         $cats = array();
-        foreach ( \molongui_post_categories() as $post_category )
+        foreach ( molongui_post_categories() as $post_category )
         {
             if ( !empty( $box['hide_on_category_'.$post_category] ) ) $cats[] = $post_category;
             if ( isset( $box['hide_on_category_'.$post_category] ) )  unset( $box['hide_on_category_'.$post_category] );
         }
-        $box['hide_on_categories'] = \implode ( ",", $cats );
+        $box['hide_on_categories'] = implode ( ",", $cats );
         $box['related_orderby'] = $box['related_order_by'];
         unset( $box['related_order_by'] );
         $main['encode_email'] = $box['encode_email'];
         $main['encode_phone'] = $box['encode_phone'];
         unset( $box['encode_email'], $box['encode_phone'] );
-        \update_option( 'molongui_authorship_main', $main );
-        \update_option( 'molongui_authorship_box' , $box  );
+        update_option( 'molongui_authorship_main', $main, true );
+        update_option( 'molongui_authorship_box' , $box, true  );
     }
     public function db_update_15()
     {
@@ -278,14 +279,14 @@ class DB_Update
 
         $wpdb->query( "DELETE FROM {$wpdb->prefix}usermeta WHERE meta_key LIKE 'molongui_author_%_count';" );
         $wpdb->query( "DELETE FROM {$wpdb->prefix}postmeta WHERE meta_key LIKE '_molongui_guest_author_%_count';" );
-        \add_option( 'molongui_authorship_update_post_counters', true );
+        add_option( 'molongui_authorship_update_post_counters', true, '', true );
     }
     public function db_update_14()
     {
         global $wpdb;
 
         $wpdb->query( "UPDATE {$wpdb->prefix}posts SET post_type = 'guest_author' WHERE post_type = 'molongui_guestauthor';" );
-        \add_option( 'molongui_authorship_update_post_counters', true );
+        add_option( 'molongui_authorship_update_post_counters', true, '', true );
         $box_settings      = (array) get_option( 'molongui_authorship_box', array() );
         $byline_settings   = (array) get_option( 'molongui_authorship_byline', array() );
         $authors_settings  = (array) get_option( 'molongui_authorship_authors', array() );
@@ -369,12 +370,12 @@ class DB_Update
         unset( $advanced_settings['enable_sc_text_widgets'] );
         unset( $advanced_settings['plugin_version'] );
         $main = array_merge( $main, $advanced_settings );
-        update_option( 'molongui_authorship_box', $box_settings );
-        update_option( 'molongui_authorship_byline', $byline );
-        update_option( 'molongui_authorship_archives', $archives_settings );
-        update_option( 'molongui_authorship_main', $main );
-        update_option( 'molongui_authorship_seo', $seo );
-        update_option( 'molongui_authorship_compat', $compat );
+        update_option( 'molongui_authorship_box', $box_settings, true );
+        update_option( 'molongui_authorship_byline', $byline, true );
+        update_option( 'molongui_authorship_archives', $archives_settings, true );
+        update_option( 'molongui_authorship_main', $main, true );
+        update_option( 'molongui_authorship_seo', $seo, true );
+        update_option( 'molongui_authorship_compat', $compat, true );
         delete_option( 'molongui_authorship_authors' );
         delete_option( 'molongui_authorship_advanced' );
     }
@@ -398,7 +399,7 @@ class DB_Update
                 $notices = get_option( 'molongui_authorship_notices', array() );
                 if ( !$notices ) $notices = array();
                 $notices[$key] = $value;
-                update_option( 'molongui_authorship_notices', $notices );
+                update_option( 'molongui_authorship_notices', $notices, true );
             }
             delete_site_transient( $transient_name );
         }
@@ -432,7 +433,7 @@ class DB_Update
             'include_guests_in_search'     => $guest_settings['include_guests_in_search'],
             'guest_menu_item_level'        => $guest_settings['guest_menu_item_level'],
         );
-        add_option( 'molongui_authorship_authors', $author_settings );
+        add_option( 'molongui_authorship_authors', $author_settings, '', true );
         $wpdb->query( "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_molongui_guest_author_box_display' WHERE meta_key = '_molongui_guest_author_hide_box';" );
         $wpdb->query( "UPDATE {$wpdb->prefix}usermeta SET meta_key = 'molongui_author_box_display' WHERE meta_key = 'molongui_author_hide_box';" );
         $wpdb->query( "UPDATE {$wpdb->prefix}postmeta SET meta_value = 'hide' WHERE meta_key = '_molongui_guest_author_box_display' AND meta_value = '1';" );
@@ -446,7 +447,7 @@ class DB_Update
             '0'     => 'hide',
         );
         $box_settings['display'] = $display[$box_settings['display']];
-        update_option( 'molongui_authorship_box', $box_settings );
+        update_option( 'molongui_authorship_box', $box_settings, true );
     }
     public function db_update_10()
     {
@@ -474,13 +475,13 @@ class DB_Update
         $box_settings = get_option( 'molongui_authorship_box', array() );
         unset( $box_settings['show_mail'] );
         unset( $box_settings['show_web'] );
-        update_option( 'molongui_authorship_box', $box_settings );
+        update_option( 'molongui_authorship_box', $box_settings, true );
     }
     public function db_update_9()
     {
         $box_settings = get_option( 'molongui_authorship_box', array() );
         $box_settings['show_mail'] = '0';
-        update_option( 'molongui_authorship_box', $box_settings );
+        update_option( 'molongui_authorship_box', $box_settings, true );
     }
     public function db_update_8()
     {
@@ -517,7 +518,7 @@ class DB_Update
             'layout-5' => 'slim',
         );
         $box_settings['layout'] = $layout[$box_settings['layout']];
-        update_option( 'molongui_authorship_box', $box_settings );
+        update_option( 'molongui_authorship_box', $box_settings, true );
     }
     public function db_update_7() {}
     public function db_update_6()
@@ -638,11 +639,11 @@ class DB_Update
         );
         $box_settings['layout'] = $layout[$box_settings['layout']];
         $box_settings = array_merge( $box_settings, $main_settings );
-        update_option( 'molongui_authorship_byline', $byline_settings );
-        update_option( 'molongui_authorship_box', $box_settings );
-        update_option( 'molongui_authorship_guest', $guest_settings );
-        update_option( 'molongui_authorship_archives', $archives_settings );
-        update_option( 'molongui_authorship_advanced', $advanced_settings );
+        update_option( 'molongui_authorship_byline', $byline_settings, true );
+        update_option( 'molongui_authorship_box', $box_settings, true );
+        update_option( 'molongui_authorship_guest', $guest_settings, true );
+        update_option( 'molongui_authorship_archives', $archives_settings, true );
+        update_option( 'molongui_authorship_advanced', $advanced_settings, true );
         delete_option( 'molongui_authorship_main' );
     }
     public function db_update_5()
@@ -666,11 +667,11 @@ class DB_Update
             'keep_config'            => $main_settings['keep_config'],
             'keep_data'              => $main_settings['keep_data'],
         );
-        update_option( 'molongui_authorship_advanced', $advanced_settings );
+        update_option( 'molongui_authorship_advanced', $advanced_settings, true );
         unset( $main_settings['enable_sc_text_widgets'] );
         unset( $main_settings['keep_config'] );
         unset( $main_settings['keep_data'] );
-        update_option( 'molongui_authorship_main', $main_settings );
+        update_option( 'molongui_authorship_main', $main_settings, true );
         $rows = $wpdb->get_results( "SELECT meta_id, post_id, meta_value FROM {$wpdb->prefix}postmeta WHERE meta_id IN (SELECT meta_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_molongui_guest_author_id' AND meta_value IS NOT NULL)" );
         foreach ( $rows as $row )
         {
@@ -738,7 +739,7 @@ class DB_Update
             'keep_config'             => $settings['keep_config'],
             'keep_data'               => $settings['keep_data'],
         );
-        update_option( 'molongui_authorship_main', $main_settings );
+        update_option( 'molongui_authorship_main', $main_settings, true );
         $wpdb->query( "UPDATE {$wpdb->prefix}postmeta SET meta_key = '_molongui_guest_author_googleplus' WHERE meta_key = '_molongui_guest_author_gplus';" );
         $wpdb->query( "UPDATE {$wpdb->prefix}usermeta SET meta_key = 'molongui_author_googleplus' WHERE meta_key = 'molongui_author_gplus';" );
     }
@@ -813,8 +814,8 @@ class DB_Update
             'bottom_border'       => $settings['molongui_authorship_bottom_border'],
             'bottom_border_color' => $settings['molongui_authorship_bottom_border_color'],
         );
-        add_option( 'molongui_authorship_main', $main_settings );
-        add_option( 'molongui_authorship_box', $box_settings );
+        add_option( 'molongui_authorship_main', $main_settings, '', true );
+        add_option( 'molongui_authorship_box', $box_settings, '', true );
         delete_option( 'molongui_authorship_config' );
         delete_option( 'molongui_authorship_deactivate_checkbox' );
         $wpdb->query( "UPDATE {$wpdb->prefix}postmeta SET meta_key = 'molongui_guest_author_blog' WHERE meta_key = 'molongui_guest_author_link';" );

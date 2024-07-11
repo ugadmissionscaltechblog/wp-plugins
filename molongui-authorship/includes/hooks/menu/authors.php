@@ -116,7 +116,7 @@ function authorship_set_authors_screen_options( $screen_option, $option, $value 
 add_filter( 'set-screen-option', 'authorship_set_authors_screen_options', 10, 3 );
 function authorship_render_authors_screen()
 {
-    $authors_table = new \Molongui\Authorship\Includes\Authors_List_Table( 'molongui-authorship' );
+    $authors_table = new \Molongui\Authorship\Authors_List_Table( 'molongui-authorship' );
     $authors_table->prepare_items();
 
     include MOLONGUI_AUTHORSHIP_DIR . 'views/admin/html-page-authors.php';

@@ -1,7 +1,11 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Utils\Cache;
+use Molongui\Authorship\Common\Utils\Helpers;
+use Molongui\Authorship\Post;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'is_guest_post' ) )
 {
     function is_guest_post( $post_id = null )
@@ -48,7 +52,7 @@ if ( !function_exists( 'is_multiauthor_post' ) )
             $post_id = $post->ID;
         }
 
-        return ( count( get_post_meta( $post_id, '_molongui_author', false ) ) > 1 ? true : false );
+        return count( get_post_meta( $post_id, '_molongui_author', false ) ) > 1;
     }
 }
 if ( !function_exists( 'is_multiauthor_link' ) )
@@ -79,6 +83,7 @@ if ( !function_exists( 'get_main_author' ) )
         {
             $split      = explode( '-', $meta );
             $data       = new stdClass();
+            $data->ID   = $split[1];
             $data->id   = $split[1];
             $data->type = $split[0];
             $data->ref  = $meta;
@@ -102,6 +107,7 @@ if ( !function_exists( 'authorship_get_wp_post_author' ) )
         if ( $post_author = get_post_field( 'post_author', $post_id ) )
         {
             $data       = new stdClass();
+            $data->ID   = $post_author;
             $data->id   = $post_author;
             $data->type = 'user';
             $data->ref  = $data->type.'-'.$data->id;
@@ -110,66 +116,80 @@ if ( !function_exists( 'authorship_get_wp_post_author' ) )
         return $data;
     }
 }
+function authorship_get_post_authors( $post_id = null, $key = '' )
+{
+    if ( empty( $post_id ) or !is_integer( $post_id ) )
+    {
+        $post_id = Post::get_id();
+        if ( !$post_id ) return false;
+    }
+
+    $data = array();
+    if ( !in_array( authorship_get_post_type( $post_id ), molongui_supported_post_types( MOLONGUI_AUTHORSHIP_NAME, 'all' ) ) )
+    {
+        $data[] = authorship_get_wp_post_author( $post_id );
+    }
+
+    else
+    {
+        $main_author = get_main_author( $post_id );
+        if ( empty( $main_author ) ) return false;
+        if ( !authorship_is_feature_enabled( 'multi' ) )
+        {
+            $data[] = $main_author;
+        }
+
+        else
+        {
+            $authors = get_post_meta( $post_id, '_molongui_author', false );
+            if ( !empty( $authors) )
+            {
+                $guest_enabled = authorship_is_feature_enabled( 'guest' );
+
+                foreach ( $authors as $author )
+                {
+                    $split = explode( '-', $author );
+                    if ( empty( $split[1] ) )
+                    {
+                        continue;
+                    }
+                    if ( $split[1] == $main_author->id )
+                    {
+                        continue;
+                    }
+                    if ( $split[0] === 'guest' and !$guest_enabled )
+                    {
+                        continue;
+                    }
+                    $data[] = (object) array( 'ID' => (int)$split[1], 'id' => (int)$split[1], 'type' => $split[0], 'ref' => $author );
+                }
+            }
+            array_unshift( $data, $main_author );
+        }
+    }
+    if ( !$key ) return $data;
+    if ( !empty( $data ) )
+    {
+        $values = array();
+        foreach ( $data as $author )
+        {
+            if ( is_object( $author ) and property_exists( $author, $key ) )
+            {
+                $values[] = $author->$key;
+            }
+        }
+        return $values;
+    }
+    else
+    {
+        return false;
+    }
+}
 if ( !function_exists( 'get_post_authors' ) )
 {
     function get_post_authors( $post_id = null, $key = '' )
     {
-        if ( empty( $post_id ) or !is_integer( $post_id ) )
-        {
-            $post_id = authorship_get_post_id();
-            if ( !$post_id ) return false;
-        }
-
-        $data = array();
-        if ( !in_array( authorship_get_post_type( $post_id ), molongui_supported_post_types( MOLONGUI_AUTHORSHIP_NAME, 'all' ) ) )
-        {
-            $data[] = authorship_get_wp_post_author( $post_id );
-        }
-
-        else
-        {
-            $main_author = get_main_author( $post_id );
-            if ( empty( $main_author ) ) return false;
-            if ( !authorship_is_feature_enabled( 'multi' ) )
-            {
-                $data[] = $main_author;
-            }
-
-            else
-            {
-                $authors = get_post_meta( $post_id, '_molongui_author', false );
-                if ( !empty( $authors) )
-                {
-                    $guest_enabled = authorship_is_feature_enabled( 'guest' );
-
-                    foreach ( $authors as $author )
-                    {
-                        $split = explode( '-', $author );
-                        if ( $split[1] == $main_author->id ) continue;
-                        if ( $split[0] === 'guest' and !$guest_enabled ) continue;
-                        $data[] = (object) array( 'id' => (int)$split[1], 'type' => $split[0], 'ref' => $author );
-                    }
-                }
-                array_unshift( $data, $main_author );
-            }
-        }
-        if ( !$key ) return $data;
-        if ( !empty( $data ) )
-        {
-            $values = array();
-            foreach ( $data as $author )
-            {
-                if ( is_object( $author ) and property_exists( $author, $key ) )
-                {
-                    $values[] = $author->$key;
-                }
-            }
-            return $values;
-        }
-        else
-        {
-            return false;
-        }
+        return authorship_get_post_authors( $post_id, $key );
     }
 }
 if ( !function_exists( 'get_coauthored_posts' ) )
@@ -225,9 +245,9 @@ if ( !function_exists( 'get_coauthored_posts' ) )
             'post__not_in'   => $exclude,
             'meta_query'     => $mq,
             'site_id'        => get_current_blog_id(),
-            'language'       => molongui_get_language(),
+            'language'       => array( Helpers::class, 'get_language' ),
         );
-        $data = molongui_query( $args, 'posts' );
+        $data = Cache::query( $args, 'posts' );
         if ( !empty( $data->posts ) ) foreach ( $data->posts as $post ) $posts[] = $post;
         return ( !empty( $posts ) ? $posts : array() );
     }

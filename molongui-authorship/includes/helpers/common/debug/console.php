@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_console_log( $value = null, $message = '' )
 {
     if ( apply_filters( 'authorship/disable_console_log', false ) ) return;
@@ -10,7 +11,7 @@ function authorship_console_log( $value = null, $message = '' )
     {
         if ( is_array( $value ) or is_object( $value ) )
         {
-            $value = json_encode( $value );
+            $value = wp_json_encode( $value );
         }
         elseif ( is_string( $value ) )
         {

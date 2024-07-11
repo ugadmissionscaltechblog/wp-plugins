@@ -54,18 +54,16 @@ function authorship_guest_register_post_type()
     );
     register_post_type( MOLONGUI_AUTHORSHIP_CPT, $args );
 }
-add_action( 'init', 'authorship_guest_register_post_type' );
 function authorship_post_link( $post_link, $post, $leavename, $sample )
 {
     if ( MOLONGUI_AUTHORSHIP_CPT === $post->post_type )
     {
-        $guest = new \Molongui\Authorship\Includes\Author( $post->ID, 'guest', $post );
+        $guest = new \Molongui\Authorship\Author( $post->ID, 'guest', $post );
         $post_link = $guest->get_url();
     }
 
     return $post_link;
 }
-add_filter( 'post_type_link', 'authorship_post_link', 10, 4 );
 function authorship_guest_post_updated_messages( $msg )
 {
     $msg[MOLONGUI_AUTHORSHIP_CPT] = array
@@ -85,7 +83,6 @@ function authorship_guest_post_updated_messages( $msg )
 
     return $msg;
 }
-add_filter( 'post_updated_messages', 'authorship_guest_post_updated_messages' );
 function authorship_guest_remove_menu_item()
 {
     $options = authorship_get_options();
@@ -106,4 +103,4 @@ function authorship_guest_remove_menu_item()
         }
     }
 }
-add_action( 'admin_menu', 'authorship_guest_remove_menu_item' );
+//add_action( 'admin_menu', 'authorship_guest_remove_menu_item' );

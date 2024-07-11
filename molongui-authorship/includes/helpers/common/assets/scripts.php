@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_register_script( $file, $scope, $deps = array( 'jquery' ), $handle = null, $version = null )
 {
     if ( empty( $file ) or empty( $scope ) ) return;
@@ -55,8 +56,8 @@ function authorship_enqueue_script( $file, $scope, $admin = false, $handle = nul
                     $function = 'authorship_'.$scope.'_script_params';
                     if ( function_exists( $function ) ) $params = call_user_func( $function );
 
-                    if ( !empty( $params ) ) echo '<script id="'.$handle.'-inline-js-extra">' . 'var '.$jsextra.' = '.json_encode( $params ).';' . '</script>';
-                    echo '<script id="'.$handle.'-inline-js" type="text/javascript" data-file="'.basename( $filepath ).'" data-version="'.$version.'">' . $contents . '</script>';
+                    if ( !empty( $params ) ) echo '<script id="'.$handle.'-inline-js-extra">' . 'var '.$jsextra.' = '.wp_json_encode( $params ).';' . '</script>';
+                    echo '<script id="'.esc_attr( $handle ).'-inline-js" type="text/javascript" data-file="'.basename( $filepath ).'" data-version="'.$version.'">' . $contents . '</script>';
                 });
 
                 /*!

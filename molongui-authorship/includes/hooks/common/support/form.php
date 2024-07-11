@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_send_mail()
 {
     if ( !is_admin() and !isset( $_POST['form'] ) and $_POST['type'] == 'ticket' )

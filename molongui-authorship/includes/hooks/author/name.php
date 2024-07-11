@@ -1,4 +1,6 @@
 <?php
+
+use Molongui\Authorship\Common\Utils\Helpers;
 defined( 'ABSPATH' ) or exit;
 if ( !authorship_byline_takeover() ) return;
 function authorship_filter_author_name( $display_name )
@@ -31,9 +33,9 @@ if ( apply_filters_ref_array( 'molongui_authorship_do_filter_name', array( false
     list( $filter, $display_name ) = apply_filters( '_authorship/filter/the_author', array( true, $display_name ), $args );
     if ( !$filter ) return is_null( $display_name ) ? $old_display_name : $display_name;
     if ( is_author() or is_guest_author() ) return $display_name;
-    return get_byline();
+    return authorship_get_byline();
 }
-add_filter( 'the_author', 'authorship_filter_author_name', 999, 1 );
+add_filter( 'the_author', 'authorship_filter_author_name', PHP_INT_MAX, 1 );
 function authorship_filter_author_display_name( $display_name, $user_id = null, $original_user_id = null )
 {
     $original_display_name = $display_name;
@@ -43,7 +45,7 @@ function authorship_filter_author_display_name( $display_name, $user_id = null, 
     $display_name = $original_display_name;
     if ( ( !empty( $original_user_id ) or $original_user_id === 0 )
          and !apply_filters( 'molongui_authorship_bypass_original_user_id_if', false )
-         and !authorship_is_block_editor()
+         and !Helpers::is_block_editor()
     ){
         return $display_name;
     }
@@ -55,7 +57,7 @@ $dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 100 );
 if ( empty( $dbt ) ) return $display_name;
     if ( apply_filters( 'molongui_authorship_dont_filter_the_author_display_name', false, $display_name, $user_id, $original_user_id, $post, $dbt ) ) return $display_name;
     if ( is_author() or is_guest_author() ) return $display_name;
-    return get_byline( $post_id );
+    return authorship_get_byline( $post_id );
 }
 add_filter( 'get_the_author_display_name', 'authorship_filter_author_display_name', PHP_INT_MAX, 3 );
 function authorship_filter_archive_title( $title )

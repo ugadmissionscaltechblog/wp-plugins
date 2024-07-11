@@ -15,7 +15,6 @@ function authorship_filter_posts_by_author()
         wp_dropdown_users( $params );
     }
 }
-add_action( 'restrict_manage_posts', 'authorship_filter_posts_by_author' );
 function authorship_filter_posts_by_guest()
 {
     global $post_type;
@@ -40,4 +39,4 @@ function authorship_filter_posts_by_guest()
         }
     }
 }
-add_action( 'restrict_manage_posts', 'authorship_filter_posts_by_guest' );
+//add_action( 'restrict_manage_posts', 'authorship_filter_posts_by_guest' );

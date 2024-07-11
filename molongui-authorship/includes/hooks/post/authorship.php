@@ -1,10 +1,10 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 function authorship_enable_post_authors_update()
 {
-    new \Molongui\Authorship\Includes\Update_Post_Authors();
+    new \Molongui\Authorship\Update_Post_Authors();
 }
 add_action( 'authorship/init', 'authorship_enable_post_authors_update' );
 function authorship_post_authors_update()
@@ -25,12 +25,12 @@ function authorship_post_authors_update_completed()
         delete_option( 'm_update_post_authors_complete' );
         delete_option( 'm_update_post_authors_running' );
 
-        $message = '<p>' . sprintf( __( '%sAuthorship Data Updater%s - The update process is now complete. All posts have authorship information now.', 'molongui-authorship' ), '<strong>', '</strong>' ) . '</p>';
+        $message = '<p>' . sprintf( __( "%sAuthorship Data Updater%s - The update process is now complete. All posts now have authorship information.", 'molongui-authorship' ), '<strong>', '</strong>' ) . '</p>';
         echo '<div class="notice notice-success is-dismissible">' . $message . '</div>';
     }
     elseif ( get_option( 'm_update_post_authors_running' ) )
     {
-        $message = '<p>' . sprintf( __( '%sAuthorship Data Updater%s - Post authorship update process is running in the background. It should not take long.', 'molongui-authorship' ), '<strong>', '</strong>' ) . '</p>';
+        $message = '<p>' . sprintf( __( "%sAuthorship Data Updater%s - The post authorship update process is running in the background. It should not take long.", 'molongui-authorship' ), '<strong>', '</strong>' ) . '</p>';
         echo '<div class="notice notice-warning is-dismissible">' . $message . '</div>';
     }
 }

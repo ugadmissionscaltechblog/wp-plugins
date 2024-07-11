@@ -1,4 +1,6 @@
 <?php
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 ?>
 
 <div class="m-a-box-content-top">

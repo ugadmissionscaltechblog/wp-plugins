@@ -1,4 +1,6 @@
 <?php
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 ?>
 
 <?php if ( $author['img'] and !empty( $options['author_box_avatar_show'] ) ) : ?>

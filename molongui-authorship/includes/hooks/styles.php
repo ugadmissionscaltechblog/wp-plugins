@@ -1,11 +1,13 @@
 <?php
+
+use Molongui\Authorship\Common\Utils\Assets;
 defined( 'ABSPATH' ) or exit;
 function authorship_register_admin_styles()
 {
-    $file = apply_filters( 'authorship/admin/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/admin-rtl.6ee0.min.css' : '/assets/css/admin.1a88.min.css' ) );
+    $file = apply_filters( 'authorship/admin/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/admin-rtl.9bee.min.css' : '/assets/css/admin.f42c.min.css' ) );
     $deps = array( 'wp-color-picker' );
 
-    authorship_register_style( $file, 'admin', $deps );
+    Assets::register_style( $file, 'admin', $deps );
 }
 add_action( 'admin_enqueue_scripts', 'authorship_register_admin_styles' );
 function authorship_enqueue_admin_styles()
@@ -25,9 +27,9 @@ function authorship_enqueue_admin_styles()
     );
     if ( !in_array( $screen->id, $screens ) ) return;
     wp_enqueue_style( 'wp-color-picker' );
-    $file = apply_filters( 'authorship/admin/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/admin-rtl.6ee0.min.css' : '/assets/css/admin.1a88.min.css' ) );
+    $file = apply_filters( 'authorship/admin/styles', MOLONGUI_AUTHORSHIP_FOLDER . ( is_rtl() ? '/assets/css/admin-rtl.9bee.min.css' : '/assets/css/admin.f42c.min.css' ) );
 
-    authorship_enqueue_style( $file, 'admin', true );
+    Assets::enqueue_style( $file, 'admin', true );
 }
 add_action( 'admin_enqueue_scripts', 'authorship_enqueue_admin_styles' );
 function authorship_admin_extra_styles()

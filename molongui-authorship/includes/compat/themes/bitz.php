@@ -41,7 +41,7 @@ add_filter( 'get_the_author_description', function( $value, $user_id = null, $or
     ){
         global $wp_query;
         $author_id = ( is_guest_author() and isset( $wp_query->guest_author_id ) ) ? $wp_query->guest_author_id : $wp_query->query_vars['author'];
-        $author_class = new Molongui\Authorship\Includes\Author();
+        $author_class = new Molongui\Authorship\Author();
         return $author_class->get_bio( $author_id, ( isset( $wp_query->is_guest_author ) and $wp_query->is_guest_author ) ? 'guest' : 'user', false, false );
     }
     return $value;

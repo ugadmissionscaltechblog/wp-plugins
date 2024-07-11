@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 function authorship_post_add_author_meta()
 {
@@ -8,7 +8,7 @@ function authorship_post_add_author_meta()
     $options = authorship_get_options();
     if ( empty( $post ) or empty( $post->ID ) ) return;
     if ( !$options['add_html_meta'] and !$options['add_opengraph_meta'] and !$options['add_facebook_meta'] and !$options['add_twitter_meta'] ) return;
-    $authors = get_post_authors( $post->ID );
+    $authors = authorship_get_post_authors( $post->ID );
     if ( empty( $authors ) ) return;
     if ( apply_filters( 'authorship/add_html_comments', true ) )
     {
@@ -55,7 +55,7 @@ function authorship_post_add_author_meta()
             break;
 
             case 'aio':
-                if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="' . esc_attr( get_byline( $post->ID ) ) . '">'."\n";
+                if ( !empty( $options['add_html_meta'] ) ) $meta .= '<meta name="author" content="' . esc_attr( authorship_get_byline( $post->ID ) ) . '">'."\n";
 
                 foreach ( $authors as $auth )
                 {
@@ -123,7 +123,7 @@ function authorship_post_add_opengraph_archive_meta()
     $author_id   = null;
     $author_type = null;
     if ( !isset( $wp_query ) ) return;
-    if ( \is_guest_author() )
+    if ( is_guest_author() )
     {
         $author_id   = isset( $wp_query->guest_author_id ) ? $wp_query->guest_author_id : $wp_query->query_vars['author'];
         $author_type = 'guest';
@@ -138,7 +138,7 @@ function authorship_post_add_opengraph_archive_meta()
     $author_name   = $author->get_name();
     $author_first  = $author->get_meta( 'first_name' );
     $author_last   = $author->get_meta( 'last_name' );
-    $author_bio    = \esc_html( $author->get_bio() );
+    $author_bio    = esc_html( $author->get_bio() );
     $author_link   = $author->get_url();
     $author_avatar = $author->get_avatar( 'full', 'url', 'local' );
 

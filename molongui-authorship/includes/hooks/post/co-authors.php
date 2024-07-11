@@ -1,6 +1,5 @@
 <?php
 defined( 'ABSPATH' ) or exit;
-if ( !authorship_is_feature_enabled( 'multi' ) ) return;
 function authorship_post_allow_coauthors_edit( $allcaps, $caps, $args, $user )
 {
     global $in_comment_loop;
@@ -45,7 +44,6 @@ function authorship_post_allow_coauthors_edit( $allcaps, $caps, $args, $user )
 
     return $allcaps;
 }
-add_filter( 'user_has_cap', 'authorship_post_allow_coauthors_edit', 999, 4 );
 function authorship_post_filter_map_meta_cap( $caps, $cap, $user_id, $args )
 {
     if ( in_array( $cap, array( 'edit_post', 'edit_others_posts' ) ) and in_array('edit_others_posts', $caps, true ) )
@@ -73,4 +71,4 @@ function authorship_post_filter_map_meta_cap( $caps, $cap, $user_id, $args )
 
     return $caps;
 }
-add_filter( 'map_meta_cap', 'authorship_post_filter_map_meta_cap', 10, 4 );
+//add_filter( 'map_meta_cap', 'authorship_post_filter_map_meta_cap', 10, 4 );

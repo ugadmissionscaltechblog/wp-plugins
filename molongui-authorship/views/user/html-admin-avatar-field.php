@@ -1,4 +1,6 @@
 <?php
+
+use Molongui\Authorship\Common\Utils\Assets;
 defined( 'ABSPATH' ) or exit;
 $img_id       = get_the_author_meta( 'molongui_author_image_id',   $user->ID );
 $img_url      = get_the_author_meta( 'molongui_author_image_url',  $user->ID );
@@ -17,7 +19,7 @@ else
 if ( current_user_can( 'upload_files' ) ) :
     wp_enqueue_media();
     authorship_enqueue_edit_avatar_scripts();
-    authorship_enqueue_media_uploader_styles();
+    Assets::enqueue_media_uploader_styles();
     ?>
 
     <div id="molongui_author_image">

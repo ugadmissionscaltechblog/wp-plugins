@@ -1,10 +1,10 @@
-﻿=== Author Box, Guest Author and Co-Authors for Your Posts - Molongui ===
+=== Author Box, Guest Author and Co-Authors for Your Posts - Molongui ===
 Contributors: molongui
 Donate link: https://www.paypal.me/amitzy/
 Tags: author box, author bio, guest author, co-authors, multiple authors
+Requires PHP: 5.6.20
 Requires at least: 5.2
-Tested up to: 6.4
-Requires PHP: 5.5
+Tested up to: 6.6
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -40,24 +40,24 @@ Easily add an author, a guest author or multiple authors to your posts and displ
 
 = Premium Features =
 
-> ✨ Premium features **only available in [Molongui Authorship Pro](https://www.molongui.com/authorship/ "Click to explore all features")**
+> ✨ Premium features **only available in [Molongui Authorship Pro](https://www.molongui.com/wordpress-plugin-post-authors "Click to explore all features")**
 >
 > - Custom Post Type support
 > - Additional author box layouts, styling options and display settings
 > - Support for HTML tags and third party shortcodes and embeds in the author bio
 > - Handy shortcodes to display the author box, the post byline and any author information anywhere. Know more [here](https://www.molongui.com/help/molongui-authorship-available-shortcodes/ "Click to see available shortcodes")
 > - Author archive page for guest authors
-> - Author list. 4 different layouts, user role filter and [more](https://www.molongui.com/authorship/author-list/ "Know more")
+> - Author list. 4 different layouts, user role filter and [more](https://www.molongui.com/wordpress-plugin-post-authors/author-list/ "Know more")
 > - List of posts by author. 5 different layouts, pagination and [more](https://www.molongui.com/help/molongui_author_posts/ "Know more")
 > - 1-click user to guest conversion and vice versa
-> - Allow visitors to search content by author name. Know [more](https://www.molongui.com/authorship/search-by-author-name/ "Know more")
+> - Allow visitors to search content by author name. Know [more](https://www.molongui.com/wordpress-plugin-post-authors/search-by-author-name/ "Know more")
 > - Disable author pages for registered WordPress users
 > - Add a post byline anywhere via shortcode. Useful if your theme does not show a byline for your posts
 > - Byline modifiers so you can prepend and append any string to them (i.e. By)
 > - Retrieve author information via shortcode. Very useful to use with page builders
 > - Guest author and co-authored post information available for third-party applications via REST API
 
-[Read more](https://www.molongui.com/authorship/ "Explore all premium features") about the Molongui Authorship advanced features.
+[Read more](https://www.molongui.com/wordpress-plugin-post-authors "Explore all premium features") about the Molongui Authorship advanced features.
 
 = More Info =
 
@@ -71,6 +71,7 @@ Easily add an author, a guest author or multiple authors to your posts and displ
 
 👋 **Want to chat with us?** Click [here](https://www.tidiochat.com/chat/foioudbu7xqepgvwseufnvhcz6wkp7am "Click to live chat with us")
 
+This plugin uses a third-party service to enable live chat communication with our support team, exclusively for administrators in the backend. You can disable this service via the plugin settings page. For more information about the live chat [service provider](https://www.tidio.com/) review their [privacy policy](https://www.tidio.com/privacy-policy/) and [terms](https://www.tidio.com/terms/).
 
 
 == Screenshots ==
@@ -113,7 +114,7 @@ Yes.
 
 = Where is the author box displayed? =
 
-By default, the author box is added at the bottom of all your posts. However, Molongui Authorship provides you plenty of display options to change that. You can change the location to make it display at the top of the post content, hide it on some posts or disable the automatic display so you can decide on which handpicked posts it must be shown. The [Pro](https://www.molongui.com/authorship/) version of the plugin allows you to hide the author box based on the post category.
+By default, the author box is added at the bottom of all your posts. However, Molongui Authorship provides you plenty of display options to change that. You can change the location to make it display at the top of the post content, hide it on some posts or disable the automatic display so you can decide on which handpicked posts it must be shown. The [Pro](https://www.molongui.com/wordpress-plugin-post-authors) version of the plugin allows you to hide the author box based on the post category.
 
 = Can I display the author box on a page? =
 
@@ -121,7 +122,7 @@ Yes. Unlike other author box plugins, Molongui Authorship allows you to show the
 
 = Can I use Molongui Authorship on custom post types? =
 
-Yes. You need the [Pro version](https://www.molongui.com/authorship/ "Molongui Authorship Pro") of the plugin to enjoy the features on custom post types.
+Yes. You need the [Pro version](https://www.molongui.com/wordpress-plugin-post-authors "Molongui Authorship Pro") of the plugin to enjoy the features on custom post types.
 
 = I have two author boxes. How can I hide one? =
 
@@ -133,7 +134,7 @@ To avoid clutter the edit screen, some social networks are not displayed by defa
 
 = Why some social media profiles are premium options? =
 
-Those social media networks which are intended for business and professional networking are only available in the [Pro version](https://www.molongui.com/authorship/ "Molongui Authorship Pro") of the plugin.
+Those social media networks which are intended for business and professional networking are only available in the [Pro version](https://www.molongui.com/wordpress-plugin-post-authors "Molongui Authorship Pro") of the plugin.
 
 = Where can I find documentation and user guides? =
 
@@ -187,18 +188,94 @@ If you need further assistance, please, read the [Installing Plugins](https://wo
 
 In order to run, Molongui Authorship requires:
 
-* PHP version 5.5.0 or greater. Considering [Wordpress recommends](https://wordpress.org/about/requirements/ "Wordpress recommends") it to be 7.4 or greater, this should not be a problem.
-* WordPress 5.2 or later
+* PHP version 5.6.20 or greater. Considering [Wordpress recommends](https://wordpress.org/about/requirements/ "Wordpress recommends") it to be 7.4 or greater, this should not be a problem.
+* WordPress 5.2 or later.
 
 
 
 == Changelog ==
 
-> <strong>Important</strong>: if you use a caching plugin, please flush cache after any plugin update.
+<strong>Important</strong>: If you use a caching plugin, please clear your cache after updating any plugins.
+
+= 4.9.5 (2024-07-09) =
+
+* Fixed load time impact on the post list screen for installations with over 5,000 users
+* Added WordPress 6.6 compatibility
+
+= 4.9.4 (2024-07-03) =
+
+* Added 'WeChat' social network
+* Fixed PHP warning regarding dynamic property
+
+= 4.9.3 (2024-06-24) =
+
+* Fixed users with the 'contributor' user role not being selectable as post author
+* Removed the 'edit_posts' capability requirement to be eligible as post author
+* Enhanced compatibility with the Molongui Post Contributors plugin
+
+= 4.9.2 (2024-06-20) =
+
+* The email field is not required any more for quick-adding guest authors from the edit-post screen
+* Fixed javascript conflict when editing a post using the old/classic WordPress editor
+
+= 4.9.1 (2024-06-17) =
+
+* Fixed missing author bio on author pages
+* Enhanced compatibility with the Jannah theme
+* Updated framework files to version 3.0.3
+
+= 4.9.0 (2024-06-13) =
+
+* Reduced number of queries
+* Redesigned post author selector
+* Refactored some code
+* Improved some messages readability
+
+= 4.8.6 (2024-06-03) =
+
+* Fixed some data sanitization
+* Fixed misleading debug message
+* Updated framework files to version 3.0.2
+
+= 4.8.5 (2024-05-31) =
+
+* Enhanced compatibility with the Avada theme
+* Fixed issue with mailto links in the author box
+
+= 4.8.4 (2024-05-20) =
+
+* Fixed deprecated function returning void
+
+= 4.8.3 (2024-05-20) =
+
+* Fixed quick edit hanging on saving
+* Fixed typo in constant name
+
+= 4.8.2 (2024-05-15) =
+
+* Fixed missing author validation
+
+= 4.8.1 (2024-05-14) =
+
+* Fixed debug messages showing in browser console
+
+= 4.8.0 (2024-05-14) =
+
+* Added option to allow non-privileged users to publish content on behalf of others
+* Added option to disable guest author translations for Polylang
+* Fixed issues with the authors assigned to a post
+* Fixed email icons in the author box not working properly
+* Fixed break line as separator for the author meta not working
+* Fixed some PHP warnings
+* Minor code refactor
+* Updated plugin bootstrap
+* Updated framework files to version 3.0.0
+* Raised min PHP supported version to 5.6.20... come on
+* Added WordPress 6.5 compatibility
 
 = 4.7.10 (2024-02-28) =
 
-* Added hook to allow a nonprivileged user (user account without administrative privileges) to publish content on behalf of another user
+* Added hook to allow non-privileged users (user account without administrative privileges) to publish content on behalf of others
 * Fixed missing JS variables
 * Fixed localized JS variables loaded twice
 * Fixed PHP error caused by wrong function name
@@ -471,3 +548,13 @@ Major code refactor! Please don't update right ahead if you have custom code tie
 
 = 4.6.20 =
 Fixes vulnerability. Please update immediately.
+
+= 4.8.0 =
+Minimum required PHP version raised to 5.6.20
+Clear your cache after updating
+
+= 4.8.3 =
+Pro users: Please update the Pro plugin to the latest version before installing this update to the Base plugin.
+
+= 4.8.4 =
+Pro users: Please update the Pro plugin to the latest version before installing this update to the Base plugin.

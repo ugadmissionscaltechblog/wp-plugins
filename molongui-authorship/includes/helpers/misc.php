@@ -1,4 +1,6 @@
 <?php
+
+use Molongui\Authorship\Common\Utils\Cache;
 defined( 'ABSPATH' ) or exit;
 function authorship_is_feature_enabled( $feature = null )
 {
@@ -75,11 +77,11 @@ function authorship_clear_cache( $key = 'all' )
     {
         foreach ( $known as $key )
         {
-            molongui_cache_clear( $key );
+            Cache::clear( $key );
         }
     }
     if ( !in_array( $key, $known ) ) return;
-    molongui_cache_clear( $key );
+    Cache::clear( $key );
 }
 function authorship_void_filter( $null, $original )
 {

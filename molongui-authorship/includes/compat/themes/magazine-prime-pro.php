@@ -1,6 +1,6 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 defined( 'ABSPATH' ) or exit;
 add_filter( 'authorship/pre_get_user_by', function( $user, $original_user, $field, $value )
 {

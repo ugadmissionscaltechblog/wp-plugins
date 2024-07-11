@@ -4,11 +4,11 @@ add_filter( 'schema_wp_author', function( $author )
 {
     global $post;
     if ( !is_multiauthor_post( $post->ID ) ) return $author;
-    $post_authors = get_post_authors( $post->ID );
+    $post_authors = authorship_get_post_authors( $post->ID );
     $authors = array();
     foreach ( $post_authors as $post_author )
     {
-        $author_class = new \Molongui\Authorship\Includes\Author( $post_author->id, $post_author->type );
+        $author_class = new \Molongui\Authorship\Author( $post_author->id, $post_author->type );
         $url_enable = schema_wp_get_option( 'author_url_enable' );
         $url 		= ( $url_enable == true ) ? esc_url( $author_class->get_url() ) : '';
 
