@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( 'authorship_pro/sc/author_posts/atts', function( $atts, $attributes )
 {
     if ( !empty( $attributes['author'] ) ) return $atts;

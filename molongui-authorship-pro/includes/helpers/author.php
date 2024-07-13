@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_get_author_short_bio( $author_id, $author_type, $author )
 {
     $short_bio = '';

@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( 'authorship/options/display_banners', '__return_false' );
 add_filter( '_authorship/options/post_type/disabled', '__return_false' );
 function authorship_pro_get_enhanced_search_markup()

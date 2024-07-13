@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 remove_filter( 'authorship/validate_options', 'authorship_validate_freemium_options', 10 );
 remove_filter( 'authorship/get_options', 'authorship_validate_saved_options', 10 );
 function authorship_pro_maybe_flush_rules( $options, $old )

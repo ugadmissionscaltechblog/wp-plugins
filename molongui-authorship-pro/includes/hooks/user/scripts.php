@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_edit_user_scripts( $default )
 {
     return apply_filters( 'authorship_pro/edit_user/script', MOLONGUI_AUTHORSHIP_PRO_FOLDER . '/assets/js/edit-user.1f12.min.js', $default );

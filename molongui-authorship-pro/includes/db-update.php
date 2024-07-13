@@ -1,7 +1,8 @@
 <?php
 
-namespace Molongui\Authorship\Pro\Includes;
-\defined( 'ABSPATH' ) or exit;
+namespace Molongui\Authorship\Pro;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 class DB_Update
 {
 	public function db_update_6()

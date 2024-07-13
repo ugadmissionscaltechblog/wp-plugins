@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: molongui-authorship-pro 1.5.11\n"
+"Project-Id-Version: molongui-authorship-pro 1.7.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 18:24+0200\n"
+"POT-Creation-Date: 2024-06-24 10:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,115 +18,372 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: includes/activator.php:211
-msgid "Contributors"
-msgstr ""
-
-#: includes/activator.php:212
+#: common/modules/license.php:476 includes/update/license.php:467
 msgid ""
-"Many people have contributed to this website and we are thankful to them all "
-"for their hard work."
+"Your license key could not be deactivated. Use the \"Deactivate\" button to "
+"manually deactivate it before activating a new one. If all else fails, go to "
+"Plugins, then deactivate and reactivate this plugin, then go to the Settings "
+"for this plugin and enter your license information again to activate your "
+"key. Also check the My Account dashboard to see if the API Key for this site "
+"was still active before the error message was displayed."
 msgstr ""
 
-#: includes/compat/plugins/yoast.php:43
-msgid "Yoast SEO Settings"
+#: common/modules/license.php:503 includes/update/license.php:494
+#, php-format
+msgid ""
+"<b>Warning!</b> You're blocking external requests which means you won't be "
+"able to get %s updates. Please add %s to %s."
 msgstr ""
 
-#: includes/extend-wp-rest-api.php:283
-msgid "Failed to update post_author field."
+#: common/modules/license.php:582
+msgid "Plugin Activation Required"
 msgstr ""
 
-#: includes/extend-wp-rest-api.php:294
-msgid "Molongui authors"
+#: common/modules/license.php:590
+#, php-format
+msgid "To continue using all the features of %s, please activate your license."
 msgstr ""
 
-#: includes/helpers/options.php:37
-msgid "&mdash; No role for this site &mdash;"
+#: common/modules/license.php:591
+msgid "Why is this happening?"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:34
-#: includes/hooks/common/options/license.php:65
+#: common/modules/license.php:592
+msgid ""
+"A valid license key is necessary for the plugin to function, receive "
+"updates, and get support. Your current license may have expired or was not "
+"entered."
+msgstr ""
+
+#: common/modules/license.php:593 common/modules/license.php:611
+msgid "What can you do?"
+msgstr ""
+
+#: common/modules/license.php:596
+#, php-format
+msgid ""
+"<strong>Enter your license key</strong> — Go to the plugin %1$ssettings page"
+"%2$s."
+msgstr ""
+
+#: common/modules/license.php:598
+#, php-format
+msgid ""
+"<strong>Purchase a license</strong> — If you don't have a license yet, visit "
+"our %1$spricing page%2$s."
+msgstr ""
+
+#: common/modules/license.php:599
+msgid ""
+"<strong>Need help?</strong> — If you're unsure about your license status or "
+"need assistance, please contact our support team."
+msgstr ""
+
+#: common/modules/license.php:602 common/modules/settings.php:509
+#: includes/hooks/common/options/license.php:206
+msgid "Activate License"
+msgstr ""
+
+#: common/modules/license.php:608
+#, php-format
+msgid ""
+"The %s is currently inactive because it requires a valid license key to "
+"function."
+msgstr ""
+
+#: common/modules/license.php:609
+msgid "Why are you seeing this?"
+msgstr ""
+
+#: common/modules/license.php:610
+msgid ""
+"Only an administrator can enter the license key needed for the plugin to "
+"operate fully. The license may be expired or hasn't been activated yet."
+msgstr ""
+
+#: common/modules/license.php:614
+#, php-format
+msgid ""
+"<strong>Contact your site administrator</strong> to ensure the license is "
+"activated so you can enjoy the full functionalities of %s."
+msgstr ""
+
+#: common/modules/license.php:616
+#, php-format
+msgid ""
+"If you need further information or assistance, please direct your site "
+"administrator to %1$scontact support%1$s."
+msgstr ""
+
+#: common/modules/license.php:662
+msgid "License Renewal Required"
+msgstr ""
+
+#: common/modules/license.php:664
+#, php-format
+msgid "Your %s License Has Expired."
+msgstr ""
+
+#: common/modules/license.php:666
+#, php-format
+msgid ""
+"Your license expired on %s. Renew now to continue receiving new updates and "
+"premium support. Stay protected, secure, and up to date."
+msgstr ""
+
+#: common/modules/license.php:667
+msgid "Benefits of Renewing:"
+msgstr ""
+
+#: common/modules/license.php:669
+msgid ""
+"<strong>Continuous Updates</strong>: Get all the latest features, "
+"improvements, and security updates."
+msgstr ""
+
+#: common/modules/license.php:670
+msgid ""
+"<strong>Premium Support</strong>: Access our expert support team to assist "
+"you with any issues or questions."
+msgstr ""
+
+#: common/modules/license.php:671
+msgid ""
+"<strong>Keep Your Site Running Smoothly</strong>: Ensure compatibility with "
+"the latest WordPress releases."
+msgstr ""
+
+#: common/modules/license.php:673
+msgid "Renew Your License Now to Stay Covered"
+msgstr ""
+
+#: common/modules/license.php:674
+msgid ""
+"Don't let your site fall behind. Keep it running smoothly by renewing your "
+"license today."
+msgstr ""
+
+#: common/modules/license.php:675
+msgid "Renew License"
+msgstr ""
+
+#: common/modules/license.php:831 includes/update/license.php:793
+msgid "Plugin activated."
+msgstr ""
+
+#: common/modules/license.php:847 common/modules/license.php:1032
+#: includes/update/license.php:808 includes/update/license.php:990
+msgid ""
+"Connection failed to the Molongui Licensing Server. Try again later. There "
+"may be a problem on your server preventing outgoing requests, or the store "
+"is blocking your request to activate the plugin."
+msgstr ""
+
+#: common/modules/license.php:876 includes/update/license.php:835
+msgid ""
+"License activation could not be completed due to an unknown error possibly "
+"on the Molongui server. The activation results were empty."
+msgstr ""
+
+#: common/modules/license.php:905 includes/update/license.php:864
+msgid ""
+"Security token check failed. Please make sure you're activating the license "
+"from the plugin settings page. If you already are, please refresh the page."
+msgstr ""
+
+#: common/modules/license.php:913 includes/update/license.php:872
+msgid ""
+"It is like the provided license key is already active on this site. Please "
+"log in to your My Account and check your key state."
+msgstr ""
+
+#: common/modules/license.php:1011 includes/update/license.php:970
+msgid "License activated."
+msgstr ""
+
+#: common/modules/license.php:1092 includes/update/license.php:1049
+msgid ""
+"License could not be deactivated. Use the Deactivate button to manually "
+"deactivate your key before activating a new one. If all else fails, go to "
+"Plugins, then deactivate and reactivate this plugin, then go to the settings "
+"page for this plugin and enter your License information again to activate "
+"it. Also check the My Account dashboard to see if your key was still active "
+"for this site before the error message was displayed."
+msgstr ""
+
+#: common/modules/license.php:1117 includes/update/license.php:1074
+msgid ""
+"Security token check failed. Please make sure you're deactivating the "
+"license from the plugin settings page. If you already are, please refresh "
+"the page."
+msgstr ""
+
+#: common/modules/license.php:1125 includes/update/license.php:1082
+msgid ""
+"It is like there is no active license key to deactivate. Please log in to My "
+"Account dashboard to see if your key is still active for this site."
+msgstr ""
+
+#: common/modules/license.php:1162 includes/update/license.php:1118
+msgid "License key deactivated."
+msgstr ""
+
+#: common/modules/license.php:1190 includes/update/license.php:1145
+msgid ""
+"License deactivation could not be completed due to an unknown error possibly "
+"on the Molongui server. The deactivation results were empty."
+msgstr ""
+
+#: common/modules/license/key.php:34 common/modules/license/key.php:68
+#: includes/update/key.php:36 includes/update/key.php:70
+msgid "The license key is missing from the deactivation request."
+msgstr ""
+
+#: common/modules/license/update.php:429 includes/update/update.php:426
+msgid "Auto-updates unavailable"
+msgstr ""
+
+#: common/modules/license/update.php:440 includes/update/update.php:437
+msgid "Auto-updates enabled"
+msgstr ""
+
+#: common/modules/license/update.php:444 includes/update/update.php:441
+msgid "Auto-updates disabled"
+msgstr ""
+
+#: common/modules/license/update.php:452 includes/update/update.php:449
+msgid "Disable auto-updates"
+msgstr ""
+
+#: common/modules/license/update.php:458 includes/update/update.php:455
+msgid "Enable auto-updates"
+msgstr ""
+
+#: common/modules/license/update.php:516 includes/update/update.php:511
+#, php-format
+msgid ""
+"%sError%s: Checking for %s updates failed. It might just be a temporary "
+"issue. If the issue persists for days, please open a support ticket %shere%s."
+msgstr ""
+
+#: common/modules/settings.php:63 includes/hooks/common/options/tools.php:31
+msgid "Restore plugin configuration from a previous exported backup file"
+msgstr ""
+
+#: common/modules/settings.php:69 includes/hooks/common/options/tools.php:37
+msgid "Restore"
+msgstr ""
+
+#: common/modules/settings.php:70 includes/hooks/common/options/tools.php:38
+msgid "Restore Plugin Configuration"
+msgstr ""
+
+#: common/modules/settings.php:84 includes/hooks/common/options/tools.php:52
+msgid "Reset plugin settings to their defaults"
+msgstr ""
+
+#: common/modules/settings.php:90 includes/hooks/common/options/tools.php:58
+msgid "Reset"
+msgstr ""
+
+#: common/modules/settings.php:91 includes/hooks/common/options/tools.php:59
+msgid "Reset Plugin Configuration"
+msgstr ""
+
+#: common/modules/settings.php:336 common/modules/settings.php:367
+#: includes/hooks/common/options/license.php:33
+#: includes/hooks/common/options/license.php:64
 msgid "License"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:80
+#: common/modules/settings.php:382 includes/hooks/common/options/license.php:79
 msgid ""
 "Your license is active. You might want to deactivate your license key on "
 "this site to use it in different installation. Should you want to re-"
 "activate the plugin here, you will need to input your credentials again."
 msgstr ""
 
-#: includes/hooks/common/options/license.php:95
+#: common/modules/settings.php:397 includes/hooks/common/options/license.php:94
 #, php-format
 msgid ""
 "Please provide your license key and PIN to activate the plugin. You can find "
 "them on your %sMy Account%s"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:107
+#: common/modules/settings.php:409
+#: includes/hooks/common/options/license.php:106
 msgid "Type here your license key"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:114
+#: common/modules/settings.php:416
+#: includes/hooks/common/options/license.php:113
 #, php-format
 msgid ""
 "%sThe license key you got by e-mail upon purchase.%s %sYou can also find it "
 "in your My Account.%s"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:122
+#: common/modules/settings.php:424
+#: includes/hooks/common/options/license.php:121
 msgid "License KEY"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:131
+#: common/modules/settings.php:433
+#: includes/hooks/common/options/license.php:130
 msgid "Type here your license PIN"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:138
+#: common/modules/settings.php:440
+#: includes/hooks/common/options/license.php:137
 #, php-format
 msgid ""
 "%sThe PIN you got by e-mail upon purchase.%s %sYou can also find it in your "
 "My Account.%s"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:146
+#: common/modules/settings.php:448
+#: includes/hooks/common/options/license.php:145
 msgid "License PIN"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:158
+#: common/modules/settings.php:460
+#: includes/hooks/common/options/license.php:157
 msgid ""
 "Deactivating the license will make the plugin to stop working on this site."
 msgstr ""
 
-#: includes/hooks/common/options/license.php:166
+#: common/modules/settings.php:468
+#: includes/hooks/common/options/license.php:165
 msgid "Deactivate"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:167
+#: common/modules/settings.php:469
+#: includes/hooks/common/options/license.php:166
 msgid "Deactivate License"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:186
+#: common/modules/settings.php:488
+#: includes/hooks/common/options/license.php:185
 msgid "Click here to get some help"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:187
+#: common/modules/settings.php:489
+#: includes/hooks/common/options/license.php:186
 msgid "Can't activate your license? Get help"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:206
+#: common/modules/settings.php:508
+#: includes/hooks/common/options/license.php:205
 msgid "Activate"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:207
-msgid "Activate License"
-msgstr ""
-
-#: includes/hooks/common/options/license.php:220
+#: common/modules/settings.php:522
+#: includes/hooks/common/options/license.php:219
 msgid "Retention"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:234
+#: common/modules/settings.php:536
+#: includes/hooks/common/options/license.php:233
 #, php-format
 msgid ""
 "%sWhether to deactivate the license key upon plugin deactivation.%s "
@@ -134,56 +391,68 @@ msgid ""
 "the plugin.%s"
 msgstr ""
 
-#: includes/hooks/common/options/license.php:235
+#: common/modules/settings.php:537
+#: includes/hooks/common/options/license.php:234
 msgid "Keep plugin license active upon plugin deactivation."
 msgstr ""
 
-#: includes/hooks/common/options/tools.php:32
-msgid "Restore plugin configuration from a previous exported backup file"
+#: includes/activator.php:227
+msgid "Contributors"
 msgstr ""
 
-#: includes/hooks/common/options/tools.php:38
-msgid "Restore"
+#: includes/activator.php:228
+msgid ""
+"Many people have contributed to this website and we are thankful to them all "
+"for their hard work."
 msgstr ""
 
-#: includes/hooks/common/options/tools.php:39
-msgid "Restore Plugin Configuration"
+#: includes/compat/plugins/wp-graphql.php:33
+msgid "Post author"
 msgstr ""
 
-#: includes/hooks/common/options/tools.php:53
-msgid "Reset plugin settings to their defaults"
+#: includes/compat/plugins/wp-graphql.php:61
+msgid "Returns the post authors"
 msgstr ""
 
-#: includes/hooks/common/options/tools.php:59
-msgid "Reset"
+#: includes/compat/plugins/yoast.php:42
+msgid "Yoast SEO Settings"
 msgstr ""
 
-#: includes/hooks/common/options/tools.php:60
-msgid "Reset Plugin Configuration"
+#: includes/extend-wp-rest-api.php:280
+msgid "Failed to update post_author field."
 msgstr ""
 
-#: includes/hooks/guest/list/bulk-edit.php:72
-#: includes/hooks/post/bulk-edit.php:83
+#: includes/extend-wp-rest-api.php:291
+msgid "Molongui authors"
+msgstr ""
+
+#: includes/helpers/options.php:36
+msgid "&mdash; No role for this site &mdash;"
+msgstr ""
+
+#: includes/hooks/guest/list/bulk-edit.php:73
+#: includes/hooks/post/bulk-edit.php:87 includes/post.php:116
 msgid "Author Box"
 msgstr ""
 
-#: includes/hooks/guest/list/bulk-edit.php:74
-#: includes/hooks/post/bulk-edit.php:85 includes/hooks/post/bulk-edit.php:187
+#: includes/hooks/guest/list/bulk-edit.php:75
+#: includes/hooks/post/bulk-edit.php:89 includes/hooks/post/bulk-edit.php:192
+#: includes/post.php:118 includes/post.php:215
 msgid "&mdash; No Change &mdash;"
 msgstr ""
 
-#: includes/hooks/guest/list/bulk-edit.php:75
-#: includes/hooks/post/bulk-edit.php:86
+#: includes/hooks/guest/list/bulk-edit.php:76
+#: includes/hooks/post/bulk-edit.php:90 includes/post.php:119
 msgid "Default"
 msgstr ""
 
-#: includes/hooks/guest/list/bulk-edit.php:76
-#: includes/hooks/post/bulk-edit.php:87
+#: includes/hooks/guest/list/bulk-edit.php:77
+#: includes/hooks/post/bulk-edit.php:91 includes/post.php:120
 msgid "Show"
 msgstr ""
 
-#: includes/hooks/guest/list/bulk-edit.php:77
-#: includes/hooks/post/bulk-edit.php:88
+#: includes/hooks/guest/list/bulk-edit.php:78
+#: includes/hooks/post/bulk-edit.php:92 includes/post.php:121
 msgid "Hide"
 msgstr ""
 
@@ -204,99 +473,99 @@ msgstr ""
 msgid "No guest to convert has been supplied!"
 msgstr ""
 
-#: includes/hooks/guest/pages/admin-bar.php:53
+#: includes/hooks/guest/pages/admin-bar.php:52
 msgid "Edit Guest"
 msgstr ""
 
-#: includes/hooks/guest/scripts.php:59
+#: includes/hooks/guest/scripts.php:58
 msgid "Guest to User Conversion"
 msgstr ""
 
-#: includes/hooks/guest/scripts.php:60
+#: includes/hooks/guest/scripts.php:59
 msgid ""
 "This guest author will be removed and a new WordPress user with role "
 "'author' created. Do you want to continue?"
 msgstr ""
 
-#: includes/hooks/guest/scripts.php:61 includes/hooks/options/scripts.php:68
-#: includes/hooks/options/scripts.php:81 includes/hooks/options/scripts.php:97
-#: includes/hooks/options/scripts.php:110 includes/hooks/user/scripts.php:61
+#: includes/hooks/guest/scripts.php:60 includes/hooks/options/scripts.php:67
+#: includes/hooks/options/scripts.php:80 includes/hooks/options/scripts.php:96
+#: includes/hooks/options/scripts.php:109 includes/hooks/user/scripts.php:60
 msgid "Cancel"
 msgstr ""
 
-#: includes/hooks/guest/scripts.php:62 includes/hooks/options/scripts.php:69
-#: includes/hooks/options/scripts.php:82 includes/hooks/options/scripts.php:98
-#: includes/hooks/options/scripts.php:111 includes/hooks/user/scripts.php:62
+#: includes/hooks/guest/scripts.php:61 includes/hooks/options/scripts.php:68
+#: includes/hooks/options/scripts.php:81 includes/hooks/options/scripts.php:97
+#: includes/hooks/options/scripts.php:110 includes/hooks/user/scripts.php:61
 msgid "OK"
 msgstr ""
 
-#: includes/hooks/guest/scripts.php:63
+#: includes/hooks/guest/scripts.php:62
 msgid "Provide a password for the new user:"
 msgstr ""
 
-#: includes/hooks/guest/scripts.php:64 includes/hooks/user/scripts.php:63
+#: includes/hooks/guest/scripts.php:63 includes/hooks/user/scripts.php:62
 msgid "Converting..."
 msgstr ""
 
-#: includes/hooks/options/footer.php:32
+#: includes/hooks/options/footer.php:31
 msgid "Pro"
 msgstr ""
 
-#: includes/hooks/options/footer.php:33 includes/hooks/options/footer.php:43
+#: includes/hooks/options/footer.php:32 includes/hooks/options/footer.php:42
 msgid "See changelog"
 msgstr ""
 
-#: includes/hooks/options/footer.php:42
+#: includes/hooks/options/footer.php:41
 msgid "Free"
 msgstr ""
 
-#: includes/hooks/options/footer.php:52
+#: includes/hooks/options/footer.php:51
 msgid "Docs"
 msgstr ""
 
-#: includes/hooks/options/footer.php:53
+#: includes/hooks/options/footer.php:52
 msgid "Read the plugin documentation"
 msgstr ""
 
-#: includes/hooks/options/footer.php:62
+#: includes/hooks/options/footer.php:61
 msgid "Help"
 msgstr ""
 
-#: includes/hooks/options/footer.php:63
+#: includes/hooks/options/footer.php:62
 msgid "Click to get help"
 msgstr ""
 
-#: includes/hooks/options/footer.php:72
+#: includes/hooks/options/footer.php:71
 msgid "Chat"
 msgstr ""
 
-#: includes/hooks/options/footer.php:73
+#: includes/hooks/options/footer.php:72
 msgid "How can we help?"
 msgstr ""
 
-#: includes/hooks/options/license.php:38
+#: includes/hooks/options/license.php:37
 msgid "TIP"
 msgstr ""
 
-#: includes/hooks/options/license.php:39
+#: includes/hooks/options/license.php:38
 msgid "You need to re-activate your license using your new key."
 msgstr ""
 
-#: includes/hooks/options/license.php:40
+#: includes/hooks/options/license.php:39
 msgid ""
 "We have e-mailed you your new key. But you can find it also on your My "
 "Account"
 msgstr ""
 
-#: includes/hooks/options/license.php:44
+#: includes/hooks/options/license.php:43
 msgid "What's my new key?"
 msgstr ""
 
-#: includes/hooks/options/license.php:45
+#: includes/hooks/options/license.php:44
 msgid "Click to find out what your new key is"
 msgstr ""
 
-#: includes/hooks/options/markup.php:57
+#: includes/hooks/options/markup.php:58
 #, php-format
 msgid ""
 "%sImprove visitors user experience allowing them to search content by author "
@@ -305,13 +574,13 @@ msgid ""
 "by that author.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:58
+#: includes/hooks/options/markup.php:59
 msgid ""
 "Enhance default search functionality allowing visitors to search content by "
 "author name"
 msgstr ""
 
-#: includes/hooks/options/markup.php:89
+#: includes/hooks/options/markup.php:90
 #, php-format
 msgid ""
 "%sGive more visibility to your guests including their archive page on search "
@@ -320,22 +589,22 @@ msgid ""
 "to guest authors. Doesn't work with registered users.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:90
+#: includes/hooks/options/markup.php:91
 msgid ""
 "Include guest author pages in search results if searched string matches the "
 "guest author name"
 msgstr ""
 
-#: includes/hooks/options/markup.php:121
+#: includes/hooks/options/markup.php:122
 #, php-format
 msgid "Make Guest Author custom post type available at %s%s%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:156
+#: includes/hooks/options/markup.php:157
 msgid "Hide other authors' posts for these user roles:"
 msgstr ""
 
-#: includes/hooks/options/markup.php:159
+#: includes/hooks/options/markup.php:160
 #, php-format
 msgid ""
 "%sBy default, WordPress users in the admin area can see all the Posts on the "
@@ -346,61 +615,61 @@ msgid ""
 "as possible.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:197
+#: includes/hooks/options/markup.php:198
 msgid "Add an 'authors' field to the post object returned by the REST API."
 msgstr ""
 
-#: includes/hooks/options/markup.php:233
+#: includes/hooks/options/markup.php:234
 msgid ""
 "Select which user roles the plugin will take into account to populate "
 "authors dropdown selector, authors list and other stuff. Custom user roles "
 "are supported."
 msgstr ""
 
-#: includes/hooks/options/markup.php:269
+#: includes/hooks/options/markup.php:270
 #, php-format
 msgid ""
 "%sSelect where in the admin menu to add a new item to manage guest authors."
 "%s %sIn order to this setting to take effect, a page reload is required.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:270
+#: includes/hooks/options/markup.php:271
 #, php-format
 msgid "Add %sGuest Authors%s link as %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:276
+#: includes/hooks/options/markup.php:277
 msgid "a top level menu item"
 msgstr ""
 
-#: includes/hooks/options/markup.php:281
+#: includes/hooks/options/markup.php:282
 #, php-format
 msgid "a sub-menu item to the %sUsers%s menu"
 msgstr ""
 
-#: includes/hooks/options/markup.php:286
+#: includes/hooks/options/markup.php:287
 #, php-format
 msgid "a sub-menu item to the %sPosts%s menu"
 msgstr ""
 
-#: includes/hooks/options/markup.php:291
+#: includes/hooks/options/markup.php:292
 #, php-format
 msgid "a sub-menu item to the %sPages%s menu"
 msgstr ""
 
-#: includes/hooks/options/markup.php:331
+#: includes/hooks/options/markup.php:332
 #, php-format
 msgid "%sHide%s the author box on these %spost categories%s:"
 msgstr ""
 
-#: includes/hooks/options/markup.php:334
+#: includes/hooks/options/markup.php:335
 #, php-format
 msgid ""
 "%sThis setting might be overridden by post configuration, so exceptions can "
 "be handled on a per post basis.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:376
+#: includes/hooks/options/markup.php:377
 #, php-format
 msgid ""
 "%sOther plugins may also add their stuff to post content, so the author box "
@@ -411,94 +680,94 @@ msgid ""
 "issues with your content.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:377
+#: includes/hooks/options/markup.php:378
 #, php-format
 msgid ""
 "Add the author box at a priority of %s %s%sChange only if author box is not "
 "displayed where expected%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:412
+#: includes/hooks/options/markup.php:413
 msgid "Encode e-mail addresses to prevent them getting spammed."
 msgstr ""
 
-#: includes/hooks/options/markup.php:429
+#: includes/hooks/options/markup.php:430
 msgid ""
 "Encode phone numbers to prevent them getting annoying scam calls and texts."
 msgstr ""
 
-#: includes/hooks/options/markup.php:465
+#: includes/hooks/options/markup.php:466
 #, php-format
 msgid "Show %s bio when available"
 msgstr ""
 
-#: includes/hooks/options/markup.php:471
+#: includes/hooks/options/markup.php:472
 msgid "short"
 msgstr ""
 
-#: includes/hooks/options/markup.php:476
+#: includes/hooks/options/markup.php:477
 msgid "full"
 msgstr ""
 
-#: includes/hooks/options/markup.php:517
+#: includes/hooks/options/markup.php:518
 #, php-format
 msgid "Display %s entries as related posts."
 msgstr ""
 
-#: includes/hooks/options/markup.php:533
+#: includes/hooks/options/markup.php:534
 #, php-format
 msgid "%sThe criteria to sort related entries.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:534
+#: includes/hooks/options/markup.php:535
 #, php-format
 msgid "Sort related entries by %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:540
+#: includes/hooks/options/markup.php:541
 msgid "title"
 msgstr ""
 
-#: includes/hooks/options/markup.php:545
+#: includes/hooks/options/markup.php:546
 msgid "date on which the post was written"
 msgstr ""
 
-#: includes/hooks/options/markup.php:550
+#: includes/hooks/options/markup.php:551
 msgid "date on which the post was last modified"
 msgstr ""
 
-#: includes/hooks/options/markup.php:555
+#: includes/hooks/options/markup.php:556
 msgid "comment count"
 msgstr ""
 
-#: includes/hooks/options/markup.php:560
+#: includes/hooks/options/markup.php:561
 msgid "random order"
-msgstr ""
-
-#: includes/hooks/options/markup.php:578
-#, php-format
-msgid "%sThe order by which to list related entries.%s"
 msgstr ""
 
 #: includes/hooks/options/markup.php:579
 #, php-format
+msgid "%sThe order by which to list related entries.%s"
+msgstr ""
+
+#: includes/hooks/options/markup.php:580
+#, php-format
 msgid "Sort related entries in %s order"
 msgstr ""
 
-#: includes/hooks/options/markup.php:585
+#: includes/hooks/options/markup.php:586
 msgid "ascending"
 msgstr ""
 
-#: includes/hooks/options/markup.php:590
+#: includes/hooks/options/markup.php:591
 msgid "descending"
 msgstr ""
 
-#: includes/hooks/options/markup.php:612
+#: includes/hooks/options/markup.php:613
 #, php-format
 msgid "Post types to retrieve %sas related entries%s:"
 msgstr ""
 
-#: includes/hooks/options/markup.php:613
+#: includes/hooks/options/markup.php:614
 #, php-format
 msgid ""
 "%sPost types listed as related items.%s %sOnly those post types where plugin "
@@ -506,11 +775,11 @@ msgid ""
 "they are not listed here, save settings and refresh this page.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:643
+#: includes/hooks/options/markup.php:644
 msgid "Written by "
 msgstr ""
 
-#: includes/hooks/options/markup.php:651
+#: includes/hooks/options/markup.php:652
 #, php-format
 msgid ""
 "%sDoesn't remove nor replace any modifier added by your theme, like the "
@@ -518,16 +787,16 @@ msgid ""
 "styles and custom elements.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:654
+#: includes/hooks/options/markup.php:655
 #, php-format
 msgid "At the very beginning of each byline, prepend this string: %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:665
+#: includes/hooks/options/markup.php:666
 msgid " et al."
 msgstr ""
 
-#: includes/hooks/options/markup.php:673
+#: includes/hooks/options/markup.php:674
 #, php-format
 msgid ""
 "%sDoesn't remove nor replace any modifier added by your theme or any other "
@@ -535,12 +804,12 @@ msgid ""
 "custom elements.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:676
+#: includes/hooks/options/markup.php:677
 #, php-format
 msgid "At the end of each byline, append this string: %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:708
+#: includes/hooks/options/markup.php:709
 #, php-format
 msgid ""
 "%sGuest Archives are pages listing all posts from a given guest author. This "
@@ -549,28 +818,28 @@ msgid ""
 "these pages.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:709
+#: includes/hooks/options/markup.php:710
 msgid "Enable Guest Author Archives."
 msgstr ""
 
-#: includes/hooks/options/markup.php:725 includes/hooks/options/markup.php:742
-#: includes/hooks/options/markup.php:921 includes/hooks/options/markup.php:938
+#: includes/hooks/options/markup.php:726 includes/hooks/options/markup.php:743
+#: includes/hooks/options/markup.php:922 includes/hooks/options/markup.php:939
 #, php-format
 msgid "By default, only %sposts%s are listed."
 msgstr ""
 
-#: includes/hooks/options/markup.php:726
+#: includes/hooks/options/markup.php:727
 #, php-format
 msgid "Include %spages%s authored by the guest author in the archive."
 msgstr ""
 
-#: includes/hooks/options/markup.php:743 includes/hooks/options/markup.php:939
+#: includes/hooks/options/markup.php:744 includes/hooks/options/markup.php:940
 msgid ""
 "Include custom post types where plugin functionality is enabled in the "
 "archive."
 msgstr ""
 
-#: includes/hooks/options/markup.php:762
+#: includes/hooks/options/markup.php:763
 #, php-format
 msgid ""
 "%sEasily change permalink structure for guest author archives pages.%s %sYou "
@@ -578,29 +847,29 @@ msgid ""
 "on your site.%s%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:765
+#: includes/hooks/options/markup.php:766
 #, php-format
 msgid "Add a custom slug to guest author page URL: %s%s%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:776 includes/hooks/options/markup.php:777
-#: includes/hooks/options/markup.php:950 includes/hooks/options/markup.php:951
+#: includes/hooks/options/markup.php:777 includes/hooks/options/markup.php:778
+#: includes/hooks/options/markup.php:951 includes/hooks/options/markup.php:952
 msgid "author"
 msgstr ""
 
-#: includes/hooks/options/markup.php:784 includes/hooks/options/markup.php:958
+#: includes/hooks/options/markup.php:785 includes/hooks/options/markup.php:959
 #, php-format
 msgid ""
 "%sBy default, author archive pages are accessible at: %s%s %sYou can easily "
 "change that %sauthor%s part with any other custom string of your choice.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:787
+#: includes/hooks/options/markup.php:788
 #, php-format
 msgid "Make guest author pages accessible at: %s%s%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:806 includes/hooks/options/markup.php:997
+#: includes/hooks/options/markup.php:807 includes/hooks/options/markup.php:998
 #, php-format
 msgid ""
 "%sWordPress takes the %sauthor.php%s, %sarchive.php%s or %sindex.php%s "
@@ -608,50 +877,50 @@ msgid ""
 "alternative template to use instead.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:809 includes/hooks/options/markup.php:1000
+#: includes/hooks/options/markup.php:810 includes/hooks/options/markup.php:1001
 #, php-format
 msgid "Force author pages to use this template: %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:827
+#: includes/hooks/options/markup.php:828
 #, php-format
 msgid ""
 "%sThis option adds a %snoindex%s robots tag to your guest author pages.%s "
 "%sIf you have a SEO plugin, you might want to use it for this instead.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:828
+#: includes/hooks/options/markup.php:829
 msgid "Prevent guest author pages to be indexed by search engines"
 msgstr ""
 
-#: includes/hooks/options/markup.php:840 includes/hooks/options/markup.php:1031
+#: includes/hooks/options/markup.php:841 includes/hooks/options/markup.php:1032
 msgid "Articles by"
 msgstr ""
 
-#: includes/hooks/options/markup.php:848 includes/hooks/options/markup.php:1061
+#: includes/hooks/options/markup.php:849 includes/hooks/options/markup.php:1062
 #, php-format
 msgid ""
 "%sThis might not work for all themes or if you use a theme builder.%s "
 "%sDefaults to an empty string.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:851 includes/hooks/options/markup.php:1042
+#: includes/hooks/options/markup.php:852 includes/hooks/options/markup.php:1043
 #, php-format
 msgid "At the very beginning of the page title, prepend this string: %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:870 includes/hooks/options/markup.php:1039
+#: includes/hooks/options/markup.php:871 includes/hooks/options/markup.php:1040
 #, php-format
 msgid ""
 "%sThis might not work for all themes.%s %sDefaults to an empty string.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:873 includes/hooks/options/markup.php:1064
+#: includes/hooks/options/markup.php:874 includes/hooks/options/markup.php:1065
 #, php-format
 msgid "At the end of the page title, append this string: %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:904
+#: includes/hooks/options/markup.php:905
 #, php-format
 msgid ""
 "%sUser Archives are pages listing all posts from a given user.%s %sIf "
@@ -660,21 +929,21 @@ msgid ""
 "user archives to prevent content duplicity or for security reasons.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:905
+#: includes/hooks/options/markup.php:906
 msgid "Enable User Archives."
 msgstr ""
 
-#: includes/hooks/options/markup.php:922
+#: includes/hooks/options/markup.php:923
 #, php-format
 msgid "Include %spages%s authored by the user in the archive."
 msgstr ""
 
-#: includes/hooks/options/markup.php:961
+#: includes/hooks/options/markup.php:962
 #, php-format
 msgid "Make author pages accessible at: %s%s%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:977
+#: includes/hooks/options/markup.php:978
 #, php-format
 msgid ""
 "%sThis allows you to control author permalinks by using the user "
@@ -684,194 +953,194 @@ msgid ""
 "to improve the security of your site.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:978
+#: includes/hooks/options/markup.php:979
 msgid "Use author display name instead of username in author permalinks."
 msgstr ""
 
-#: includes/hooks/options/markup.php:1018
+#: includes/hooks/options/markup.php:1019
 #, php-format
 msgid ""
 "%sThis option adds a %snoindex%s robots tag to your user pages.%s %sIf you "
 "have a SEO plugin, you might want to use it for this instead.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1019
+#: includes/hooks/options/markup.php:1020
 msgid "Prevent author pages to be indexed by search engines"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1081
+#: includes/hooks/options/markup.php:1082
 #, php-format
 msgid ""
 "Redirect visitors to the %s page if they try to access to an author archive "
 "page."
 msgstr ""
 
-#: includes/hooks/options/markup.php:1099
+#: includes/hooks/options/markup.php:1100
 #, php-format
 msgid "Upon redirection let the web server return a status code of %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1105
+#: includes/hooks/options/markup.php:1106
 msgid "301 - Moved Permanently"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1110
+#: includes/hooks/options/markup.php:1111
 msgid "307 - Temporary Redirect"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1115
+#: includes/hooks/options/markup.php:1116
 msgid "308 - Permanent Redirect"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1120
+#: includes/hooks/options/markup.php:1121
 msgid "403 - Forbidden"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1125
+#: includes/hooks/options/markup.php:1126
 msgid "404 - Not Found"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1162
+#: includes/hooks/options/markup.php:1163
 #, php-format
 msgid "On co-authored posts add %s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1168
+#: includes/hooks/options/markup.php:1169
 msgid "as many meta tag as authors the post has"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1173
+#: includes/hooks/options/markup.php:1174
 msgid "one meta tag containing all authors"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1178
+#: includes/hooks/options/markup.php:1179
 msgid "one meta tag containing main author only"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1211
-#: includes/hooks/options/markup.php:1288
+#: includes/hooks/options/markup.php:1212
+#: includes/hooks/options/markup.php:1289
 #, php-format
 msgid ""
 "%sSelecting a value inline with the structure of your page might improve SEO."
 "%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1212
+#: includes/hooks/options/markup.php:1213
 #, php-format
 msgid "Use %s tag for %sauthor name%s shown within the author box"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1218
-#: includes/hooks/options/markup.php:1295
+#: includes/hooks/options/markup.php:1219
+#: includes/hooks/options/markup.php:1296
 msgid "h1"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1223
-#: includes/hooks/options/markup.php:1300
+#: includes/hooks/options/markup.php:1224
+#: includes/hooks/options/markup.php:1301
 msgid "h2"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1228
-#: includes/hooks/options/markup.php:1305
+#: includes/hooks/options/markup.php:1229
+#: includes/hooks/options/markup.php:1306
 msgid "h3"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1233
-#: includes/hooks/options/markup.php:1310
+#: includes/hooks/options/markup.php:1234
+#: includes/hooks/options/markup.php:1311
 msgid "h4"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1238
-#: includes/hooks/options/markup.php:1315
+#: includes/hooks/options/markup.php:1239
+#: includes/hooks/options/markup.php:1316
 msgid "h5"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1243
-#: includes/hooks/options/markup.php:1320
+#: includes/hooks/options/markup.php:1244
+#: includes/hooks/options/markup.php:1321
 msgid "h6"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1248
-#: includes/hooks/options/markup.php:1325
+#: includes/hooks/options/markup.php:1249
+#: includes/hooks/options/markup.php:1326
 msgid "div"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1253
-#: includes/hooks/options/markup.php:1330
+#: includes/hooks/options/markup.php:1254
+#: includes/hooks/options/markup.php:1331
 msgid "p"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1289
+#: includes/hooks/options/markup.php:1290
 #, php-format
 msgid "Use %s tag for the %sheadline%s shown above the author box"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1360
+#: includes/hooks/options/markup.php:1361
 msgid "Export posts authorship to have a backup"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1366
-#: includes/hooks/options/markup.php:1449
+#: includes/hooks/options/markup.php:1367
+#: includes/hooks/options/markup.php:1450
 msgid "Export"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1367
+#: includes/hooks/options/markup.php:1368
 msgid "Export posts authorship"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1381
+#: includes/hooks/options/markup.php:1382
 msgid "Import posts authorship from a previous exported backup file"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1387
-#: includes/hooks/options/markup.php:1470
+#: includes/hooks/options/markup.php:1388
+#: includes/hooks/options/markup.php:1471
 msgid "Import"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1388
+#: includes/hooks/options/markup.php:1389
 msgid "Import posts authorship"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1404
+#: includes/hooks/options/markup.php:1405
 msgid "Remove all posts authorship"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1410
-#: includes/hooks/options/markup.php:1494 includes/hooks/options/scripts.php:83
-#: includes/hooks/options/scripts.php:112
+#: includes/hooks/options/markup.php:1411
+#: includes/hooks/options/markup.php:1495 includes/hooks/options/scripts.php:82
+#: includes/hooks/options/scripts.php:111
 msgid "Delete"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1411
+#: includes/hooks/options/markup.php:1412
 msgid "Delete posts authorship"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1443
+#: includes/hooks/options/markup.php:1444
 msgid ""
 "Export Guest Authors to have a backup or import them on another installation"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1450
+#: includes/hooks/options/markup.php:1451
 msgid "Export Guest Authors"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1464
+#: includes/hooks/options/markup.php:1465
 msgid "Import Guest Authors from a previous exported backup file"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1471
+#: includes/hooks/options/markup.php:1472
 msgid "Import Guest Authors"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1488
+#: includes/hooks/options/markup.php:1489
 msgid "Remove all Guest Authors"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1495
+#: includes/hooks/options/markup.php:1496
 msgid "Delete Guest Authors"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1520
+#: includes/hooks/options/markup.php:1521
 #, php-format
 msgid ""
 "%sPost types in which to automatically insert the author box. Leave it blank "
@@ -882,7 +1151,7 @@ msgid ""
 "might override this setting%s.%s "
 msgstr ""
 
-#: includes/hooks/options/markup.php:1524
+#: includes/hooks/options/markup.php:1525
 #, php-format
 msgid ""
 "%sPost types for which you want to have the option to configure —on a post "
@@ -891,168 +1160,168 @@ msgid ""
 "the author box to be shown automatically on selected post types.%s"
 msgstr ""
 
-#: includes/hooks/options/markup.php:1528
+#: includes/hooks/options/markup.php:1529
 #, php-format
 msgid ""
 "%sWhen enabled, the author box will not display for authors without a "
 "description. %sUnless author is configured otherwise%s.%s"
 msgstr ""
 
-#: includes/hooks/options/scripts.php:62 includes/hooks/options/scripts.php:91
+#: includes/hooks/options/scripts.php:61 includes/hooks/options/scripts.php:90
 msgid "File upload failed"
 msgstr ""
 
-#: includes/hooks/options/scripts.php:63 includes/hooks/options/scripts.php:92
+#: includes/hooks/options/scripts.php:62 includes/hooks/options/scripts.php:91
 msgid "Failed to load file."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:64 includes/hooks/options/scripts.php:93
+#: includes/hooks/options/scripts.php:63 includes/hooks/options/scripts.php:92
 msgid "Wrong file type"
 msgstr ""
 
-#: includes/hooks/options/scripts.php:65 includes/hooks/options/scripts.php:94
+#: includes/hooks/options/scripts.php:64 includes/hooks/options/scripts.php:93
 msgid "Only valid .JSON files are accepted."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:66 includes/hooks/options/scripts.php:79
-#: includes/hooks/options/scripts.php:95 includes/hooks/options/scripts.php:108
+#: includes/hooks/options/scripts.php:65 includes/hooks/options/scripts.php:78
+#: includes/hooks/options/scripts.php:94 includes/hooks/options/scripts.php:107
 msgid "Warning"
 msgstr ""
 
-#: includes/hooks/options/scripts.php:67
+#: includes/hooks/options/scripts.php:66
 msgid ""
 "You are about to import guest authors. If imported authors already exist in "
 "this site, they will be duplicated! Please confirm this action."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:70 includes/hooks/options/scripts.php:99
+#: includes/hooks/options/scripts.php:69 includes/hooks/options/scripts.php:98
 msgid "Success!"
 msgstr ""
 
-#: includes/hooks/options/scripts.php:71
+#: includes/hooks/options/scripts.php:70
 msgid "Guest authors have been imported successfully."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:72 includes/hooks/options/scripts.php:85
-#: includes/hooks/options/scripts.php:101
-#: includes/hooks/options/scripts.php:114
+#: includes/hooks/options/scripts.php:71 includes/hooks/options/scripts.php:84
+#: includes/hooks/options/scripts.php:100
+#: includes/hooks/options/scripts.php:113
 msgid "Error"
 msgstr ""
 
-#: includes/hooks/options/scripts.php:73 includes/hooks/options/scripts.php:102
+#: includes/hooks/options/scripts.php:72 includes/hooks/options/scripts.php:101
 msgid ""
 "Uploaded file is either wrong or empty. Please provide a valid file with "
 "data to import."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:74
+#: includes/hooks/options/scripts.php:73
 msgid ""
 "Something went wrong and some guest authors couldn't be restored. Please "
 "make sure uploaded file has content and try uploading the file again."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:75 includes/hooks/options/scripts.php:87
-#: includes/hooks/options/scripts.php:104
-#: includes/hooks/options/scripts.php:116
+#: includes/hooks/options/scripts.php:74 includes/hooks/options/scripts.php:86
+#: includes/hooks/options/scripts.php:103
+#: includes/hooks/options/scripts.php:115
 msgid ""
 "Something went wrong and couldn't connect to the server. Please, try again."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:80
+#: includes/hooks/options/scripts.php:79
 msgid ""
 "You are about to delete all guest authors in your site. All guest data will "
 "be lost! Please confirm this action."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:84
+#: includes/hooks/options/scripts.php:83
 msgid "Guest Authors deleted successfully."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:86
+#: includes/hooks/options/scripts.php:85
 msgid ""
 "Something went wrong and guest authors couldn't be deleted correctly. "
 "Please, try again."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:96
+#: includes/hooks/options/scripts.php:95
 msgid ""
 "You are about to import posts authorship. This only makes sense if you are "
 "importing data previously exported from this very same site! Please confirm "
 "this action."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:100
+#: includes/hooks/options/scripts.php:99
 msgid "Post authorship imported successfully."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:103
+#: includes/hooks/options/scripts.php:102
 msgid ""
 "Something went wrong and some authorship couldn't be restored. Please make "
 "sure uploaded file has content and try uploading the file again."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:109
+#: includes/hooks/options/scripts.php:108
 msgid ""
 "You are about to delete all posts authorship. Data will be lost! Please "
 "confirm this action."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:113
+#: includes/hooks/options/scripts.php:112
 msgid "Posts authorship deleted successfully."
 msgstr ""
 
-#: includes/hooks/options/scripts.php:115
+#: includes/hooks/options/scripts.php:114
 msgid ""
 "Something went wrong and authorship couldn't be deleted correctly. Please, "
 "try again."
 msgstr ""
 
-#: includes/hooks/post/bulk-edit.php:52
+#: includes/hooks/post/bulk-edit.php:56 includes/post.php:95
 msgid "Authorship Data"
 msgstr ""
 
-#: includes/hooks/post/bulk-edit.php:55
+#: includes/hooks/post/bulk-edit.php:59 includes/post.php:98
 msgid "Authors"
 msgstr ""
 
-#: includes/hooks/user/list.php:34 views/user/html-admin-profile-tools.php:33
+#: includes/hooks/user/list.php:33 views/user/html-admin-profile-tools.php:33
 msgid "Convert to Guest"
 msgstr ""
 
-#: includes/hooks/user/list.php:59
+#: includes/hooks/user/list.php:58
 msgid ""
 "The 'Guest Authors' feature is disabled! Enable it in the plugin settings "
 "page in order to proceed."
 msgstr ""
 
-#: includes/hooks/user/list.php:64
+#: includes/hooks/user/list.php:63
 msgid "No user to convert has been supplied!"
 msgstr ""
 
-#: includes/hooks/user/scripts.php:59
+#: includes/hooks/user/scripts.php:58
 msgid "User to Guest Conversion"
 msgstr ""
 
-#: includes/hooks/user/scripts.php:60
+#: includes/hooks/user/scripts.php:59
 msgid ""
 "This user will be removed and a new Guest Author created. Do you want to "
 "continue?"
 msgstr ""
 
-#: includes/hooks/user/scripts.php:64
+#: includes/hooks/user/scripts.php:63
 msgid ""
 "Can't convert yourself to a guest author. Do it logged in as another user."
 msgstr ""
 
-#: includes/plugin.php:90
+#: includes/plugin.php:94 molongui-authorship-pro.php:130
 msgid "Cloning instances of this class is forbidden."
 msgstr ""
 
-#: includes/plugin.php:104
+#: includes/plugin.php:109 molongui-authorship-pro.php:144
 msgid "Unserializing instances of this class is forbidden."
 msgstr ""
 
-#: includes/plugin.php:343
+#: includes/plugin.php:357 molongui-authorship-pro.php:572
 #, php-format
 msgid ""
 "%1$sMolongui Authorship Pro%2$s requires the core free plugin to be "
@@ -1060,15 +1329,15 @@ msgid ""
 "RUNNING%4$s."
 msgstr ""
 
-#: includes/plugin.php:350
+#: includes/plugin.php:364 molongui-authorship-pro.php:579
 msgid "Activate It Now"
 msgstr ""
 
-#: includes/plugin.php:355
+#: includes/plugin.php:369 molongui-authorship-pro.php:584
 msgid "Install It Now"
 msgstr ""
 
-#: includes/plugin.php:404
+#: includes/plugin.php:420
 #, php-format
 msgid ""
 "%1$sMolongui Authorship Pro%2$s requires Molongui Authorship version %3$s or "
@@ -1076,64 +1345,80 @@ msgid ""
 "%4$sNOT RUNNING%5$s."
 msgstr ""
 
-#: includes/plugin.php:409
+#: includes/plugin.php:425 molongui-authorship-pro.php:641
 msgid "Update It Now"
 msgstr ""
 
-#: includes/plugin.php:430
+#: includes/plugin.php:447
 #, php-format
 msgid ""
 "Installed version of %1$sMolongui Authorship Pro%2$s is too old to run on "
 "your site. So the plugin is currently %3$sNOT RUNNING%4$s. Please update it."
 msgstr ""
 
-#: includes/plugin.php:431
+#: includes/plugin.php:448
 msgid "Update Plugin"
 msgstr ""
 
-#: includes/shortcodes/author/author-box.php:49
+#: includes/post.php:98
+msgid "Author"
+msgstr ""
+
+#: includes/post.php:310
+msgid "Missing or invalid nonce."
+msgstr ""
+
+#: includes/post.php:317
+msgid "Missing post IDs..."
+msgstr ""
+
+#: includes/post.php:343
+msgid "Custom fields for the Molongui Authorship plugin saved."
+msgstr ""
+
+#: includes/shortcodes/author/author-box.php:55
 msgid ""
 "You need to enable the author box feature in the plugin settings page in "
 "order this shortcode to work."
 msgstr ""
 
-#: includes/shortcodes/author/author-data.php:357
+#: includes/shortcodes/author/author-data.php:356
 msgid "You need to provide a key to retrieve in order this shortcode to work."
 msgstr ""
 
-#: includes/shortcodes/author/author-data.php:394
+#: includes/shortcodes/author/author-data.php:393
 msgid "Sorry, provided key does not have a valid URL value."
 msgstr ""
 
-#: includes/shortcodes/author/author-data.php:463
+#: includes/shortcodes/author/author-data.php:462
 #, php-format
 msgid "No avatar available for %s with id %s."
 msgstr ""
 
-#: includes/shortcodes/author/author-data.php:463
+#: includes/shortcodes/author/author-data.php:462
 msgid "guest author"
 msgstr ""
 
-#: includes/shortcodes/author/author-data.php:463
+#: includes/shortcodes/author/author-data.php:462
 msgid "user"
 msgstr ""
 
-#: includes/shortcodes/author/author-list.php:156
-#: includes/shortcodes/author/author-list.php:172
+#: includes/shortcodes/author/author-list.php:164
+#: includes/shortcodes/author/author-list.php:180
 msgid "Select an author"
 msgstr ""
 
-#: includes/shortcodes/author/author-list.php:387
-#: includes/shortcodes/author/author-posts.php:250
+#: includes/shortcodes/author/author-list.php:407
+#: includes/shortcodes/author/author-posts.php:254
 msgid "&larr;"
 msgstr ""
 
-#: includes/shortcodes/author/author-list.php:388
-#: includes/shortcodes/author/author-posts.php:251
+#: includes/shortcodes/author/author-list.php:408
+#: includes/shortcodes/author/author-posts.php:255
 msgid "&rarr;"
 msgstr ""
 
-#: includes/shortcodes/author/author-list.php:398
+#: includes/shortcodes/author/author-list.php:418
 msgid "No authors found."
 msgstr ""
 
@@ -1144,183 +1429,134 @@ msgid ""
 "ID). %sLearn more%s"
 msgstr ""
 
-#: includes/shortcodes/author/author-posts.php:259
+#: includes/shortcodes/author/author-posts.php:262
 msgid "There are no posts to list."
 msgstr ""
 
-#: includes/shortcodes/post/avatars.php:101
+#: includes/shortcodes/post/avatars.php:100
 #, php-format
 msgid ""
 "%sThis shortcode requires you to provide a post ID when running outside The "
 "Loop.%s"
 msgstr ""
 
-#: includes/shortcodes/post/avatars.php:104
+#: includes/shortcodes/post/avatars.php:103
 #, php-format
 msgid ""
 "%sProvided post ID is wrong. Make sure it is an integer for an existing post."
 "%s"
 msgstr ""
 
-#: includes/shortcodes/post/byline.php:35
+#: includes/shortcodes/post/byline.php:37
 msgid ""
 "You have plugin template tags disabled. Probably using the 'authorship/"
 "template_tags' filter. Remove that filter to get this shortcode working."
 msgstr ""
 
-#: includes/update/license.php:319
-msgid ""
-"Attempt to migrate data failed. Deactivate then reactive this plugin, then "
-"enter your License Key on the settings screen to receive software updates. "
-"Contact support if assistance is required."
-msgstr ""
-
-#: includes/update/license.php:471
-#, php-format
-msgid ""
-"<b>Warning!</b> You're blocking external requests which means you won't be "
-"able to get %s updates. Please add %s to %s."
-msgstr ""
-
-#: includes/update/license.php:509
+#: includes/update/license.php:580
 msgid "License not activated"
 msgstr ""
 
-#: includes/update/license.php:510
+#: includes/update/license.php:581
 #, php-format
 msgid ""
 "No license for %s has been found, so the plugin won't work! %sClick here%s "
 "to activate your copy of the plugin."
 msgstr ""
 
-#: includes/update/license.php:522
+#: includes/update/license.php:593
 msgid "Activate plugin"
 msgstr ""
 
-#: includes/update/license.php:581
-msgid "Your license expires soon."
-msgstr ""
-
-#: includes/update/license.php:582
-#, php-format
-msgid ""
-"%sRenew your license today%s to keep getting feature updates and premium "
-"support for %s plugin."
-msgstr ""
-
-#: includes/update/license.php:592 includes/update/license.php:640
-msgid "Renew license"
-msgstr ""
-
-#: includes/update/license.php:629
+#: includes/update/license.php:646
 msgid "Your license has expired!"
 msgstr ""
 
-#: includes/update/license.php:630
+#: includes/update/license.php:647
 #, php-format
 msgid ""
 "%sRenew your license today%s to get feature updates and premium support for "
 "%s plugin."
 msgstr ""
 
-#: includes/update/license.php:789
-msgid "Plugin activated."
+#: includes/update/license.php:657
+msgid "Renew license"
 msgstr ""
 
-#: includes/update/license.php:804 includes/update/license.php:977
-msgid ""
-"Connection failed to the Molongui Licensing Server. Try again later. There "
-"may be a problem on your server preventing outgoing requests, or the store "
-"is blocking your request to activate the plugin."
-msgstr ""
-
-#: includes/update/license.php:853
-msgid ""
-"Security token check failed. Please make sure you're activating the license "
-"from the plugin settings page. If you already are, please refresh the page."
-msgstr ""
-
-#: includes/update/license.php:861
-msgid ""
-"It is like the provided license key is already active on this site. Please "
-"log in to your My Account and check your key state."
-msgstr ""
-
-#: includes/update/license.php:958
-msgid "License activated."
-msgstr ""
-
-#: includes/update/license.php:1033
-msgid ""
-"The license could not be deactivated. Use the Deactivate button to manually "
-"deactivate your key before activating a new one. If all else fails, go to "
-"Plugins, then deactivate and reactivate this plugin, then go to the settings "
-"page for this plugin and enter your License information again to activate "
-"it. Also check the My Account dashboard to see if your key was still active "
-"for this site before the error message was displayed."
-msgstr ""
-
-#: includes/update/license.php:1057
-msgid ""
-"Security token check failed. Please make sure you're deactivating the "
-"license from the plugin settings page. If you already are, please refresh "
-"the page."
-msgstr ""
-
-#: includes/update/license.php:1065
-msgid ""
-"It is like there is no active license key to deactivate. Please log in to My "
-"Account dashboard to see if your key is still active for this site."
-msgstr ""
-
-#: includes/update/license.php:1096
-msgid "License key deactivated."
-msgstr ""
-
-#: includes/update/update.php:297
+#: molongui-authorship-pro.php:278
 #, php-format
 msgid ""
-"%sError%s: Checking for %s updates failed. It might just be a temporary "
-"issue. If the issue persists for days, please open a support ticket %shere%s."
+"%1$sMolongui Authorship Pro%2$s requires PHP version %3$s or greater to "
+"operate. Unfortunately, your current PHP version (%4$s) is too old, so the "
+"plugin has been disabled."
 msgstr ""
 
-#: molongui-authorship-pro.php:94
-#, php-format
-msgid ""
-"%1$sMolongui Authorship Pro%2$s requires PHP version %3$s or greater. "
-"Because you are using an earlier version, the plugin is currently %4$sNOT "
-"RUNNING%5$s."
-msgstr ""
-
-#: molongui-authorship-pro.php:95
+#: molongui-authorship-pro.php:279
 msgid "How to update PHP?"
 msgstr ""
 
-#: molongui-authorship-pro.php:113
+#: molongui-authorship-pro.php:303
 #, php-format
 msgid ""
-"%1$sMolongui Authorship Pro%2$s requires WordPress version %3$s+. Because "
-"you are using an earlier version, the plugin is currently %4$sNOT RUNNING"
-"%5$s."
+"%1$sMolongui Authorship Pro%2$s requires WordPress version %3$s or higher. "
+"Please update your WordPress to run this plugin."
+msgstr ""
+
+#: molongui-authorship-pro.php:636
+#, php-format
+msgid ""
+"%1$sMolongui Authorship Pro%2$s requires Molongui authorship version %3$s or "
+"greater. Because you are using an earlier version, the plugin is currently "
+"%4$sNOT RUNNING%5$s."
+msgstr ""
+
+#: molongui-authorship-pro.php:662
+msgid "Action Required: Incompatible Plugin Version Detected"
+msgstr ""
+
+#: molongui-authorship-pro.php:664
+#, php-format
+msgid ""
+"Your current version of %s is outdated and not compatible with your site. As "
+"a result, the plugin has been temporarily disabled to ensure system "
+"stability. Please update to the latest version promptly to restore "
+"functionality."
+msgstr ""
+
+#: molongui-authorship-pro.php:675
+msgid "Update Now"
+msgstr ""
+
+#: molongui-authorship-pro.php:676
+msgid "Update Check"
+msgstr ""
+
+#: molongui-authorship-pro.php:677
+msgid "Download Latest"
+msgstr ""
+
+#: molongui-authorship-pro.php:678
+msgid "Help me!"
 msgstr ""
 
 #: views/author-box/profile/html-layout-7.php:92
 msgid "This author does not have any more posts."
 msgstr ""
 
-#: views/authors-list/html-basic.php:33 views/authors-list/html-grid.php:89
+#: views/authors-list/html-basic.php:41 views/authors-list/html-grid.php:97
 msgid "at"
 msgstr ""
 
-#: views/authors-list/html-basic.php:59 views/authors-list/html-basic.php:67
-#: views/authors-list/html-grid.php:179 views/authors-list/html-grid.php:187
+#: views/authors-list/html-basic.php:67 views/authors-list/html-basic.php:75
+#: views/authors-list/html-grid.php:187 views/authors-list/html-grid.php:195
 #, php-format
 msgid "%1$s %2$s "
 msgid_plural "%1$s %3$s "
 msgstr[0] ""
 msgstr[1] ""
 
-#: views/authors-list/html-basic.php:116 views/authors-list/html-grid.php:153
+#: views/authors-list/html-basic.php:124 views/authors-list/html-grid.php:161
+#: views/authors-list/html-grid.php:222
 msgid "Website"
 msgstr ""
 

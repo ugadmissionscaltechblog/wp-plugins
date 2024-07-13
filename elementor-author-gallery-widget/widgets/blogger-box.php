@@ -1,6 +1,5 @@
 <?php
 
-use Molongui\Authorship\Author;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
@@ -71,7 +70,7 @@ class Blogger_Box extends Widget_Base {
 				'type' => Controls_Manager::SELECT2,
 				'label_block' => true,
 				'multiple' => true,
-				'options' => wp_list_pluck( molongui_get_authors(), 'name', 'id' ),
+				'options' => wp_list_pluck( molongui_get_authors(), 'name', 'ref' ),
 				'condition' => [
 					'source' => 'choose',
 				],
@@ -169,6 +168,7 @@ class Blogger_Box extends Widget_Base {
 					'' => esc_html__( 'None', 'elementor-pro' ),
 					'website' => esc_html__( 'Website', 'elementor-pro' ),
 				],
+				'default' => 'posts_archive',
 				'condition' => [
 					'source!' => 'custom',
 				],
@@ -1404,76 +1404,41 @@ class Blogger_Box extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$authors = [];
 		$custom_src = ( 'custom' === $settings['source'] );
+		$authors = [];
 	
 		if ( 'current' === $settings['source'] ) {
-			$avatar_args['size'] = $settings['avatar_size'];
 			$authors_list = get_post_authors(get_the_ID());
-	
-			if ($authors_list) {
-				foreach ($authors_list as $author_obj) {
-					// Log the author_obj to inspect its structure
-					error_log('Author Object: ' . print_r($author_obj, true));
-	
-					$user = null;
-					if ($author_obj->type === 'user') {
-						$user = molongui_get_author_by('ID', $author_obj->id, 'user');
-					} else {
-						// Prepend 'guest-' to the guest author ID
-						$user_post_obj = molongui_get_author_by('id', $author_obj->id, 'guest', false);
-						$user = new Author($user_post_obj->ref);
-					}
-	
-					// Log user object to inspect what is returned
-					error_log('User Object: ' . print_r($user, true));
-	
-					if ($user) {
-						if ($author_obj->type === 'user') {
-							// Handle WP_User object
-							$authors[] = [
-								'avatar' => get_avatar_url($user->ID, $avatar_args),
-								'display_name' => $user->display_name,
-								'website' => $user->user_url,
-								'bio' => $user->description,
-								'posts_url' => get_author_posts_url($user->ID)
-							];
-						} else {
-							// Handle Molongui\Author object
-							$authors[] = [
-								'avatar' => $user->get_avatar('thumbnail', 'url'),
-								'display_name' => $user->get_name(),
-								'website' => $user->get_url(),
-								'bio' => $user->get_bio(),
-								'posts_url' => $user->get_url()
-							];
-						}
-					} else {
-						// Log error or handle the case where user is not found
-						error_log('User not found for author ID: ' . $author_obj->id . ' and type: ' . $author_obj->type);
-					}
-				}
-			}
+			$authors = format_author_details($authors_list);
 		} elseif ( $custom_src ) {
-			$authors[] = [
+			$authors = [[
 				'avatar' => ! empty( $settings['author_avatar']['url'] ) ? $settings['author_avatar']['url'] : '',
 				'display_name' => $settings['author_name'],
 				'website' => $settings['author_website']['url'],
 				'bio' => wpautop( $settings['author_bio'] ),
 				'posts_url' => $settings['posts_url']['url']
-			];
+			]];
 		} elseif ( 'choose' === $settings['source'] ) {
-			foreach ( $settings['author'] as $id ) {
-				if ( !$id ) continue;
-	
-				$data = new Author($id);
-				$authors[] = [
-					'avatar' => $data->get_avatar($context = 'url'),
-					'display_name' => $data->get_name(),
-					'bio' => $data->get_bio(),
-					'posts_url' => $data->get_url()
-				];
+			$author_ids = $settings['author'];
+			
+			// Ensure $author_ids is always an array
+			if (!is_array($author_ids)) {
+				$author_ids = [$author_ids];
 			}
+	
+			// Create list of objects with id and type properties
+			$authors_list = [];
+			foreach ( $author_ids as $author )
+                {
+                    $split = explode( '-', $author );
+                    if ( empty( $split[1] ) )
+                    {
+                        continue;
+                    }
+                    $authors_list[] = (object) array( 'ID' => (int)$split[1], 'id' => (int)$split[1], 'type' => $split[0], 'ref' => $author );
+                }
+	
+			$authors = format_author_details($authors_list);
 		}
 	
 		ob_start();
@@ -1503,7 +1468,13 @@ class Blogger_Box extends Widget_Base {
 				}
 	
 				if ( ! empty( $link_url ) ) {
-					$this->add_render_attribute( 'author_link', 'href', esc_url( $link_url ) );
+					$this->add_render_attribute( 'author_link', 
+						[
+							'href' => esc_url( $link_url ),
+							'target' => $link_target,
+							'style' => 'color: #ff6c0c;',
+						]
+					);
 	
 					if ( ! empty( $link_target ) ) {
 						$this->add_render_attribute( 'author_link', 'target', $link_target );
@@ -1529,23 +1500,6 @@ class Blogger_Box extends Widget_Base {
 					'button',
 					'class',
 					'elementor-animation-' . $settings['button_hover_animation']
-				);
-			}
-	
-			if ( $print_avatar ) {
-				$this->add_render_attribute(
-					'avatar',
-					[
-						'src' => esc_url( $author['avatar'] ),
-						'alt' => ( ! empty( $author['display_name'] ) )
-							? sprintf(
-								/* translators: %s: Author display name. */
-								esc_attr__( 'Picture of %s', 'elementor-pro' ),
-								$author['display_name']
-							)
-							: esc_html__( 'Author picture', 'elementor-pro' ),
-						'loading' => 'lazy',
-					]
 				);
 			}
 	

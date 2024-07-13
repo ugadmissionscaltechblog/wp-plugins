@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_add_image_sizes' ) )
 {
     function authorship_pro_add_image_sizes()

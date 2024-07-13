@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_filter_author_bio( $bio, $author_id, $author_type, $author )
 {
     if ( apply_filters( '_authorship/doing_shortcode/author_bio', false ) ) return $bio;

@@ -1,8 +1,11 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_guest_pages_noindex( $robots )
 {
-    $options = authorship_get_options();
+    $options = Settings::get();
 
     if ( is_guest_author() and !empty( $options['guest_archive_noindex'] ) )
     {

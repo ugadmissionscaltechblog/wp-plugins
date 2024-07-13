@@ -1,9 +1,10 @@
 <?php
 
-namespace Molongui\Authorship\Pro\Includes;
+namespace Molongui\Authorship\Pro;
 
-use Molongui\Authorship\Includes\Author;
-\defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !\molongui_is_request( 'api' ) ) return;
 
 if ( !\class_exists( 'Extend_WP_REST_API' ) )
@@ -152,7 +153,7 @@ if ( !\class_exists( 'Extend_WP_REST_API' ) )
         }
     } // class
 } // if_class
-if ( \class_exists( 'Molongui\Authorship\Pro\Includes\Extend_WP_REST_API' ) )
+if ( \class_exists( 'Molongui\Authorship\Pro\Extend_WP_REST_API' ) )
 {
     new Extend_WP_REST_API();
 }

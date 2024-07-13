@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_box_styles( $default )
 {
     return apply_filters( 'authorship_pro/box/styles', MOLONGUI_AUTHORSHIP_PRO_FOLDER . ( is_rtl() ? '/assets/css/author-box-rtl.71d9.min.css' : '/assets/css/author-box.f886.min.css' ), $default );

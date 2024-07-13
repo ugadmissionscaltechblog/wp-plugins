@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( 'pll_get_archive_url', function( $url, $language )
 {
     global $wp_query;
@@ -18,7 +19,7 @@ add_filter( 'pll_get_archive_url', function( $url, $language )
                 return $url;
             }
         }
-        $author = new Molongui\Authorship\Includes\Author( $translations[$language->slug], 'guest' );
+        $author = new Molongui\Authorship\Author( $translations[$language->slug], 'guest' );
         add_filter( 'authorship/pll/lang', function() use ( $language ) { return $language->slug; } );
         $url = $author->get_url();
     }

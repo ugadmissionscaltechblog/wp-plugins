@@ -1,12 +1,14 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Common\Modules\Settings;
+use Molongui\Authorship\Author;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_enable_view_guest_link' ) )
 {
     function authorship_pro_enable_view_guest_link()
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         return !$options['guest_pages'];
     }
     add_filter( 'authorship/guest/row_actions/remove_view_link', 'authorship_pro_enable_view_guest_link' );

@@ -1,22 +1,29 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
-if ( !function_exists( 'is_plugin_active' ) ) require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+if ( !function_exists( 'is_plugin_active' ) )
+{
+    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+}
 
 if ( is_plugin_active( 'seo-by-rank-math/rank-math.php' ) )
 {
     add_filter( 'rank_math/sitemap/author_sitemap_url', function( $url, $sitemap )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         if ( !$options['user_archive_enabled'] ) return '';
 
         return $sitemap->sitemap_url( $url );
     }, 10, 2 );
     add_action( 'rank_math/sitemap/author_content', function()
     {
-        $options = authorship_get_options();
-        if ( !$options['guest_pages'] ) return '';
+        if ( !Settings::get( 'guest_pages' ) )
+        {
+            return '';
+        }
         $output = '';
         $guests = molongui_get_guests( array( 'fields' => 'all' ) );
 

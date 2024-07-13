@@ -1,10 +1,11 @@
 <?php
 
-namespace Molongui\Authorship\Pro\Includes;
-\defined( 'ABSPATH' ) or exit;
+namespace Molongui\Authorship\Pro;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 final class Plugin
 {
-    const MINIMUM_CORE_VERSION = '4.6.0';
+    const MINIMUM_CORE_VERSION = '4.8.0';
     const CORE_SLUG = 'molongui-authorship';
     private static $_instance = null;
     private $core;
@@ -55,7 +56,7 @@ final class Plugin
             \add_action( 'admin_notices', array( $this, 'admin_notice_missing_core_plugin' ) );
             return false;
         }
-        $license = new \Molongui\Authorship\Pro\Includes\Update\License();
+        $license = new \Molongui\Authorship\Pro\Update\License();
         \add_action( 'wp_ajax_'.MOLONGUI_AUTHORSHIP_PREFIX.'_activate_license_key'  , array( $license, 'activate_license_key'   ) );
         \add_action( 'wp_ajax_'.MOLONGUI_AUTHORSHIP_PREFIX.'_deactivate_license_key', array( $license, 'deactivate_license_key' ) );
 
@@ -89,7 +90,7 @@ final class Plugin
     }
     private function update_db()
     {
-        $update_db = new \Molongui\Authorship\Includes\Libraries\Common\DB_Update( MOLONGUI_AUTHORSHIP_PRO_DB, MOLONGUI_AUTHORSHIP_PRO_DB_VERSION, MOLONGUI_AUTHORSHIP_PRO_NAMESPACE );
+        $update_db = new \Molongui\Authorship\Common\Modules\DB_Update( MOLONGUI_AUTHORSHIP_PRO_DB, MOLONGUI_AUTHORSHIP_PRO_DB_VERSION, MOLONGUI_AUTHORSHIP_PRO_NAMESPACE );
         if ( $update_db->db_update_needed() ) $update_db->run_update();
     }
     public function admin_notice_missing_core_plugin()
@@ -161,7 +162,8 @@ final class Plugin
     public function init()
     {
         require_once MOLONGUI_AUTHORSHIP_PRO_DIR . 'includes/load.php';
-        \do_action( 'authorship_pro/init' );
+        authorship_debug( null, sprintf( "%s %s", MOLONGUI_AUTHORSHIP_PRO_TITLE, MOLONGUI_AUTHORSHIP_PRO_VERSION ) );
+        do_action( 'authorship_pro/init' );
     }
 
 } // class

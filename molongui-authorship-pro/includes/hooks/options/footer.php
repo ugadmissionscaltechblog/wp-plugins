@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_options_footer_items()
 {
     $docs_url = 'https://www.molongui.com/docs/' . MOLONGUI_AUTHORSHIP_NAME;

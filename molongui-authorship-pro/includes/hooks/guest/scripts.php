@@ -1,8 +1,9 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_edit_guest_scripts( $default )
 {
-    return apply_filters( 'authorship_pro/edit_guest/script', MOLONGUI_AUTHORSHIP_PRO_FOLDER . '/assets/js/edit-guest.e16b.min.js', $default );
+    return apply_filters( 'authorship_pro/edit_guest/script', MOLONGUI_AUTHORSHIP_PRO_FOLDER . '/assets/js/edit-guest.b4a7.min.js', $default );
 }
 add_filter( 'authorship/edit_guest/script', 'authorship_pro_edit_guest_scripts' );
 function authorship_pro_get_edit_guest_params( $params )

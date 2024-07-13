@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_register_style( $file, $scope, $deps = array() )
 {
     if ( empty( $file ) or empty( $scope ) ) return;

@@ -1,7 +1,9 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( class_exists( 'WP_Sitemaps_Provider' ) )
 {
     if ( !class_exists( 'WP_Sitemaps_Guest_Authors' ) )
@@ -61,7 +63,7 @@ if ( class_exists( 'WP_Sitemaps_Provider' ) )
     } // !class_exists
     add_filter( 'init', function()
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         if ( !$options['guest_pages'] ) return;
 
         $provider = new WP_Sitemaps_Guest_Authors();

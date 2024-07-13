@@ -1,8 +1,9 @@
 <?php
 
-namespace Molongui\Authorship\Pro\Includes\Update;
-\defined( 'ABSPATH' ) or exit;
-if ( !\trait_exists( 'Molongui\Authorship\Pro\Includes\Update\Update' ) )
+namespace Molongui\Authorship\Pro\Update;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+if ( !\trait_exists( 'Molongui\Authorship\Pro\Update\Update' ) )
 {
     trait Update
     {

@@ -1,7 +1,8 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_shortcode( 'molongui_post_avatars', 'shortcode_authorship_post_avatars' );
 add_shortcode( 'post_avatars', 'shortcode_authorship_post_avatars' );
@@ -37,7 +38,7 @@ if ( !function_exists( 'shortcode_authorship_post_avatars' ) )
             $size_array = explode( ',', $no_whitespaces_size );
             $atts['size'] = array( $size_array[0], $size_array[1] );
         }
-        $authors = get_post_authors( $atts['pid'] );
+        $authors = authorship_get_post_authors( $atts['pid'] );
         if ( !$authors )
         {
             if ( empty( $atts['pid'] ) )

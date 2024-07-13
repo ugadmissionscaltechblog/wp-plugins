@@ -1,7 +1,8 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_shortcode( 'molongui_author_name',   'shortcode_molongui_author_name'   );
 add_shortcode( 'molongui_author_slug',   'shortcode_molongui_author_slug'   );

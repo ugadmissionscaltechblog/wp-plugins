@@ -1,10 +1,13 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_change_author_base' ) )
 {
     function authorship_pro_change_author_base()
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         if ( empty( $options['user_archive_base'] ) ) return;
         global $wp_rewrite;
         $wp_rewrite->author_base = $options['user_archive_base'];
@@ -16,7 +19,7 @@ if ( !function_exists( 'authorship_pro_change_author_base' ) )
     }
     add_action( 'init', 'authorship_pro_change_author_base' );
 }
-$options = authorship_get_options();
+$options = Settings::get();
 if ( !empty( $options['user_archive_slug'] ) )
 {
     if ( !function_exists( 'authorship_pro_switch_user_archive_slug' ) )

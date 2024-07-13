@@ -1,5 +1,9 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+use Molongui\Authorship\Common\Utils\Debug;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_shortcode( 'molongui_author_list', 'authorship_pro_author_list_shortcode' );
 if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
@@ -25,7 +29,7 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
         $old_atts = $atts;
         add_filter( '_authorship/doing_shortcode', '__return_true' );
         add_filter( '_authorship/doing_shortcode/author_list', '__return_true' );
-        $options = authorship_get_options();
+        $options = Settings::get();
         $add_microdata = authorship_is_feature_enabled( 'microdata' );
         if ( isset( $atts['orderby'] ) and $atts['orderby'] == 'posts' ) $atts['orderby'] = 'post_count';
         if ( isset( $atts['icon'] ) ) $atts['list_icon'] = $atts['icon'];
@@ -108,8 +112,8 @@ if ( !function_exists( 'authorship_pro_author_list_shortcode' ) )
             $atts['exclude_users']  = array_unique( array_merge( $atts['exclude_users'], $archived_users ) );
             $atts['exclude_guests'] = array_unique( array_merge( $atts['exclude_guests'], $archived_guests ) );
         }
-        authorship_debug( $old_atts, "[molongui_author_list] provided attributes:" );
-        authorship_debug( $atts, "[molongui_author_list] sanitized attributes:" );
+        Debug::console_log( $old_atts, "[molongui_author_list] provided attributes:" );
+        Debug::console_log( $atts, "[molongui_author_list] sanitized attributes:" );
         add_filter( 'authorship_pro/author_list/atts', function() use ( $atts ){ return $atts; } );
         add_filter( 'authorship/author/name/format', 'authorship_pro_author_list_name_format' );
         add_filter( 'authorship/user/roles', function() use ( $atts ){ return $atts['user_role']; } );

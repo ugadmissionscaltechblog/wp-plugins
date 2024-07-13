@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !molongui_is_request( 'frontend' ) ) return;
 if ( !function_exists( 'authorship_pro_change_author_template' ) )
 {
@@ -7,7 +10,7 @@ if ( !function_exists( 'authorship_pro_change_author_template' ) )
     {
         if ( is_author() )
         {
-            $options  = authorship_get_options();
+            $options  = Settings::get();
             $filename = !empty( $options['user_archive_tmpl'] ) ? trim( $options['user_archive_tmpl'] ) : '';
             if ( empty( $filename ) or 'php' !== pathinfo( $filename, PATHINFO_EXTENSION ) ) return $template;
             if ( is_file( $filename ) )

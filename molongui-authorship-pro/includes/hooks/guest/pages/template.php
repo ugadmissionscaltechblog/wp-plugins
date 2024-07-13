@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_guest_page_template' ) )
 {
     function authorship_pro_guest_page_template( $template )
@@ -14,7 +17,7 @@ if ( !function_exists( 'authorship_pro_guest_page_template' ) )
         $wp_query->is_404 = false;
         if ( array_key_exists( 'guest-author-name', $wp_query->query_vars ) )
         {
-            $options  = authorship_get_options();
+            $options  = Settings::get();
             $filename = !empty( $options['guest_archive_tmpl'] ) ? trim( $options['guest_archive_tmpl'] ) : '';
             if ( empty( $filename ) or 'php' !== pathinfo( $filename, PATHINFO_EXTENSION ) ) return $template;
             if ( is_file( $filename ) )

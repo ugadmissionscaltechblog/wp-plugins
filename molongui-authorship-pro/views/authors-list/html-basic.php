@@ -69,7 +69,7 @@
 
                 <?php if ( $author['mail'] and $author['show_meta_mail'] and !$author['show_meta_mail'] ) : ?>
 	                <?php
-                        if( isset( $options['encode_email'] ) and $options['encode_email'] )
+                        if ( isset( $options['encode_email'] ) and $options['encode_email'] )
                         {
                             $email  = molongui_ascii_encode( $author['mail'] );
                             $e_href = '&#109;&#97;&#105;&#108;&#116;&#111;&#58;'.$email;

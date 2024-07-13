@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $config = array
 (
     'brand' => 'Molongui',
@@ -24,7 +25,7 @@ $constants = array
     'FOLDER'    => basename( dirname( MOLONGUI_AUTHORSHIP_PRO_FILE ) ),
     'URL'       => plugin_dir_url( MOLONGUI_AUTHORSHIP_PRO_FILE ),
     'BASENAME'  => plugin_basename( MOLONGUI_AUTHORSHIP_PRO_FILE ),
-    'NAMESPACE' => str_replace( ' ', '', ucwords( strtr( ucwords( strtolower( str_replace( ' Pro', '', $config['name'] ) ) ), array( '-' => ' ', '_' => ' ' ) ) ) ) . '\Pro',
+    'NAMESPACE' => '\Molongui\\' . str_replace( ' ', '', ucwords( strtr( ucwords( strtolower( str_replace( ' Pro', '', $config['name'] ) ) ), array( '-' => ' ', '_' => ' ' ) ) ) ) . '\Pro',
     'DB'         => $config['db'],
     'DB_VERSION' => $plugin_px.'_db_version',
     'INSTALL'    => $plugin_px.'_install',

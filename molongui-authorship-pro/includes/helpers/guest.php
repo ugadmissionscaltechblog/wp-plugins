@@ -1,8 +1,11 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_is_user_query( $wp_query )
 {
-    $options = authorship_get_options();
+    $options = Settings::get();
 
     if ( empty( $options['user_archive_slug'] ) )
     {
@@ -32,7 +35,7 @@ function authorship_pro_set_guest_page_query_vars( &$wp_query, $guest )
     $wp_query->is_guest_author = true;
     $wp_query->set( 'author', 0 );
 
-    $options = authorship_get_options();
+    $options = Settings::get();
     $cpts    = array();
     if ( isset( $options['guest_archive_include_pages'] ) and $options['guest_archive_include_pages'] ) $cpts[] = 'page';
     if ( isset( $options['guest_archive_include_cpts'] ) and $options['guest_archive_include_cpts'] )

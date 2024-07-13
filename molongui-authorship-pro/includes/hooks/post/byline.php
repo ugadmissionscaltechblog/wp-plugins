@@ -1,10 +1,13 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_enable_byline_main_author' ) )
 {
     function authorship_pro_enable_byline_main_author( $default, $type )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
 
         switch ( $type )
         {

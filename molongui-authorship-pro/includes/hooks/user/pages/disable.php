@@ -1,7 +1,10 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !molongui_is_request( 'frontend' ) ) return;
-if ( !isset( $options['user_archive_enabled'] ) ) $options = authorship_get_options();
+if ( !isset( $options['user_archive_enabled'] ) ) $options = Settings::get();
 if ( !$options['user_archive_enabled'] )
 {
     add_action( 'template_redirect', function()
@@ -9,7 +12,7 @@ if ( !$options['user_archive_enabled'] )
         if ( is_guest_author() ) return;
         if ( is_404() and !( get_query_var( 'author' ) or get_query_var( 'author_name' ) ) ) return;
 
-        $options = authorship_get_options();
+        $options = Settings::get();
         $existing_author_page     = is_author();
         $non_existing_author_page = ( is_404() and ( get_query_var( 'author' ) or get_query_var( 'author_name' ) ) );
 

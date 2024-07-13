@@ -1,11 +1,18 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+use Molongui\Authorship\Common\Utils\Debug;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_guest_page_filter_posts' ) )
 {
     function authorship_pro_guest_page_filter_posts( $wp_query )
     {
-        $options = authorship_get_options();
-        if ( empty( $options['guest_authors'] ) or empty( $options['guest_pages'] ) ) return;
+        $options = Settings::get();
+        if ( empty( $options['guest_authors'] ) or empty( $options['guest_pages'] ) )
+        {
+            return;
+        }
         if ( ( is_admin() and ( !defined( 'DOING_AJAX' ) or !DOING_AJAX /*or !wp_doing_ajax()*/ ) )
              or ( !$wp_query->is_main_query() and apply_filters_ref_array( 'molongui_edit_main_query_only', array( true, &$wp_query ) ) )
              or !isset( $wp_query->query_vars['guest-author-name'] ) or empty( $wp_query->query_vars['guest-author-name'] )

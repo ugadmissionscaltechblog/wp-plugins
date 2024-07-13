@@ -1,8 +1,9 @@
 <?php
 
-namespace Molongui\Authorship\Pro\Includes\Update;
-\defined( 'ABSPATH' ) or exit;
-if ( !\class_exists( 'Molongui\Authorship\Pro\Includes\Update\License' ) )
+namespace Molongui\Authorship\Pro\Update;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+if ( !\class_exists( 'Molongui\Authorship\Pro\Update\License' ) )
 {
     class License
     {
@@ -438,6 +439,7 @@ if ( !\class_exists( 'Molongui\Authorship\Pro\Includes\Update\License' ) )
                     $options[$this->data_status_key]       = 'wc-active';
                     $options[$this->wc_am_api_key_key]     = $api_key;
                     $options[$this->data_purchase_key]     = $activate_results['data']['purchase_date'];
+                    $options['renewal']                    = $activate_results['data']['next_payment'];
                     $options[$this->data_keep_key]         = $keep_license;
                     \update_option( $this->data_key, $options );
                     \update_option( $this->wc_am_activated_key, 'Activated' );

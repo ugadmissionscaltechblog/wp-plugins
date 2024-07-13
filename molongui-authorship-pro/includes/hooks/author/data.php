@@ -1,7 +1,8 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_filter_guest_link' ) )
 {
     function authorship_pro_filter_guest_link( $default, $guest_id, $type, $author, $opt )

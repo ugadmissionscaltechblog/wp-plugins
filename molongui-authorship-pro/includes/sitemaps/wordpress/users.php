@@ -1,12 +1,14 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( 'wp_sitemaps_add_provider', function ( $provider, $name )
 {
     if ( 'users' != $name ) return $provider;
 
-    $options = authorship_get_options();
+    $options = Settings::get();
     if ( !$options['user_archive_enabled'] ) $provider = null;
 
     return $provider;

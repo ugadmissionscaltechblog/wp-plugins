@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_options_license_markup( $fw_options )
 {
     $license_on   = did_action( 'authorship_pro/init' );

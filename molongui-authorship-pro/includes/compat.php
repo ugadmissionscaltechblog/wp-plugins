@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 $plugin_compat = authorship_is_feature_enabled( 'plugin_compat' );
 $theme_compat  = authorship_is_feature_enabled( 'theme_compat' );
 if ( $plugin_compat )

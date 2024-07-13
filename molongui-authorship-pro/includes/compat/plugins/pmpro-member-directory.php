@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( '_authorship/filter/get_user_by', function( $data, $args )
 {
     list( $filter, $user ) = $data;

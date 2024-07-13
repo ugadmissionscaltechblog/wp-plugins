@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_import_options()
 {
     check_ajax_referer( 'mfw_import_options_nonce', 'nonce', true );

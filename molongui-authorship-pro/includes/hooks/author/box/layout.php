@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 remove_filter( 'authorship/author_box/profile_layout', 'authorship_box_preview_profile_layout', 10 );
 remove_filter( 'authorship/author_box/related_layout', 'authorship_box_preview_related_layout', 10 );
 function authorship_pro_profile_layout( $output, $options, $author, $random_id )

@@ -1,10 +1,43 @@
 === Molongui Authorship Pro ===
 
-Requires PHP: 5.5.0
+Requires PHP: 5.6.20
 Requires WP : 5.2.0
-Requires MA : 4.6.0
+Requires MA : 4.8.0
 
 == Changelog ==
+
+= 1.7.4 (2024-06-24) =
+
+* Fixed link to the license activation form
+
+= 1.7.3 (2024-06-20) =
+
+* Fixed javascript conflict on the edit-post screen when using the old editor
+* Raised min Molongui Authorship version to 4.9.2
+
+= 1.7.2 (2024-06-17) =
+
+* Updated framework files to version 3.0.2
+
+= 1.7.1 (2024-06-14) =
+
+* Fixed license activation page not showing
+* Fixed user pages showing the main blog page when having guest pages enabled but guest authors disabled
+
+= 1.7.0 (2024-06-13) =
+
+* Minor code refactor
+* Updated plugin bootstrap
+* Updated framework files to version 3.0.2
+* Fixed bulk-edit not working
+* Fixed some minor issues
+* Raised min Molongui Authorship version to 4.9.0
+
+= 1.6.8 (2024-05-15) =
+
+* Raised min Molongui Authorship version to 4.8.0
+* Raised min PHP supported version to 5.6.20... come on
+* Added WordPress 6.5 compatibility
 
 = 1.6.7 (2024-02-26) =
 

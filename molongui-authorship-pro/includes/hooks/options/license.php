@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_deactivated_key_130( $fw_options )
 {
     if ( did_action( 'authorship_pro/init' ) or !get_transient( MOLONGUI_AUTHORSHIP_PRO_PREFIX . '_deactivated_key_130' ) ) return $fw_options;

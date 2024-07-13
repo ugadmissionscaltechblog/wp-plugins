@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_admin_bar_edit_user_item( $wp_admin_bar )
 {
     if ( !is_admin() )

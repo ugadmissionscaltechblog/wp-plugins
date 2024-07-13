@@ -1,11 +1,17 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_maybe_update_rewrite_rules' ) )
 {
     function authorship_pro_maybe_update_rewrite_rules()
     {
-        $options = authorship_get_options();
-        if ( empty( $options['guest_authors'] ) or empty( $options['guest_pages'] ) ) return;
+        $options = Settings::get();
+        if ( empty( $options['guest_authors'] ) or empty( $options['guest_pages'] ) )
+        {
+            return;
+        }
 
         if ( get_option( MOLONGUI_AUTHORSHIP_PRO_PREFIX.'_flush_rewrite_rules', false ) )
         {
@@ -19,9 +25,11 @@ if ( !function_exists( 'authorship_pro_update_guest_rewrite_rules' ) )
 {
     function authorship_pro_update_guest_rewrite_rules( $author_rewrite )
     {
-
-        $options = authorship_get_options();
-        if ( empty( $options['guest_pages'] ) ) return $author_rewrite;
+        $options = Settings::get();
+        if ( empty( $options['guest_authors'] ) or empty( $options['guest_pages'] ) )
+        {
+            return $author_rewrite;
+        }
 
         global $wp_rewrite;
 
@@ -47,7 +55,10 @@ if ( !function_exists( 'authorship_pro_guest_page_query_var' ) )
 {
     function authorship_pro_guest_page_query_var( $query_vars )
     {
-        if ( is_admin() ) return $query_vars;
+        if ( is_admin() )
+        {
+            return $query_vars;
+        }
 
         $query_vars[] = 'guest-author-name';
 

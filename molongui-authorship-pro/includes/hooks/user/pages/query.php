@@ -1,11 +1,14 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !molongui_is_request( 'frontend' ) ) return;
 if ( !function_exists( 'authorship_pro_add_author_pages' ) )
 {
     function authorship_pro_add_author_pages( $wp_query )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         if ( empty( $options['user_archive_include_pages'] ) ) return;
         if ( ( is_admin() and ( !defined( 'DOING_AJAX' ) or !DOING_AJAX /*or !wp_doing_ajax()*/ ) ) //is_admin()
             or ( !$wp_query->is_main_query() and apply_filters_ref_array( 'molongui_edit_main_query_only', array( true, &$wp_query ) ) )
@@ -31,7 +34,7 @@ if ( !function_exists( 'authorship_pro_add_author_cpts' ) )
 {
     function authorship_pro_add_author_cpts( $wp_query )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         if ( empty( $options['user_archive_include_cpts'] ) ) return;
         if ( ( is_admin() and ( !defined( 'DOING_AJAX' ) or !DOING_AJAX /*or !wp_doing_ajax()*/ ) ) //is_admin()
             or ( !$wp_query->is_main_query() and apply_filters_ref_array( 'molongui_edit_main_query_only', array( true, &$wp_query ) ) )

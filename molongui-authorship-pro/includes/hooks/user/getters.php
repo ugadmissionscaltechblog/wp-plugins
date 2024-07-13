@@ -1,16 +1,16 @@
 <?php
+use Molongui\Authorship\Common\Modules\Settings;
+
 defined( 'ABSPATH' ) or exit;
-
-if ( !function_exists( 'authorship_pro_load_user_roles' ) )
+function authorship_pro_load_user_roles( $value )
 {
-    function authorship_pro_load_user_roles( $default_roles )
-    {
-        $options       = authorship_get_options();
-        $options_key   = 'user_roles';
-        $enabled_roles = explode( ",", $options[$options_key] );
-        if ( empty( $enabled_roles ) ) return $default_roles;
+    $user_roles = Settings::get( 'user_roles', "administrator,editor,author,contributor" );
 
-        return $enabled_roles;
+    if ( empty( $user_roles ) )
+    {
+        return array('');
     }
-    add_filter( 'authorship/user/roles', 'authorship_pro_load_user_roles' );
+
+    return explode( ",", $user_roles );
 }
+add_filter( 'authorship/user/roles', 'authorship_pro_load_user_roles' );

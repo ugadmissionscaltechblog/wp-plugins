@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_register_script( $file, $scope, $deps = array( 'jquery' ) )
 {
     if ( empty( $file ) or empty( $scope ) ) return;

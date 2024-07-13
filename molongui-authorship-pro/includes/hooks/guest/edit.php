@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
+remove_filter( 'postbox_classes_'.MOLONGUI_AUTHORSHIP_CPT.'_authorshortbiodiv', 'authorship_guest_add_short_bio_metabox_class' );
+remove_filter( 'postbox_classes_'.MOLONGUI_AUTHORSHIP_CPT.'_authorconversiondiv', 'authorship_guest_add_conversion_metabox_class' );
 function authorship_pro_guest_shortbio_metabox( $post )
 {
     return MOLONGUI_AUTHORSHIP_PRO_DIR . 'views/guest-author/html-admin-short-bio-metabox.php';

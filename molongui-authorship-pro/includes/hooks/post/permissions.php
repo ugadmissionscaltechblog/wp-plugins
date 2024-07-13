@@ -1,10 +1,13 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 function authorship_pro_hide_others_posts( $wp_query )
 {
     $current_user = wp_get_current_user();
     $roles        = (array) $current_user->roles;
-    $options      = authorship_get_options();
+    $options      = Settings::get();
     if ( !empty( $options['permissions_hide_others_posts'] ) )
     {
         if ( array_intersect( $roles, explode( ",", $options['permissions_hide_others_posts'] ) ) )

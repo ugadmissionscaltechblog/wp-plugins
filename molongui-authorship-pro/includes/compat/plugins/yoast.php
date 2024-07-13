@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_action( 'authorship/admin/guest/metaboxes', 'authorship_pro_add_yoast_metabox', 10, 1 );
 if ( !function_exists( 'authorship_pro_add_yoast_metabox' ) )
 {

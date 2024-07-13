@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_action( 'graphql_register_types', function()
 {
     register_graphql_object_type( 'postAuthor', array
@@ -41,7 +42,7 @@ add_action( 'graphql_register_types', function()
 
             foreach ( $post_authors as $post_author )
             {
-                $author = new Molongui\Authorship\Includes\Author( $post_author->id, $post_author->type );
+                $author = new Molongui\Authorship\Author( $post_author->id, $post_author->type );
 
                 $authors[] = array
                 (

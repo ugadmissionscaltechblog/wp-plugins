@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\WP;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( 'authorship/guest/bulk_actions/remove_edit', '__return_false' );
 if ( !function_exists( 'authorship_pro_bulk_edit_add_guest_title_field' ) )
 {
@@ -97,7 +100,10 @@ if ( !function_exists( 'authorship_pro_bulk_edit_save_guest_custom_fields' ) )
 {
     function authorship_pro_bulk_edit_save_guest_custom_fields()
     {
-        if ( !wp_verify_nonce( $_POST['nonce'], 'molongui_authorship_bulk_edit_nonce' ) ) wp_die();
+        if ( !WP::verify_nonce( 'molongui_authorship_bulk_edit_nonce', 'nonce' ) )
+        {
+            wp_die();
+        }
         if ( empty( $_POST['post_ids'] ) ) wp_die();
         if ( empty( $_POST['box_display'] ) ) wp_die();
         foreach ( $_POST['post_ids'] as $id ) update_post_meta( $id, '_molongui_guest_author_box_display', $_POST['box_display'] );

@@ -1,7 +1,7 @@
 <div id="caltech-blogger-box">
     <div class="caltech-blogger-box__avatar-wrapper">
         <?php if ( $print_avatar ) : ?>
-            <img alt="<?php echo esc_attr( $author['display_name'] ); ?>" src="<?php echo esc_url( $author['avatar'] ); ?>">
+            <img src="<?php echo esc_url( $author['avatar'] ); ?>" alt="<?php echo esc_attr( $author['display_name'] ); ?>" loading="lazy">
         <?php endif; ?>
     </div>
     <div class="caltech-blogger-box__text">
@@ -9,9 +9,9 @@
             <?php if ( $print_name ) : ?>
                 <h5>
                     <?php if ( ! empty( $author['posts_url'] ) ) : ?>
-                        <<?php echo esc_html( $link_tag ); ?> <?php $this->print_render_attribute_string( 'author_link' ); ?> style="color: #ff6c0c;">
+                        <a <?php $this->print_render_attribute_string( 'author_link' ); ?>>
                             <strong><?php echo esc_html( $author['display_name'] ); ?></strong>
-                        </<?php echo esc_html( $link_tag ); ?>>
+                        </a>
                     <?php else : ?>
                         <span>
                             <strong><?php echo esc_html( $author['display_name'] ); ?></strong>

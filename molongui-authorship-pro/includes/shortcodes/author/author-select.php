@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_shortcode( 'molongui_author_select', 'authorship_pro_author_select_shortcode' );
 if ( !function_exists( 'authorship_pro_author_select_shortcode' ) )

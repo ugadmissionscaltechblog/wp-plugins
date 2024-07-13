@@ -1,7 +1,8 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !molongui_is_request( 'frontend' ) ) return;
 if ( apply_filters( 'authorship_pro/search_by_author_name', true ) and authorship_is_feature_enabled( 'author_search' ) )
 {

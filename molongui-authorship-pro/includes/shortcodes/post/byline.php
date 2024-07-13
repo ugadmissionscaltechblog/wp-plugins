@@ -1,5 +1,9 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Utils\Debug;
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_shortcode( 'molongui_byline', 'shortcode_authorship_post_byline' );
 add_shortcode( 'post_byline', 'shortcode_authorship_post_byline' );
@@ -13,7 +17,7 @@ if ( !function_exists( 'shortcode_authorship_post_byline' ) )
         }
         add_filter( '_authorship/doing_shortcode', '__return_true' );
         add_filter( '_authorship/doing_shortcode/post_byline', '__return_true' );
-        authorship_debug( $atts, "[molongui_byline] provided attributes:" );
+        Debug::console_log( $atts, "[molongui_byline] provided attributes:" );
         $atts = shortcode_atts( array
         (
             'pid'            => null,
@@ -33,7 +37,7 @@ if ( !function_exists( 'shortcode_authorship_post_byline' ) )
             $atts['pid'] = apply_filters( 'authorship_pro/sc/byline/post_id', $atts['pid'] );
         }
         else $atts['pid'] = (int) $atts['pid'];
-        authorship_debug( $atts, "[molongui_byline] sanitized attributes:" );
+        Debug::console_log( $atts, "[molongui_byline] sanitized attributes:" );
         $byline = '';
         if ( 'yes' == strtolower( $atts['linked'] ) )
         {
@@ -58,7 +62,7 @@ add_filter( 'authorship/author/link', function( $link, $name, $url, $author_id, 
 {
     if ( is_single() and apply_filters( '_authorship/doing_shortcode/post_byline', false ) )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
         if ( ( $options['author_box'] ) )
         {
             if ( !empty( $name ) )

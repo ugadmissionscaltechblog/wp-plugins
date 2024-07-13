@@ -1,7 +1,9 @@
 <?php
 
-use Molongui\Authorship\Includes\Author;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Author;
+use Molongui\Authorship\Common\Utils\Debug;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 
 add_shortcode( 'molongui_author_posts', 'shortcode_molongui_author_posts' );
 if ( !function_exists( 'shortcode_molongui_author_posts' ) )
@@ -84,8 +86,8 @@ if ( !function_exists( 'shortcode_molongui_author_posts' ) )
         $atts['include_posts'] = is_array( $atts['include_posts'] ) ? $atts['include_posts'] : molongui_parse_array_attribute( $atts['include_posts'] );
         $atts['exclude_posts'] = is_array( $atts['exclude_posts'] ) ? $atts['exclude_posts'] : molongui_parse_array_attribute( $atts['exclude_posts'] );
         $atts = apply_filters( 'authorship_pro/sc/author_posts/atts', $atts, $attributes );
-        authorship_debug( $attributes, "[molongui_author_posts] provided attributes:" );
-        authorship_debug( $atts, "[molongui_author_posts] sanitized attributes:" );
+        Debug::console_log( $attributes, "[molongui_author_posts] provided attributes:" );
+        Debug::console_log( $atts, "[molongui_author_posts] sanitized attributes:" );
         $author = new Author( $atts['author'], $atts['guest'] );
         $posts  = $author->get_posts( array( 'post_type' => $atts['post_types'], 'post_status' => 'publish', 'cat' => $atts['category'], 'post__not_in' => $atts['exclude_posts'], 'post__in' => $atts['include_posts'], 'order' => $atts['order'], 'orderby' => $atts['orderby'], 'posts_per_page' => $atts['count'], 'meta_query' => $meta_query ) );
         $add_microdata = authorship_is_feature_enabled( 'microdata' );

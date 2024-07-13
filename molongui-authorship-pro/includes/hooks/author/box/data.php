@@ -1,5 +1,8 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+use Molongui\Authorship\Common\Modules\Settings;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_maybe_replace_author_name' ) )
 {
     function authorship_pro_maybe_replace_author_name( $string, $author )
@@ -31,7 +34,7 @@ if ( !function_exists( 'authorship_pro_encode_email' ) )
 {
     function authorship_pro_encode_email( $html, $email, $add_microdata, $nofollow )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
 
         if ( !empty( $options['encode_email'] ) )
         {
@@ -47,7 +50,7 @@ if ( !function_exists( 'authorship_pro_encode_phone' ) )
 {
     function authorship_pro_encode_phone( $html, $phone, $add_microdata, $nofollow )
     {
-        $options = authorship_get_options();
+        $options = Settings::get();
 
         if ( !empty( $options['encode_phone'] ) )
         {
@@ -62,7 +65,7 @@ if ( !function_exists( 'authorship_pro_encode_phone' ) )
 function authorship_pro_enable_short_bio( $bio, $author )
 {
     $short_bio = '';
-    $options   = authorship_get_options();
+    $options   = Settings::get();
 
     if ( 'short' === $options['author_box_bio_source'] or apply_filters( 'authorship_pro/force_short_bio', false ) )
     {

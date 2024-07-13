@@ -1,7 +1,8 @@
 <?php
 
-use Molongui\Authorship\Includes\Post;
-defined( 'ABSPATH' ) or exit;
+use Molongui\Authorship\Post;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 if ( !function_exists( 'authorship_pro_bulk_edit_add_post_custom_fields' ) )
 {
     function authorship_pro_bulk_edit_add_post_custom_fields( $column_name, $post_type )
@@ -55,7 +56,6 @@ if ( !function_exists( 'authorship_pro_bulk_edit_add_post_custom_fields' ) )
             <?php
         }
     }
-    add_action( 'bulk_edit_custom_box', 'authorship_pro_bulk_edit_add_post_custom_fields', 0, 2 );
 }
 if ( !function_exists( 'authorship_pro_bulk_edit_submit_post_custom_fields' ) )
 {
@@ -156,7 +156,6 @@ if ( !function_exists( 'authorship_pro_bulk_edit_submit_post_custom_fields' ) )
         </script>
         <?php
     }
-    add_action( 'admin_footer', 'authorship_pro_bulk_edit_submit_post_custom_fields' );
 }
 if ( !function_exists( 'authorship_pro_bulk_edit_save_post_custom_fields' ) )
 {
@@ -164,9 +163,12 @@ if ( !function_exists( 'authorship_pro_bulk_edit_save_post_custom_fields' ) )
     {
         if ( !wp_verify_nonce( $_POST['nonce'], 'molongui_authorship_bulk_edit_nonce' ) ) wp_die();
         if ( empty( $_POST['post_ids'] ) ) wp_die();
-        if ( !empty( $_POST['molongui_authors'] ) or !empty( $_POST['_molongui_author'] ) )
+        if ( !empty( $_POST['molongui_post_authors'] ) or !empty( $_POST['_molongui_author'] ) )
         {
-            foreach ( $_POST['post_ids'] as $id ) authorship_post_save_authors( $_POST, $id );
+            foreach ( $_POST['post_ids'] as $id )
+            {
+                Post::update_authors( $_POST['molongui_post_authors'], $id, '', get_current_user_id() );
+            }
         }
         if ( !empty( $_POST['box_display'] ) )
         {
@@ -174,5 +176,4 @@ if ( !function_exists( 'authorship_pro_bulk_edit_save_post_custom_fields' ) )
         }
         wp_die();
     }
-    add_action( 'wp_ajax_authorship_save_bulk_edit_fields', 'authorship_pro_bulk_edit_save_post_custom_fields' );
 }

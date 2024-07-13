@@ -1,5 +1,6 @@
 <?php
-defined( 'ABSPATH' ) or exit;
+
+defined( 'ABSPATH' ) or exit; // Exit if accessed directly
 add_filter( 'authorship_pro/sc/byline/post_id', function( $post_id )
 {
     global $tdb_state_single;
