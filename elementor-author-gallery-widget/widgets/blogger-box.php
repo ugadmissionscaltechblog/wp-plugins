@@ -57,6 +57,9 @@ class Blogger_Box extends Widget_Base {
 				'options' => [
 					'current' => esc_html__( 'Current Author(s)', 'elementor-pro' ),
 					'choose' => esc_html__( 'Choose Author(s)', 'elementor-pro' ),
+					'current_bloggers' => esc_html__( 'List All Current Bloggers', 'elementor-pro' ),
+					'guest_bloggers' => esc_html__( 'List All Guest Bloggers', 'elementor-pro' ),
+					'retired_bloggers' => esc_html__( 'List All Retired Bloggers', 'elementor-pro' ),
 					'custom' => esc_html__( 'Custom', 'elementor-pro' ),
 				],
 			]
@@ -1438,6 +1441,15 @@ class Blogger_Box extends Widget_Base {
                     $authors_list[] = (object) array( 'ID' => (int)$split[1], 'id' => (int)$split[1], 'type' => $split[0], 'ref' => $author );
                 }
 	
+			$authors = format_author_details($authors_list);
+		} elseif ( 'current_bloggers' === $settings['source'] ) {
+			$authors_list = get_current_bloggers();
+			$authors = format_author_details($authors_list);
+		} elseif ( 'guest_bloggers' === $settings['source'] ) {
+			$authors_list = get_guest_bloggers();
+			$authors = format_author_details($authors_list);
+		} elseif ( 'retired_bloggers' === $settings['source'] ) {
+			$authors_list = get_retired_bloggers();
 			$authors = format_author_details($authors_list);
 		}
 	
