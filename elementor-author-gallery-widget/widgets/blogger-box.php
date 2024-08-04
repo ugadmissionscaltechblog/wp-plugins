@@ -1461,12 +1461,10 @@ class Blogger_Box extends Widget_Base {
 			$print_link = ( ( ! $custom_src && 'yes' === $settings['show_link'] ) && ! empty( $settings['link_text'] ) || ( $custom_src && ! empty( $author['posts_url'] ) && ! empty( $settings['link_text'] ) ) );
 	
 			if ( ! empty( $settings['link_to'] ) || $custom_src ) {
-				$link_tag = 'div';
 				$link_url = '';
 				$link_target = '';
 	
 				if ( ( $custom_src || 'website' === $settings['link_to'] ) && ! empty( $author['website'] ) ) {
-					$link_tag = 'a';
 					$link_url = $author['website'];
 	
 					if ( $custom_src ) {
@@ -1475,7 +1473,6 @@ class Blogger_Box extends Widget_Base {
 						$link_target = '_blank';
 					}
 				} elseif ( 'posts_archive' === $settings['link_to'] && ! empty( $author['posts_url'] ) ) {
-					$link_tag = 'a';
 					$link_url = $author['posts_url'];
 				}
 	
@@ -1483,8 +1480,6 @@ class Blogger_Box extends Widget_Base {
 					$this->add_render_attribute( 'author_link', 
 						[
 							'href' => esc_url( $link_url ),
-							'target' => $link_target,
-							'style' => 'color: #ff6c0c;',
 						]
 					);
 	

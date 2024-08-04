@@ -67,7 +67,7 @@ function format_author_details($authors_list) {
                 'bio' => $user->get_bio(),
                 'posts_url' => $user->get_url()
             ];
-            error_log('User found for author ID: ' . $id . ' and type: ' . $type . ' with display name: ' . $user->get_name());
+            error_log('User found for author ID: ' . $id . ' and type: ' . $type . ' with display name: ' . $user->get_name() . ' and url: ' . $user->get_url());
             remove_filter( 'molongui_authorship_dont_filter_name', '__return_true' );
             remove_filter( 'authorship/pre_author_link', 'authorship_dont_filter_author_link', 10 );
         } else {
@@ -80,11 +80,11 @@ function format_author_details($authors_list) {
 
 function get_current_bloggers() {
     $query = new WP_User_Query(array(
-        'role' => 'editor',
+        'role__in' => array('editor', 'blog_lead'),
         'fields' => array('ID')
     ));
     $bloggers = $query->get_results();
-    error_log('result: ' . print_r($bloggers, true));
+    error_log('get current bloggers result: ' . print_r($bloggers, true));
     return $bloggers;
 }
 
@@ -94,7 +94,7 @@ function get_guest_bloggers() {
         'fields' => array('ID')
     ));
     $bloggers = $query->get_results();
-    error_log('result: ' . print_r($bloggers, true));
+    error_log('get guest bloggers result: ' . print_r($bloggers, true));
     return $bloggers;
 }
 
@@ -104,6 +104,6 @@ function get_retired_bloggers() {
         'fields' => array('ID')
     ));
     $bloggers = $query->get_results();
-    error_log('result: ' . print_r($bloggers, true));
+    error_log('get retired bloggers result: ' . print_r($bloggers, true));
     return $bloggers;
 }

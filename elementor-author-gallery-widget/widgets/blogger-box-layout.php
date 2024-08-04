@@ -9,7 +9,7 @@
             <?php if ( $print_name ) : ?>
                 <h5>
                     <?php if ( ! empty( $author['posts_url'] ) ) : ?>
-                        <a <?php $this->print_render_attribute_string( 'author_link' ); ?>>
+                        <a href="<?php echo esc_url( $link_url ) ?>" >
                             <strong><?php echo esc_html( $author['display_name'] ); ?></strong>
                         </a>
                     <?php else : ?>

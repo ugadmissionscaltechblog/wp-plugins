@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Molongui\Authorship\Includes\Author;
+use Molongui\Authorship\Author;
 
 add_action( 'elementor/query/currentbloggersquery', function( $query ) {
     global $wpdb;
