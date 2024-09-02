@@ -30,6 +30,7 @@
 
 use PublishPress\Core\Ajax;
 use PublishPress\Core\Error;
+use PublishPress\Legacy\Util;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
@@ -208,6 +209,16 @@ class PP_Content_Overview extends PP_Module
         // Load necessary scripts and stylesheets
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
+        // Content Board body class
+        add_filter('admin_body_class', [$this, 'add_admin_body_class']);
+    }
+
+    public function add_admin_body_class($classes) {
+        global $pagenow;
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
+            $classes .= ' pp-content-overview-page';
+        }
+        return $classes;
     }
 
     private function getViewCapability()
@@ -257,28 +268,7 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Retrieve wordpress registered taxonomy
-     * 
-     * Private taxonomy are excluded
-     *
-     * @since 3.7.0
-     */
-    public function get_all_taxonomies()
-    {
-
-        //category and post tag are not included in public taxonomy
-        $category   = get_taxonomies(['name' => 'category'], 'objects');
-        $post_tag   = get_taxonomies(['name' => 'post_tag'], 'objects');
-
-        $public     = get_taxonomies(['_builtin' => false, 'public'   => true], 'objects');
-
-        $taxonomies = array_merge($category, $post_tag, $public);
-    
-        return $taxonomies;
-    }
-
-    /**
-     * Choose the post types for editorial metadata
+     * Choose the post types for editorial fields
      *
      * @since 0.7
      */
@@ -289,7 +279,7 @@ class PP_Content_Overview extends PP_Module
     }
 
     /**
-     * Get the post types for editorial metadata
+     * Get the post types for editorial fields
      *
      * @return array $post_types All existing post types
      *
@@ -361,6 +351,15 @@ class PP_Content_Overview extends PP_Module
      */
     public function install()
     {
+        $viewCapability = $this->getViewCapability();
+        $eligible_roles = ['administrator', 'editor', 'author'];
+
+        foreach ($eligible_roles as $eligible_role) {
+            $role = get_role($eligible_role);
+            if (is_object($role) && !$role->has_cap($viewCapability)) {
+                $role->add_cap($viewCapability);
+            }
+        }
     }
 
     /**
@@ -417,7 +416,7 @@ class PP_Content_Overview extends PP_Module
 
         $publishpress->add_menu_page(
             esc_html__('Content Overview', 'publishpress'),
-            apply_filters('pp_view_content_overview_cap', 'pp_view_calendar'),
+            apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview'),
             self::MENU_SLUG,
             [$this, 'render_admin_page']
         );
@@ -435,7 +434,7 @@ class PP_Content_Overview extends PP_Module
             $publishpress->get_menu_slug(),
             esc_html__('Content Overview', 'publishpress'),
             esc_html__('Content Overview', 'publishpress'),
-            apply_filters('pp_view_content_overview_cap', 'pp_view_calendar'),
+            apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview'),
             self::MENU_SLUG,
             [$this, 'render_admin_page'],
             20
@@ -693,11 +692,11 @@ class PP_Content_Overview extends PP_Module
         }
 
         if (! $user_filters['start_date']) {
-            $user_filters['start_date'] = date('Y-m-d', strtotime('-30 days')); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+            $user_filters['start_date'] = date('Y-m-d', strtotime('-5 weeks')); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         }
 
         if (! $user_filters['end_date']) {
-            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +30 day'));
+            $user_filters['end_date'] = date('Y-m-d', strtotime($user_filters['start_date'] . ' +10 weeks'));
         }
 
         if (!empty($user_filters['me_mode'])) {
@@ -747,55 +746,16 @@ class PP_Content_Overview extends PP_Module
  
         $date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
-            ? date($date_format, strtotime('-30 days'))
+            ? date($date_format, strtotime('-5 weeks'))
             : date($date_format, strtotime(sanitize_text_field($_REQUEST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
  
         $user_filters['end_date'] = $_REQUEST['pp-content-overview-end-date_hidden'];
  
         if ($use_today_as_start_date || (empty(trim($user_filters['end_date']))) || (strtotime($user_filters['start_date']) > strtotime($user_filters['end_date']))) {
-            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +30 day'));
+            $user_filters['end_date'] = date($date_format, strtotime($user_filters['start_date'] . ' +10 weeks'));
         }
  
         $this->update_user_meta($current_user->ID, self::USERMETA_KEY_PREFIX . 'filters', $user_filters);
-    }
-
-    /**
-     *
-     * @param string $param The parameter to look for in $_GET
-     *
-     * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
-     *                      or a sanitized version of the parameter from $_GET if set and not empty
-     */
-    public function filter_get_param($param)
-    {
-        // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if (! isset($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            return null;
-        } elseif (empty($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-            return '';
-        }
-
-        return sanitize_key($_GET[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-    }
-
-    /**
-     * This function is an alternative to filter_get_param() that's stripping out date characters
-     * 
-     * @param string $param The parameter to look for in $_GET
-     *
-     * @return mixed null if the parameter is not set in $_GET, empty string if the parameter is empty in $_GET,
-     *                      or a sanitized version of the parameter from $_GET if set and not empty
-     */
-    public function filter_get_param_text($param)
-    {
-        // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if (! isset($_GET[$param])) {
-            return null;
-        } elseif (empty($_GET[$param])) {
-            return '';
-        }
-
-        return sanitize_text_field($_GET[$param]);
     }
     
     /**
@@ -1030,7 +990,7 @@ class PP_Content_Overview extends PP_Module
         // add all meta keys
         $datas['meta_keys'] = $wpdb->get_col("SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE 1=1 ORDER BY meta_key ASC");
 
-        // add editorial metadata
+        // add editorial fields
         if (class_exists('PP_Editorial_Metadata')) {
             $additional_terms = get_terms(
                 [
@@ -1090,8 +1050,7 @@ class PP_Content_Overview extends PP_Module
         $content_overview_custom_filters = $this->module->options->content_overview_custom_filters;
 
         $datas['content_overview_filters'] = is_array($content_overview_filters) ? $content_overview_filters : [
-            'post_status' => esc_html__('Status', 'publishpress'), 
-            'category' => esc_html__('Categories', 'publishpress'), 
+            'post_status' => esc_html__('Status', 'publishpress'),
             'author' => esc_html__('Author', 'publishpress'), 
             'ptype' => esc_html__('Post Type', 'publishpress')
         ];
@@ -1142,11 +1101,11 @@ class PP_Content_Overview extends PP_Module
             ]
         ];
 
-        // editorial metadata columns
+        // editorial fields columns
         if (isset($content_overview_datas['editorial_metadata'])) {
             $columns['editorial_metadata'] = [
-                'title'     => esc_html__('Editorial Metadata', 'publishpress'),
-                'message'   => esc_html__('You do not have any editorial metadata enabled', 'publishpress'),
+                'title'     => esc_html__('Editorial Fields', 'publishpress'),
+                'message'   => esc_html__('You do not have any editorial fields enabled', 'publishpress'),
                 'columns'   => is_array($content_overview_datas['editorial_metadata']) ? $content_overview_datas['editorial_metadata'] : []
             ];
         }
@@ -1202,11 +1161,11 @@ class PP_Content_Overview extends PP_Module
             ]
         ];
         
-        // editorial metadata filters
+        // editorial fields filters
         if (isset($content_overview_datas['editorial_metadata'])) {
             $filters['editorial_metadata'] = [
-                'title'     => esc_html__('Editorial Metadata', 'publishpress'),
-                'message'   => esc_html__('You do not have any editorial metadata enabled', 'publishpress'),
+                'title'     => esc_html__('Editorial Fields', 'publishpress'),
+                'message'   => esc_html__('You do not have any editorial fields enabled', 'publishpress'),
                 'filters'   => $content_overview_datas['editorial_metadata']
             ];
         }
@@ -1568,6 +1527,9 @@ class PP_Content_Overview extends PP_Module
                                     <th>
                                         <label for="publishpress-content-overview-field-<?php echo esc_attr($field_key); ?>">
                                             <?php echo esc_html($field_options['label']); ?>
+                                            <?php if (!empty($field_options['required'])) : ?>
+                                                <span class="required">*</span>
+                                            <?php endif; ?>
                                         </label>
                                     </th>
                                     <td>
@@ -1662,11 +1624,13 @@ class PP_Content_Overview extends PP_Module
                                                     break;
 
                                                     default:
+                                                    $required_html = !empty($field_options['required']) ? 'required' : '';
                                                         ?>
                                                         <input 
                                                             type="<?php echo esc_attr($field_options['type']); ?>" 
                                                             name="<?php echo esc_attr($field_key); ?>" 
                                                             value="<?php echo esc_attr($field_options['value']); ?>"
+                                                            <?php echo esc_html($required_html); ?>
                                                         >
                                                         <?php
                                                     break;
@@ -1685,6 +1649,7 @@ class PP_Content_Overview extends PP_Module
                     <div class="save-cc-changes save-new-post-form">
                         <?php echo sprintf(esc_html__('Create %s', 'publishpress'), esc_html($postTypeObject->labels->singular_name)); ?>
                     </div>
+                    <input type="submit" name="submit" class="form-submit-button" value="<?php esc_html_e('Submit', 'publishpress'); ?>" style="display: none;"/>
                 </div>
             </div>
         </form>
@@ -1718,6 +1683,7 @@ class PP_Content_Overview extends PP_Module
                 'label' => __('Title', 'publishpress'),
                 'value' => null,
                 'type' => 'text',
+                'required' => 1,
             ],
             'status' => [
                 'label' => __('Post Status', 'publishpress'),
@@ -1868,7 +1834,7 @@ class PP_Content_Overview extends PP_Module
                 </div>
                 <?php $modal_id++; ?>
                 <div class="item action co-filter" data-target="#content_overview_modal_<?php echo esc_attr($modal_id); ?>">
-                    <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Manage Filters', 'publishpress'); ?>
+                    <span class="dashicons dashicons-filter"></span> <?php esc_html_e('Customize Filters', 'publishpress'); ?>
                 </div>
                 <div id="content_overview_modal_<?php echo esc_attr($modal_id); ?>" class="customize-customize-item-modal content-overview-modal" style="display: none;">
                     <div class="content-overview-modal-content">
@@ -1973,8 +1939,8 @@ class PP_Content_Overview extends PP_Module
                 } ?>
                 <?php 
                 $date_format = 'Y-m-d';
-                $reset_start_date = date($date_format, strtotime('-30 days'));
-                $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +30 day'));
+                $reset_start_date = date($date_format, strtotime('-5 weeks'));
+                $reset_end_date   = date($date_format, strtotime($reset_start_date . ' +10 weeks'));
 
                 $filtered_start_date = $reset_start_date;
                 $filtered_start_date_timestamp = strtotime($filtered_start_date);
@@ -2015,28 +1981,6 @@ class PP_Content_Overview extends PP_Module
         }
 
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
-    }
-
-    private function meta_query_operator($operator = false) {
-        $operators = [
-            'equals' => '=',
-            'not_equals' => '!=',
-            'greater_than' => '>',
-            'greater_than_or_equals' => '>=',
-            'less_than' => '<',
-            'less_than_or_equals' => '<=',
-            'like' => 'LIKE',
-            'not_like' => 'NOT LIKE',
-            'not_exists' => 'NOT EXISTS'
-        ];
-
-        if ($operator) {
-            $return = array_key_exists($operator, $operators) ? $operators[$operator] : $operator;
-        } else {
-            $return = $operators;
-        }
-
-        return $return;
     }
 
     public function content_overview_filter_options($select_id, $select_name, $filters)
@@ -2400,9 +2344,13 @@ class PP_Content_Overview extends PP_Module
                             <div class="filter-content">
                             <select class="non-trigger-select" id="filter_<?php echo esc_attr($select_name); ?>_operator" name="<?php echo esc_attr($select_name); ?>_operator">
                             <?php
-                            $all_options = $this->meta_query_operator();
+                            $all_options = $this->meta_query_operator_label();
                             foreach ($all_options as $option_key => $option_label) {
-                                if ($operator_value == $option_key && !empty($selected_value)) {
+                                if (
+                                    ($operator_value == $option_key && !empty($selected_value))
+                                    || ($operator_value == $option_key && $selected_value == '0')
+                                    || ($operator_value == $option_key && 'not_exists' === $option_key)
+                                ) {
                                     $selected_value = $option_label . $selected_value;
                                 }
                                 echo '<option value="' . esc_attr($option_key) . '" ' . selected(
@@ -2452,6 +2400,7 @@ class PP_Content_Overview extends PP_Module
         $this->user_filters['order'] = $order;
         $this->user_filters['s']     = $search;
 
+        $localized_post_data = [];
         $posts = $this->getPostsForPostType($postType, $this->user_filters);
         $sortableColumns = $this->getSortableColumns();
 
@@ -2519,6 +2468,11 @@ class PP_Content_Overview extends PP_Module
                         <tbody>
                         <?php
                         foreach ($posts as $post) {
+                            if (Util::isPlannersProActive()) {
+                                $post_type_object = get_post_type_object($post->post_type);
+                                $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
+                                $localized_post_data = $this->localize_post_data($localized_post_data, $post, $can_edit_post);
+                            }
                             $this->print_post($post);
                         } ?>
                         </tbody>
@@ -2548,7 +2502,35 @@ class PP_Content_Overview extends PP_Module
             </div>
             </div>
         </div>
+        <div id="pp-content-overview-general-modal" style="display: none;">
+            <div id="pp-content-overview-general-modal-container" class="pp-content-overview-general-modal-container"></div>
+        </div>
         <?php
+        
+        if (Util::isPlannersProActive()) {
+            
+            $localized_post_data['post_author_label']   = esc_html__('Author', 'publishpress');
+            $localized_post_data['post_date_label']     = esc_html__('Post Date', 'publishpress');
+            $localized_post_data['edit_label']          = esc_html__('Edit', 'publishpress');
+            $localized_post_data['delete_label']        = esc_html__('Trash', 'publishpress');
+            $localized_post_data['preview_label']       = esc_html__('Preview', 'publishpress');
+            $localized_post_data['view_label']          = esc_html__('View', 'publishpress');
+            $localized_post_data['prev_label']          = esc_html__('Previous Post', 'publishpress');
+            $localized_post_data['next_label']          = esc_html__('Next Post', 'publishpress');
+            $localized_post_data['post_status_label']   = esc_html__('Post Status', 'publishpress');
+            $localized_post_data['update_label']        = esc_html__('Save Changes', 'publishpress');
+            $localized_post_data['empty_term']          = esc_html__('Taxonomy not set.', 'publishpress');
+            $localized_post_data['date_format']         = pp_convert_date_format_to_jqueryui_datepicker(get_option('date_format'));
+            $localized_post_data['week_first_day']      = esc_js(get_option('start_of_week'));
+            $localized_post_data['nonce']               = wp_create_nonce('content_overview_action_nonce');
+
+            wp_localize_script(
+                'publishpress-content_overview',
+                'PPContentOverviewPosts',
+                $localized_post_data
+            );
+        }
+
         // phpcs:enable
     }
 
@@ -2651,26 +2633,56 @@ class PP_Content_Overview extends PP_Module
                     );
                 }
 
-            } elseif(in_array($enabled_filter, $this->content_overview_datas['meta_keys']) && !empty($this->user_filters[$enabled_filter])) {
+            } elseif(
+                in_array($enabled_filter, $this->content_overview_datas['meta_keys']) 
+                && (
+                    isset($this->user_filters[$enabled_filter])
+                    && 
+                        (
+                            !empty($this->user_filters[$enabled_filter]) 
+                            || $this->user_filters[$enabled_filter] == '0'
+                            || (
+                                !empty($this->user_filters[$enabled_filter . '_operator'])
+                                && $this->user_filters[$enabled_filter . '_operator'] === 'not_exists'
+                                )
+                        )
+                    )
+                ) {
                 // metakey filter
                 unset($args[$enabled_filter]);
                 $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
                 $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
-                $compare = $this->meta_query_operator($meta_operator);
+                $compare = $this->meta_query_operator_symbol($meta_operator);
                 
                 $metadata_filter = true;
-                $meta_query[] = array(
-                    'key' => $enabled_filter,
-                    'value' => $meta_value,
-                    'compare' => $compare
-                );
+
+                if ($meta_operator == 'not_exists') {
+                    $meta_query[] = array(
+                        'relation' => 'OR',
+                        array(
+                            'key' => $enabled_filter,
+                            'compare' => 'NOT EXISTS'
+                        ),
+                        array(
+                            'key' => $enabled_filter,
+                            'value' => '',
+                            'compare' => '='
+                        )
+                    );
+                } else {
+                    $meta_query[] = array(
+                        'key' => $enabled_filter,
+                        'value' => $meta_value,
+                        'compare' => $compare
+                    );
+                }
             } elseif (in_array($enabled_filter, ['ppch_co_yoast_seo__yoast_wpseo_linkdex', 'ppch_co_yoast_seo__yoast_wpseo_content_score']) && !empty($this->user_filters[$enabled_filter]) && array_key_exists($enabled_filter, $this->form_filter_list) && class_exists('WPSEO_Meta')) {
                 // yoast seo filter
                 unset($args[$enabled_filter]);
                 $meta_value = sanitize_text_field($this->user_filters[$enabled_filter]);
                 $meta_key = str_replace('ppch_co_yoast_seo_', '', $enabled_filter);
                 $meta_operator = !empty($this->user_filters[$enabled_filter . '_operator']) ? $this->user_filters[$enabled_filter . '_operator'] : 'equals';
-                $compare = $this->meta_query_operator($meta_operator);
+                $compare = $this->meta_query_operator_symbol($meta_operator);
                 $metadata_filter = true;
                 $meta_query[] = array(
                     'key' => $meta_key,
@@ -2792,14 +2804,13 @@ class PP_Content_Overview extends PP_Module
     public function print_post($post)
     {
         ?>
-        <tr id='post-<?php
-        echo esc_attr($post->ID); ?>' valign="top">
+        <tr id="post-<?php echo esc_attr($post->ID); ?>" data-post_id="<?php echo esc_attr($post->ID); ?>" valign="top">
             <?php
             foreach ((array)$this->columns as $key => $name) {
                 if (!array_key_exists($key, $this->form_column_list) && $key !== 'post_title') {
                     continue;
                 }
-                echo '<td><div class="column-content">';
+                echo '<td><div class="column-content column-content-'. esc_attr($key) .'">';
                 if (method_exists($this, 'column_' . $key)) {
                     $method = 'column_' . $key;
                     echo $this->$method($post); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -2962,11 +2973,11 @@ class PP_Content_Overview extends PP_Module
         $post_type_object = get_post_type_object($post->post_type);
         $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
         if ($can_edit_post) {
-            $output = '<strong class="title-column"><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
+            $output = '<strong class="title-column post-title"><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
                     $post_title
                 ) . '</a></strong>';
         } else {
-            $output = '<strong>' . esc_html($post_title) . '</strong>';
+            $output = '<strong class="post-title">' . esc_html($post_title) . '</strong>';
         }
 
         // Edit or Trash or View
@@ -3092,30 +3103,24 @@ class PP_Content_Overview extends PP_Module
         $queryResult = wp_cache_get($cacheKey, $cacheGroup);
 
         if (false === $queryResult) {
-            // phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $queryResult = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
-                FROM {$wpdb->posts} as p
-                INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
-                WHERE u.display_name LIKE %s
-                ORDER BY 2
-                LIMIT 20",
-                    '%' . $wpdb->esc_like($queryText) . '%'
-                )
-            );
-            // phpcs:enable
+            $user_args = [
+                'number'     => apply_filters('pp_planner_author_result_limit', 20),
+                'capability' => 'edit_posts',
+            ];
+            if (!empty($queryText)) {
+                $user_args['search'] = sanitize_text_field('*' . $queryText . '*');
+            }
+            $users   = get_users($user_args);
+            $queryResult = [];
+            foreach ($users as $user) {
+                $queryResult[] = [
+                    'id'   => (isset($_GET['field']) && sanitize_key($_GET['field']) === 'slug') ? $user->user_nicename : $user->ID,
+                    'text' => $user->display_name,
+                ];
+            }
 
             wp_cache_set($cacheKey, $queryResult, $cacheGroup);
         }
-        
-        foreach ($queryResult as $key => $author) {
-            if (!user_can($author->id, 'edit_posts')) {
-                unset($queryResult[$key]);
-            }
-        }
-        $queryResult = array_values($queryResult);//re-order the key
 
         $ajax->sendJson($queryResult);
     }

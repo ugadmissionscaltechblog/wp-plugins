@@ -1,41 +1,47 @@
-=== Editorial Calendar and Marketing Content Overview - PublishPress Planner ===
+=== Editorial Calendar, Marketing Content, Kanban Board - PublishPress Planner ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
-Tags: editorial calendar, marketing calendar, schedule, editorial comments, content organizer
+Tags: editorial calendar, marketing calendar, kanban board, content overview, marketing
 Requires at least: 5.5
 Requires PHP: 7.2.5
-Tested up to: 6.5
-Stable tag: 4.1.0
+Tested up to: 6.6
+Stable tag: 4.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-PublishPress Planner has all the tools you need to plan WordPress content including a Content Calendar, content notifications, editorial comments, and editorial metadata.
+PublishPress Planner has all the tools you need to plan WordPress content including a Content Calendar, Content Overview, and Kanban Board.
 
 == Description ==
 
-[PublishPress Planner](https://publishpress.com/publishpress/) has all the tools you need to plan WordPress content including a Content Calendar, content notifications, editorial comments, and editorial metadata.
+[PublishPress Planner](https://publishpress.com/publishpress/) has all the tools you need to plan WordPress content including a Content Calendar, Content Overview, Kanban Board, content notifications, and more.
 
-PublishPress Planner is ideal for WordPress sites that publish high-quality content. With PublishPress Planner, you can collaborate much more effectively. This makes PublishPress Planner a great solution for any site with multiple users. PublishPress Planner is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+PublishPress Planner is ideal for WordPress sites that publish and promote high-quality content. Our goal is to help you publish content from inside WordPress. Our aim is to build SaaS-style features in WordPress so people don't need an extra service to plan your content. Why use Trello, ClickUp, Notion, CoSchedule, or other products when you already have WordPress?
 
 ## PublishPress Planner Pro ##
 
 > <strong>Upgrade to PublishPress Planner Pro</strong><br />
 > This plugin is the free version of the PublishPress Planner plugin. The Pro version comes with all the features you need to plan and schedule WordPress content. <a href="https://publishpress.com/publishpress"  title="PublishPress Planner Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
-## Editorial Content Calendar ##
+## Content Calendar ##
 
 The Content Calendar gives you a powerful overview of your publishing schedule. This screen works as a marketing calendar and an editorial calendar. You can easily see when content is planned, and when it was published. You can also drag-and-drop content to a new publication date. By default, you see all the WordPress content you have planned for the next few weeks. If you need to drill down, you can filter the calendar by post status, categories, users or post types.
 
 [Click here to read about the Content Calendar](https://publishpress.com/knowledge-base/calendar/).
 
-## Marketing Content Overview ##
+## Content Overview ##
 
 The Content Overview screen is a companion to the Calendar screen. Whereas the Calendar allows you to see content organized by dates, Content Overview allows you to drill down and see content organized by status, categories, or users. This content organizer allows to choose any data from WordPress to show in columns. In the top-right corner is a “Print” button. Click this to get a printable overview of all your planned content.
 
 [Click here to read about the Content Overview](https://publishpress.com/knowledge-base/content-overview/).
 
-## Content Update Notifications ##
+## Content Board ##
+
+The Content Board screen is a kanban board that you can use to organize your content. The Content Board provides one column for each status. You can drag-and-drop posts to change their status between Draft, Pending Review, Published, Scheduled, and more.
+
+[Click here to read about the Content Board](https://publishpress.com/knowledge-base/the-content-board-screen/).
+
+## Notifications ##
 
 Notifications keep you and your team up to date on changes to important content. Users can be subscribed to notifications for any post, either individually or by selecting user groups. PublishPress Planner allows you to create powerful notification workflows based on post types, categories, status changes and much more.
 
@@ -47,9 +53,9 @@ A very important feature in PublishPress Planner is commenting. You can leave co
 
 [Click here to read about the Editorial Comments](https://publishpress.com/knowledge-base/editorial-comments/).
 
-## Editorial Metadata ##
+## Editorial Fields ##
 
-Metadata enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress Planner provides 4 examples of metadata, but you can add your own to meet your team’s needs.
+Editorial Fields enables you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items. By default, PublishPress Planner provides 4 examples of metadata, but you can add your own to meet your team’s needs.
 
 [Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
@@ -97,13 +103,14 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 == Screenshots ==
 
-1. Editorial Calendar: Using the PublishPress Planner Calendar, you’re able to see when content is planned, and when it is published.
-2. Notifications: PublishPress Planner Notifications keeps you and your team up to date on changes to important content.
-3. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
-4. Custom Statuses: PublishPress Planner enables you to create custom post statuses such as “In Progress” or “Pending Review”.
-5. Editorial Comments: PublishPress Planner allows you to leave comments under each post you write.
-6. Reminder Notifications: The PublishPress Planner Pro feature allows you to send notifications either before or after the publishing date for content.
-7.  Slack Notifications: This PublishPress Planner Pro feature integrates your notifications with Slack.
+1. Content Calendar: Using the Content Calendar, you’re able to see when content is planned, and when it is published.
+2. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
+3. Content Board: This is a kanban board for planning your WordPress content. The Content Board Screen screen provides one column for each status. You can drag-and-drop posts to change their status.
+4. Notifications: PublishPress Planner Notifications keeps you and your team up to date on changes to important content.
+5. Editorial Fields: Editorial Fields enable you to keep track of important requirements for your content. This feature allows you to create fields and store information about content items.
+6. Editorial Comments: PublishPress Planner allows you to leave comments under each post you write.
+7. Slack Notifications: This PublishPress Planner Pro feature integrates your notifications with Slack.
+8. Reminder Notifications: The PublishPress Planner Pro feature allows you to send notifications either before or after the publishing date for content.
 
 == Frequently Asked Questions ==
 
@@ -117,6 +124,66 @@ PublishPress Planner is based on the EditFlow plugin. It is easy for Edit Flow u
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [4.4.0] - 13 Aug 2024 =
+
+* Added : Add modal to Content Calendar and Content Overview screens, #1687
+* Remove : Remove "Make Viewable" in Editorial Fields, #1636
+* Update : Add Async Notification control back to feature settings, #1726
+* Update : Add new filter to abort/prevent notification based on post id or meta data, #1723
+* Added : Add 2 new notifications, #1601
+* Update : Update Notification metabox, #1664
+* Fixed : Calendar Reset Filter not working properly, #1717
+* Update : Disable Editorial Comments and Fields for new sites, #1600
+* Update : Planner v.4.3.1_Translation Updates-ES-FR-IT, #1716
+
+= [4.3.1] - 24 July 2024 =
+
+* Fixed : Calendar not loading older post on navigation, #1707
+* Update : Add "Private" status in Content Board, #1671
+* Update : Add Scheduled status option to Content Calendar, Overview and Board status filter, #1644
+* Update : Update plugin description, #1612
+* Update : Update plugin footer, #1656
+* Update : Update Content Board status update notification styles, #1633
+* Update : Planner v.4.3.0_Translation Updates-ES-FR-IT, #1708
+
+= [4.3.0] - 22 July 2024 =
+
+* Update : Add Quick Preview and Edit Modals to Content Board Pro, #1585
+* Update : Adjust default colors of core statuses to match Statuses plugin, #1670
+* Update : Update the filters on Content Calendar to match the Overview and the Board, #1603
+* Update : Add a search box to the Calendar, #1560
+* Update : Redirect after new install, #1681
+* Update : Add the remaining planner capabilities to correct tab in the Capabilities plugin, #1638
+* Fixed : Not possible to disable the Notifications feature, #1680
+* Update : Disable the Dashboard Widgets by default, #1642
+* Fixed : User from Custom Role is not showing in Calendar form, #1674
+* Update : Update promo box, #1652
+* Update : Only show Posts on the Calendar by default, #1678
+* Update : Planner FREE_v.4.2.1 Translation Updates ES-FR-IT, #1669
+
+= [4.2.1] - 28 May 2024 =
+
+* Update : Grant Calendar, Overview and Boards screens access to editors and authors on new installation, #1640
+* Update : Tidy up the "Features" screen, #1649
+* Update : Small typo after updating card data, #1653
+* Update : Update "metadata" name in settings, #1641
+* Fixed : Content Overview and Board using english label in meta query filter, #1654
+* Update : Register pp_view_content_board with Capabilities, #1639
+* Update : Planner v.4.2.0 Translation Updates-ES-FR-IT, #1647
+
+= [4.2.0] - 16 May 2024 =
+
+* Feature : Add a kanban board to display posts by status(Content Board), #1379
+* Update : Change "Editorial Metadata" to "Editorial Fields", #1577
+* Update : Remove Categories as a default Filters, #1581
+* Update : Change Content Overview "Manage Filters" label to "Customize Filters", #1580
+* Update : Add a way to find empty data in content overview filters, #1578
+* Update : Update filters default date, #1602
+* Update : Update content overview filters compare labels, #1582
+* Update : Fixed text domain in improved-notifications.php file, #1615
+* Update : Made string translatable in Base.php file, #1614
+* Update : Planner FREE v.4.1.0 Translation Updates ES-FR-IT, #1586
 
 = [4.1.0] - 04 April 2024 =
 

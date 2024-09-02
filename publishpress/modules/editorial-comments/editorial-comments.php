@@ -67,7 +67,7 @@ if (! class_exists('PP_Editorial_Comments')) {
                 'icon_class' => 'dashicons dashicons-admin-comments',
                 'slug' => 'editorial-comments',
                 'default_options' => [
-                    'enabled' => 'on',
+                    'enabled' => 'off',
                     'post_types' => [
                         'post' => 'on',
                         'page' => 'on',
@@ -214,6 +214,8 @@ if (! class_exists('PP_Editorial_Comments')) {
                     'nonce'         => wp_create_nonce('editorial-comments-admin'),
                 ]
             );
+
+            wp_set_script_translations( 'publishpress-editorial-comments', 'publishpress' );
 
             $thread_comments = (int)get_option('thread_comments'); ?>
             <script type="text/javascript">
@@ -1336,7 +1338,7 @@ if (! class_exists('PP_Editorial_Comments')) {
          * @param array $data Additional data fields to include on the calendar
          * @param WP_Post $post
          *
-         * @return array $calendar_fields Calendar fields with our viewable Editorial Metadata added
+         * @return array $calendar_fields Calendar fields with our viewable Editorial Fields added
          * @uses  apply_filters('publishpress_calendar_get_post_data')
          *
          * @since 0.7
